@@ -27,3 +27,5 @@ git history for one of your past projects. The full requirements are:
 * You should be the sole collaborator on the project
 * The project should have been started within the past 3 years
 * Make this an example of your best work! In other words, make sure you [hit us with your best shot](https://www.youtube.com/watch?v=x5kisPBwZOM).
+
+--
