@@ -1,6 +1,9 @@
 node_modules/
 .idea/
-wp/
+wp/*
+wp/wp-content/themes/*
+wp/wp-content/themes/meanpugtest/node_modules
+!wp/wp-content/themes/meanpugtest
 
 # ignore everything in the root except the "wp-content" directory.
 !wp-content/

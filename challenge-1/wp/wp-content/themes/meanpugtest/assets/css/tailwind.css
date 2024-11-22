@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Montserrat" !important;
+}
+
+.home .site-branding, .home .main-navigation{
+    display: none;
+}
+
+.master-search input {
+    border: none !important;
+  }

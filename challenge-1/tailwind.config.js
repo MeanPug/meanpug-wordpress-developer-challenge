@@ -5,6 +5,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
+            'sans': ['Montserrat', 'sans-serif'], 
         },
         extend: {
             zIndex: {
@@ -27,3 +28,6 @@ module.exports = {
     variants: {},
     plugins: []
 };
+
+
+
