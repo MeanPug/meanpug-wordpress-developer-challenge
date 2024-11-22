@@ -1,0 +1,121 @@
+{
+    "key": "group_6033cbc192594",
+    "title": "Case Study Summary",
+    "fields": [
+        {
+            "key": "field_6033f3ee9660a",
+            "label": "Customer Name",
+            "name": "customer_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_6033cbcc52d27",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "This field will be used in place of main title, if present.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_6033cbeb52d28",
+            "label": "Description",
+            "name": "description",
+            "type": "wysiwyg",
+            "instructions": "Case study excerpt.  Used in case study module and any large cards where this case study appears.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_6033cc1b52d29",
+            "label": "Key Results",
+            "name": "key_results",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_6033cc3352d2a",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Result",
+            "sub_fields": [
+                {
+                    "key": "field_6033cc3352d2a",
+                    "label": "Result",
+                    "name": "result",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "case_study"
+            }
+        ]
+    ],
+    "menu_order": 40,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1614017529
+}

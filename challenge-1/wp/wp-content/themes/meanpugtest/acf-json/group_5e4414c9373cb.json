@@ -1,0 +1,87 @@
+{
+    "key": "group_5e4414c9373cb",
+    "title": "Support: Appearance",
+    "fields": [
+        {
+            "key": "field_5e4db455fe860",
+            "label": "Appearance Options",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5e441e1c9ca33",
+            "label": "Padding",
+            "name": "padding",
+            "type": "clone",
+            "instructions": "Use these fields to control the padding around your page sections.  In some instances, these settings may be overridden by design.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_60a2b83ae16bd"
+            ],
+            "display": "group",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        },
+        {
+            "key": "field_5e441d5f9ca2f",
+            "label": "Background",
+            "name": "background",
+            "type": "clone",
+            "instructions": "Use these fields to add a background to your page section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_60a2d0d2d1419"
+            ],
+            "display": "group",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+            {
+                "param": "post_type",
+                "operator": "!=",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "This contains the appearance tab and all adjustable appearance options across modules.",
+    "modified": 1621284369
+}

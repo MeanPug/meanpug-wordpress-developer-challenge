@@ -182,3 +182,9 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+$iterator = new RecursiveDirectoryIterator( __DIR__ . '/inc/automatic' );
+foreach ( new RecursiveIteratorIterator( $iterator ) as $file ) {
+	if ( $file->getExtension() === 'php' ) {
+		require $file;
+	}
+}

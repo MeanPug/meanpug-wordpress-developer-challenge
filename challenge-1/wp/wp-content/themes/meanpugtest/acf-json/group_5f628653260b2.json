@@ -1,0 +1,95 @@
+{
+    "key": "group_5f628653260b2",
+    "title": "Page Footer",
+    "fields": [
+        {
+            "key": "field_603038edb15c7",
+            "label": "Call To Action",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_60303905b15c8",
+            "label": "Footer CTA Settings",
+            "name": "footer_cta_settings",
+            "type": "button_group",
+            "instructions": "Controls footer section CTA.  Choose Global to use the CTA defined in Theme Settings.  Choose On to create a custom CTA for this page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "off": "Off",
+                "global": "Global",
+                "on": "On"
+            },
+            "allow_null": 0,
+            "default_value": "global",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_6030397fb15c9",
+            "label": "Footer CTA",
+            "name": "footer_cta",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_60303905b15c8",
+                        "operator": "==",
+                        "value": "on"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_6030375dce207"
+            ],
+            "display": "group",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 20,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "This typically contains information that would appear above the page footer.  Usually this is a call to action (global with local override).",
+    "modified": 1613773210
+}

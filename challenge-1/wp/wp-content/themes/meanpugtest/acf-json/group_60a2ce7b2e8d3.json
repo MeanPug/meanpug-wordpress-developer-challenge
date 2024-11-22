@@ -1,0 +1,76 @@
+{
+    "key": "group_60a2ce7b2e8d3",
+    "title": "Support: Background Color",
+    "fields": [
+        {
+            "key": "field_60a2ce8ebde34",
+            "label": "Color",
+            "name": "color",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "<div class=\"white-background-box\"><\/div>",
+                "primary": "<div class=\"primary-background-box\"><\/div>",
+                "secondary": "<div class=\"secondary-background-box\"><\/div>"
+            },
+            "allow_null": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_60a2cf59bde35",
+            "label": "Location",
+            "name": "location",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "full": "Full",
+                "top": "Top",
+                "bottom": "Bottom",
+                "centered": "Centered"
+            },
+            "allow_null": 0,
+            "default_value": "full",
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+            {
+                "param": "post_type",
+                "operator": "!=",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1621284539
+}
