@@ -33,7 +33,7 @@ function NARWHAL_BOILERPLATE_62122_jetpack_setup() {
 		'jetpack-content-options',
 		array(
 			'post-details' => array(
-				'stylesheet' => 'narwhal-boilerplate-62122-style',
+				'stylesheet' => 'meanpug-test-style',
 				'date'       => '.posted-on',
 				'categories' => '.cat-links',
 				'tags'       => '.tags-links',

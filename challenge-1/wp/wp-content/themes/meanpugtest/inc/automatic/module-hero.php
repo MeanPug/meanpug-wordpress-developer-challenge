@@ -2,13 +2,13 @@
 /**
  * Encapsulates logic to display the header, more can be added for special cases 
  * Default covers the hero module in page header and a default with filter
- * do_action( 'narwhal-boilerplate-62122/hero/display' );
+ * do_action( 'meanpug-test/hero/display' );
  */
-new NarwhalBoilerplate62122Hero();
-class NarwhalBoilerplate62122Hero{
+new MeanpugTestHero();
+class MeanpugTestHero{
 
 	function __construct(){
-		add_action( 'narwhal-boilerplate-62122/hero/display', [ $this, 'display'] );
+		add_action( 'meanpug-test/hero/display', [ $this, 'display'] );
 	}
 
 	/**
@@ -22,7 +22,7 @@ class NarwhalBoilerplate62122Hero{
 				get_template_part( 'template-parts/hero/layout', get_sub_field( 'hero_type' ) );
 			endwhile;
 		else:
-			get_template_part( 'template-parts/hero/layout', apply_filters( 'narwhal-boilerplate-62122/hero/type', 'default' ) );
+			get_template_part( 'template-parts/hero/layout', apply_filters( 'meanpug-test/hero/type', 'default' ) );
 		endif;
 	}
 

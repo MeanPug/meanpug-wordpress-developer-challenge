@@ -1,6 +1,6 @@
 <?php
 
-class NarwhalBoilerplate62122IconGroupField{
+class MeanpugTestIconGroupField{
 	/**
 	 * display icon group fields
 	 * @param string $field_name Field group name

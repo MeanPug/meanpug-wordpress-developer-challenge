@@ -12,7 +12,7 @@ class NarwhalDigitalDepartmentTaxonomy{
 				'name' => 'Departments',
 				'singular_name' => 'Department',
 			],
-			'description' => __( '', 'narwhal-digital' ),
+			'description' => __( '', 'meanpug-test' ),
 			'public' => true,
 			'publicly_queryable' => false,
 			'hierarchical' => false,

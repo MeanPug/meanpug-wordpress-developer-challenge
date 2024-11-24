@@ -3,11 +3,11 @@
  * This post type is used to run the testimonial module 
  * Default assumes that all fields are added through ACF, post title is admin use only, menu order used for query sorting
  */
-new MeanpugTestCPT_Testimonials();
+new MeanpugTestCPT_FAQs();
 
-class MeanpugTestCPT_Testimonials extends MeanpugTestCPT_Prototype{
-	protected $key = 'testimonial';
-	protected $label = 'Testimonial';
+class MeanpugTestCPT_FAQs extends MeanpugTestCPT_Prototype{
+	protected $key = 'faq';
+	protected $label = 'FAQ';
 	protected $registration = [
 		"public" => false,
 		"publicly_queryable" => false,
@@ -16,10 +16,10 @@ class MeanpugTestCPT_Testimonials extends MeanpugTestCPT_Prototype{
 		"exclude_from_search" => true,
 		"rewrite" => false,
 		"query_var" => false,
-		'menu_icon' => 'dashicons-testimonial',
+		'menu_icon' => 'dashicons-info',
 		"supports" => [
 			"title",
-			"page-attributes",
+			"editor",
 		]
 	];
 

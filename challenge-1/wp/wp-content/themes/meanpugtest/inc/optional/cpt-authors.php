@@ -3,9 +3,9 @@
  * This post type is used to run the authors module
  * Default assumes that all fields are added through ACF
  */
-new NarwhalBoilerplate62122CPT_Authors();
+new MeanpugTestCPT_Authors();
 
-class NarwhalBoilerplate62122CPT_Authors extends NarwhalBoilerplate62122CPT_Prototype{
+class MeanpugTestCPT_Authors extends MeanpugTestCPT_Prototype{
 	protected $key = 'author';
 	protected $label = 'Author';
 	protected $registration = [

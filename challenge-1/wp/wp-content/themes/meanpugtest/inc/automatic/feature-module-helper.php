@@ -2,7 +2,7 @@
 /**
  * Helper functions for working with module components, these aren't necessary to use modules, but it keeps them uniform
  */
-class NarwhalBoilerplate62122ModuleHelper{
+class MeanpugTestModuleHelper{
 
 	/**
 	 * keep track of what number of module we are on 

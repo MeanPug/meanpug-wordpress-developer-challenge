@@ -1,6 +1,6 @@
 <?php
 
-class NarwhalBoilerplate62122FormField{
+class MeanpugTestFormField{
 	/**
 	 * display form field
 	 * @param string $field_name Field group name

@@ -2,7 +2,7 @@
 
 // new code to pull action group from an options page into a template file.
 
-class NarwhalBoilerplate62122ActionGroupFieldinOptions {
+class MeanpugTestActionGroupFieldinOptions {
     public static function present($cloned_field_name) { ?>
 
         <div class="footer social extra-cta">

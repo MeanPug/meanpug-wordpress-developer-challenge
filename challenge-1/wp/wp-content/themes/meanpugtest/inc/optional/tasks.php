@@ -1,12 +1,12 @@
 <?php
 
-new NarwhalBoilerplate62122Tasks();
+new MeanpugTestTasks();
 
 /**
  * This class is here for illustrative purposes in case you need to run a periodic process
  * Or a manual one via link
  */
-class NarwhalBoilerplate62122Tasks{
+class MeanpugTestTasks{
 
 	function __construct(){
 		$this->_setup_scheduled_tasks();
@@ -18,14 +18,14 @@ class NarwhalBoilerplate62122Tasks{
 	 */
 	function _setup_scheduled_tasks(){
 
-		$tasks = apply_filters( 'narwhal-boilerplate-62122/tasks', [
+		$tasks = apply_filters( 'meanpug-test/tasks', [
 			'some-process' => 'twicedaily',
 		];
 
 		foreach( $tasks as $task => $schedule ){
-			$next_run = wp_next_scheduled( "narwhal-boilerplate-62122/{$task}" );
+			$next_run = wp_next_scheduled( "meanpug-test/{$task}" );
 			if( false === $next_run ){
-				wp_schedule_event( time(), $schedule, "narwhal-boilerplate-62122/{$task}" );
+				wp_schedule_event( time(), $schedule, "meanpug-test/{$task}" );
 			}
 		}
 
@@ -35,12 +35,12 @@ class NarwhalBoilerplate62122Tasks{
 	 * Setup a way to manually run a process
 	 */
 	function _manual_tasks(){
-		if( !isset( $_GET['narwhal-boilerplate-62122-action'] ) ){
+		if( !isset( $_GET['meanpug-test-action'] ) ){
 			return;
 		}
 
-		do_action( 'narwhal-boilerplate-62122/' . $_GET['narwhal-boilerplate-62122-action'] );
-		wp_redirect( add_query_arg( 'narwhal-boilerplate-62122-action', false ) );
+		do_action( 'meanpug-test/' . $_GET['meanpug-test-action'] );
+		wp_redirect( add_query_arg( 'meanpug-test-action', false ) );
 		exit;
 	}
 }

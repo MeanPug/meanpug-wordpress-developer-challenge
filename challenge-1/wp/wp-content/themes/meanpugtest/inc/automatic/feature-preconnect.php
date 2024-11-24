@@ -6,8 +6,8 @@
  * Not every domain needs to be in there, but if lighthouse demands, it's a way to comply
  */
 
-new NarwhalBoilerplate62122Preconnect();
-class NarwhalBoilerplate62122Preconnect{
+new MeanpugTestPreconnect();
+class MeanpugTestPreconnect{
 
 	function __construct(){
 		add_action( 'wp_head', [ $this, 'head' ], 1 );

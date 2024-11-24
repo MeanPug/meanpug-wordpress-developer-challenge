@@ -1,12 +1,12 @@
 <?php
 
-new NarwhalBoilerplate62122AdvancedCustomFields();
+new MeanpugTestAdvancedCustomFields();
 
 /**
  * Class to keep track of hooks and filters tied into ACF plugin
  */
 
-class NarwhalBoilerplate62122AdvancedCustomFields{
+class MeanpugTestAdvancedCustomFields{
 
 	function __construct(){
 		add_action( 'acf/init', [ $this, '_options_page' ] );
@@ -105,7 +105,7 @@ class NarwhalBoilerplate62122AdvancedCustomFields{
 				$resources_url = get_field( 'resources_page', 'options' );
 				$field['default_value'] = [
 					'url' => add_query_arg( 'type', $this->post_type, $resources_url ) . '#ResourceArchive',
-					'title' => sprintf( __( 'See All %s', 'narwhal-boilerplate-62122' ), $this->post_type_obj->labels->name ),
+					'title' => sprintf( __( 'See All %s', 'meanpug-test' ), $this->post_type_obj->labels->name ),
 				];
 			break;
 			case 'title_text':	//note that this is clone specific since the seo title field is used a lot
@@ -114,7 +114,7 @@ class NarwhalBoilerplate62122AdvancedCustomFields{
 			break;
 		}
 
-		$field['default_value'] = apply_filters( "narwhal-boilerplate-62122/modules/{$this->post_type}/default-value", $field['default_value'], $field );
+		$field['default_value'] = apply_filters( "meanpug-test/modules/{$this->post_type}/default-value", $field['default_value'], $field );
 	}
 
 	/**

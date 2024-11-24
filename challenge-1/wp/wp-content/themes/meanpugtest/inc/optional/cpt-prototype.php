@@ -8,10 +8,10 @@
 add_filter( 'get_the_excerpt', 'narwhal_post_type_excerpt', 20, 2 );
 function narwhal_post_type_excerpt( $excerpt, $post ){
 	$post_type = get_post_type( $post );
-	return apply_filters( "narwhal-boilerplate-62122/{$post_type}/excerpt", $excerpt, $post );
+	return apply_filters( "meanpug-test/{$post_type}/excerpt", $excerpt, $post );
 }
 
-class NarwhalBoilerplate62122CPT_Prototype{
+class MeanpugTestCPT_Prototype{
 	protected $key = '';
 	protected $label = '';
 	protected $plural_label = '';
@@ -29,9 +29,9 @@ class NarwhalBoilerplate62122CPT_Prototype{
 
 		add_action( 'init', [ $this, 'register_cpt' ] );
 
-		add_filter( "narwhal-boilerplate-62122/{$this->key}/card-label", [ $this, 'front_end_label' ] );
-		add_filter( "narwhal-boilerplate-62122/hero/{$this->key}/prehead", [ $this, 'front_end_label' ] );
-		add_filter( "narwhal-boilerplate-62122/modules/{$this->key}/default-value", [ $this, 'module_default_value' ], 20, 2 );
+		add_filter( "meanpug-test/{$this->key}/card-label", [ $this, 'front_end_label' ] );
+		add_filter( "meanpug-test/hero/{$this->key}/prehead", [ $this, 'front_end_label' ] );
+		add_filter( "meanpug-test/modules/{$this->key}/default-value", [ $this, 'module_default_value' ], 20, 2 );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class NarwhalBoilerplate62122CPT_Prototype{
 	 * Usually used in a card meta area or detail page
 	 */
 	function front_end_label(){
-		return __( $this->label, "narwhal-boilerplate-62122" );
+		return __( $this->label, "meanpug-test" );
 	}
 
 	/**
@@ -57,7 +57,7 @@ class NarwhalBoilerplate62122CPT_Prototype{
 				$resources_url = get_post_type_archive_link( $this->post_type );
 				return [
 					'url' => add_query_arg( 'type', $this->post_type, $resources_url ) . '#ResourceArchive',
-					'title' => sprintf( __( 'See All %s', 'narwhal-boilerplate-62122' ), $this->post_type_obj->labels->name ),
+					'title' => sprintf( __( 'See All %s', 'meanpug-test' ), $this->post_type_obj->labels->name ),
 				];
 			break;
 		}
@@ -70,12 +70,12 @@ class NarwhalBoilerplate62122CPT_Prototype{
 	function register_cpt() {
 
 		$labels = [
-			"name" => __( $this->plural_label, "narwhal-boilerplate-62122" ),
-			"singular_name" => __( $this->label, "narwhal-boilerplate-62122" ),
+			"name" => __( $this->plural_label, "meanpug-test" ),
+			"singular_name" => __( $this->label, "meanpug-test" ),
 		];
 
 		$args = $this->registration += [
-			"label" => __( $this->plural_label, "narwhal-boilerplate-62122" ),
+			"label" => __( $this->plural_label, "meanpug-test" ),
 			"labels" => $labels,
 			"description" => "",
 			"public" => true,

@@ -3,9 +3,9 @@
 /**
  * Add content to robots.txt file
  */
-new NarwhalBoilerplate62122Robots();
+new MeanpugTestRobots();
 
-class NarwhalBoilerplate62122Robots{
+class MeanpugTestRobots{
 
 	function __construct(){
 		add_filter( 'robots_txt', [ $this, 'xml_sitemap' ], 20, 2 );

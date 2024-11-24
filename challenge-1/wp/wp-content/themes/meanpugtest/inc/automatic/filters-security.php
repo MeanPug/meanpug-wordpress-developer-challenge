@@ -7,12 +7,12 @@
  */
 if( !function_exists( 'NarwhalSecurity' ) ){
 	function NarwhalSecurity(){
-		return NarwhalBoilerplate62122Security::getInstance();
+		return MeanpugTestSecurity::getInstance();
 	}
 	NarwhalSecurity();
 }
 
-class NarwhalBoilerplate62122Security{
+class MeanpugTestSecurity{
 
 	private static $instance = null;
 
@@ -21,7 +21,7 @@ class NarwhalBoilerplate62122Security{
 	public static function getInstance(){
 
 		if ( self::$instance == null ){
-			self::$instance = new NarwhalBoilerplate62122Security();
+			self::$instance = new MeanpugTestSecurity();
 		}
 
 		return self::$instance;

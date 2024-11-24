@@ -10,12 +10,12 @@
 
 if( !function_exists( 'AdvancedArchive' ) ){
 	function AdvancedArchive(){
-		return NarwhalBoilerplate62122AdvancedArchive::getInstance();
+		return MeanpugTestAdvancedArchive::getInstance();
 	}
 	AdvancedArchive();
 }
 
-class NarwhalBoilerplate62122AdvancedArchive{
+class MeanpugTestAdvancedArchive{
 
 	private static $instance = null;
 
@@ -39,15 +39,15 @@ class NarwhalBoilerplate62122AdvancedArchive{
 	public static function getInstance(){
 
 		if ( self::$instance == null ){
-			self::$instance = new NarwhalBoilerplate62122AdvancedArchive();
+			self::$instance = new MeanpugTestAdvancedArchive();
 		}
 
 		return self::$instance;
 	}
 
 	function __construct(){
-		add_action( 'wp_ajax_narwhal-boilerplate-62122/advanced-archive-post', [ $this, '_ajax_results' ] );
-		add_action( 'wp_ajax_nopriv_narwhal-boilerplate-62122/advanced-archive-post', [ $this, '_ajax_results' ] );
+		add_action( 'wp_ajax_meanpug-test/advanced-archive-post', [ $this, '_ajax_results' ] );
+		add_action( 'wp_ajax_nopriv_meanpug-test/advanced-archive-post', [ $this, '_ajax_results' ] );
 	}
 
 	/**
@@ -81,11 +81,11 @@ class NarwhalBoilerplate62122AdvancedArchive{
 			}
 			$section_label = get_sub_field( 'featured_section_label' );
 			if( '' === $section_label ){
-				$section_label = __( 'Featured', 'narwhal-boilerplate-62122' ) .' '. $obj->labels->name;
+				$section_label = __( 'Featured', 'meanpug-test' ) .' '. $obj->labels->name;
 			}
 			$view_all_label = get_sub_field( 'view_all_label' );
 			if( '' === $view_all_label ){
-				$view_all_label = __( 'See All', 'narwhal-boilerplate-62122' ) .' '. $obj->labels->name;
+				$view_all_label = __( 'See All', 'meanpug-test' ) .' '. $obj->labels->name;
 			}
 
 			$this->types[ $type ] = [
@@ -104,7 +104,7 @@ class NarwhalBoilerplate62122AdvancedArchive{
 			$obj = get_taxonomy( $taxonomy );
 			$filter_label = get_sub_field( 'label' );
 			if( '' === $filter_label ){
-				$filter_label = __( 'Filter by', 'narwhal-boilerplate-62122' ) . ' ' . $obj->labels->singular_name;
+				$filter_label = __( 'Filter by', 'meanpug-test' ) . ' ' . $obj->labels->singular_name;
 			}
 
 			$this->filters[ $taxonomy ] = [
@@ -162,7 +162,7 @@ class NarwhalBoilerplate62122AdvancedArchive{
 			}
 		}
 
-		return apply_filters( 'narwhal-boilerplate-62122/advanced-archive/query', $args );
+		return apply_filters( 'meanpug-test/advanced-archive/query', $args );
 	}
 
 	/**
@@ -245,7 +245,7 @@ class NarwhalBoilerplate62122AdvancedArchive{
 	 */
 	function type_filter(){
 
-		$label = __( 'Resource Type', 'narwhal-boilerplate-62122' );
+		$label = __( 'Resource Type', 'meanpug-test' );
 		$ret = [];
 
 		$ret[] = '<label for="Resources_type" class="screen-reader-text">'. $label .'</label>';
@@ -285,7 +285,7 @@ class NarwhalBoilerplate62122AdvancedArchive{
 			$this->selections[] = esc_html( $this->search );
 			$this->base_url = add_query_arg( 'search', $this->search, $this->base_url );
 		}
-		$placeholder = __( 'Search', 'narwhal-boilerplate-62122' );
+		$placeholder = __( 'Search', 'meanpug-test' );
 
 		$ret[] = '<label for="Resources_search" class="screen-reader-text">'.$placeholder.'</label>';
 		$ret[] = "<input class='resource-archive__search' id='Resources_search' type='text' name='search' value='{$terms}' placeholder='{$placeholder}'>";

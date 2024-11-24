@@ -5,8 +5,8 @@
  * Ties into certain wp hooks to allow users to enter custom scripts that will display in html
  */
 
-new NarwhalBoilerplate62122CustomScripts();
-class NarwhalBoilerplate62122CustomScripts{
+new MeanpugTestCustomScripts();
+class MeanpugTestCustomScripts{
 
 	function __construct(){
 		add_action( 'wp_head', [ $this, 'head' ], 20 );

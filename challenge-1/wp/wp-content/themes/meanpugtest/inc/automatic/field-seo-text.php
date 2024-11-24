@@ -5,7 +5,7 @@
  * If you copied your fields correctly, you should have the correct setup which is a support field containing a text and seo type fields.
  * Each module should have a clone of that field in a group with an appropriate name - default is title
  */
-class NarwhalBoilerplate62122SEOTextField{
+class MeanpugTestSEOTextField{
 
 	/**
 	 * display seo text field with corresponding selected tag

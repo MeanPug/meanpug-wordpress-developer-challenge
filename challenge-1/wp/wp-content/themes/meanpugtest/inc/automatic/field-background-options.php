@@ -3,7 +3,7 @@
 /**
  * Support: Background Options Helpers
  */
-class NarwhalBoilerplate62122BackgroundOptionsField{
+class MeanpugTestBackgroundOptionsField{
 
 	/**
 	 * Determine classes to pass to module for background

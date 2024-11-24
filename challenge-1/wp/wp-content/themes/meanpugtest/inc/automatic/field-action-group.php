@@ -5,7 +5,7 @@
  * If you copied your fields correctly, you should have the correct setup which is a support field containing an alignment selection and button repeater
  * Each module should have a clone of that field in a group with an appropriate name - default is cta
  */
-class NarwhalBoilerplate62122ActionGroupField{
+class MeanpugTestActionGroupField{
 	/**
 	 * determine if buttons are present in given context of ACF
 	 * @param string $field_name Field group name

@@ -4,15 +4,15 @@
  * Class to help convert embedded video urls into more granular pieces for custom functionality
  */
 
-if( !function_exists( 'NarwhalBoilerplate62122VideoHelper' ) ){
-	function NarwhalBoilerplate62122VideoHelper(){
-		return NarwhalBoilerplate62122VideoHelper::getInstance();
+if( !function_exists( 'MeanpugTestVideoHelper' ) ){
+	function MeanpugTestVideoHelper(){
+		return MeanpugTestVideoHelper::getInstance();
 	}
 }
 
-NarwhalBoilerplate62122VideoHelper();
+MeanpugTestVideoHelper();
 
-class NarwhalBoilerplate62122VideoHelper{
+class MeanpugTestVideoHelper{
 	private static $instance = null;
 
 	private $filter_values = array();
@@ -20,7 +20,7 @@ class NarwhalBoilerplate62122VideoHelper{
 	public static function getInstance(){
 
 		if ( self::$instance == null ){
-			self::$instance = new NarwhalBoilerplate62122VideoHelper();
+			self::$instance = new MeanpugTestVideoHelper();
 		}
 
 		return self::$instance;

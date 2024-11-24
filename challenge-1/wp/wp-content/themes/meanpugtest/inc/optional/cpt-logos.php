@@ -3,9 +3,9 @@
  * This post type is used to run the logo grid and logo slider modules
  * Default assumes that all fields are added through ACF
  */
-new NarwhalBoilerplate62122CPT_Logos();
+new MeanpugTestCPT_Logos();
 
-class NarwhalBoilerplate62122CPT_Logos extends NarwhalBoilerplate62122CPT_Prototype{
+class MeanpugTestCPT_Logos extends MeanpugTestCPT_Prototype{
 	protected $key = 'logo';
 	protected $label = 'Logo';
 	protected $registration = [

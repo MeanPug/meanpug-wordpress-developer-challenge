@@ -1,8 +1,8 @@
 <?php
 
-new NarwhalBoilerplate62122CPT_CaseStudies();
+new MeanpugTestCPT_CaseStudies();
 
-class NarwhalBoilerplate62122CPT_CaseStudies extends NarwhalBoilerplate62122CPT_Prototype{
+class MeanpugTestCPT_CaseStudies extends MeanpugTestCPT_Prototype{
 	protected $key = 'case_study';
 	protected $label = 'Case Study';
 	protected $plural_label = 'Case Studies';
@@ -16,7 +16,7 @@ class NarwhalBoilerplate62122CPT_CaseStudies extends NarwhalBoilerplate62122CPT_
 	];
 
 	function __construct(){
-		add_filter( "narwhal-boilerplate-62122/{$this->key}/excerpt", [ $this, 'custom_excerpt' ] );
+		add_filter( "meanpug-test/{$this->key}/excerpt", [ $this, 'custom_excerpt' ] );
 		parent::__construct();
 	}
 
@@ -39,10 +39,10 @@ class NarwhalBoilerplate62122CPT_CaseStudies extends NarwhalBoilerplate62122CPT_
 				if( isset( $field['_clone'] ) ):
 					switch( $field['_clone'] ){
 						case 'field_6033d1a2929fa':
-							return __( 'Key Outcomes', 'narwhal-boilerplate-62122' );
+							return __( 'Key Outcomes', 'meanpug-test' );
 						break;
 						case 'field_6033d140929f8':
-							return __( 'Related Case Studies', 'narwhal-boilerplate-62122' );
+							return __( 'Related Case Studies', 'meanpug-test' );
 						break;
 					}
 				endif;

@@ -4,17 +4,17 @@
  * Note there is a separate build procedure in case you want use the alert within another module as the ACF fields may conflict
  *
  * Use this action to build the alert while in the page scope
- * do_action( 'narwhal-boilerplate-62122/alert/build' );
+ * do_action( 'meanpug-test/alert/build' );
  * Use this action to display the alert either in place or the build html within another module's scope
- * do_action( 'narwhal-boilerplate-62122/alert/display' );
+ * do_action( 'meanpug-test/alert/display' );
  */
-new NarwhalBoilerplate62122Alert();
-class NarwhalBoilerplate62122Alert{
+new MeanpugTestAlert();
+class MeanpugTestAlert{
 	protected $built = false;
 
 	function __construct(){
-		add_action( 'narwhal-boilerplate-62122/alert/display', [ $this, 'display' ] );
-		add_action( 'narwhal-boilerplate-62122/alert/build', [ $this, 'build' ] );
+		add_action( 'meanpug-test/alert/display', [ $this, 'display' ] );
+		add_action( 'meanpug-test/alert/build', [ $this, 'build' ] );
 	}
 
 	/**

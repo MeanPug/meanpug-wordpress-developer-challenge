@@ -4,9 +4,9 @@
  * Customize individual parts of the tinymce wysiwyg across the board
  */
 
-NarwhalBoilerplate62122TinyMCE();
+MeanpugTestTinyMCE();
 
-class NarwhalBoilerplate62122TinyMCE{
+class MeanpugTestTinyMCE{
 
 	function __construct(){
 		//add_filter( 'tiny_mce_before_init', [ $this, 'change_font_colors' ], 20 );

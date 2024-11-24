@@ -7,9 +7,9 @@
  * Limit number of revisions kept in database
  * Edit menu items
  */
-new NarwhalBoilerplate62122AdminFilters();
+new MeanpugTestAdminFilters();
 
-class NarwhalBoilerplate62122AdminFilters{
+class MeanpugTestAdminFilters{
 
 	function __construct(){
 		add_filter( 'wpseo_metabox_prio', [ $this, 'move_yoast_to_bottom' ] );
@@ -92,7 +92,7 @@ class NarwhalBoilerplate62122AdminFilters{
 			case 'page':
 				add_meta_box(
 					'nw_postexcerpt',
-					__( 'Excerpt', 'narwhal-digital' ),
+					__( 'Excerpt', 'meanpug-test' ),
 					'post_excerpt_meta_box',
 					$post_type,
 					'acf_after_title',

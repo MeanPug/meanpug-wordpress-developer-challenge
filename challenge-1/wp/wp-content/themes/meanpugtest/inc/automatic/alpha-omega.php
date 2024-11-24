@@ -1,11 +1,11 @@
 <?php
 
-new NarwhalBoilerplate62122AlphaOmega();
+new MeanpugTestAlphaOmega();
 
 /**
  * Setup activation and deactivation functions
  */
-class NarwhalBoilerplate62122AlphaOmega{
+class MeanpugTestAlphaOmega{
 
 	function __construct(){
 		add_action( 'after_switch_theme', [ $this, '_activation' ] );
@@ -13,11 +13,11 @@ class NarwhalBoilerplate62122AlphaOmega{
 	}
 
 	function _activation(){
-		do_action( 'narwhal-boilerplate-62122/activate' );
+		do_action( 'meanpug-test/activate' );
 	}
 
 	function _deactivation(){
-		do_action( 'narwhal-boilerplate-62122/deactivate' );
+		do_action( 'meanpug-test/deactivate' );
 	}
 
 }

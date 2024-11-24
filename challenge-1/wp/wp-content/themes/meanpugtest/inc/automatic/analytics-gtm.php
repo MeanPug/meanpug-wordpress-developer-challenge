@@ -4,9 +4,9 @@
  * Google tag manager code
  * Hooks into wp head and wp body actions for display.  wp_head should always work, but wp_open_body in header.php is also important
  */
-new NarwhalBoilerplate62122GoogleTagManager();
+new MeanpugTestGoogleTagManager();
 
-class NarwhalBoilerplate62122GoogleTagManager{
+class MeanpugTestGoogleTagManager{
 
 	protected $id = 'GTM-XXXXXXX';
 

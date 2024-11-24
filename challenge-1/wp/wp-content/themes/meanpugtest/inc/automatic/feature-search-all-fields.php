@@ -6,9 +6,9 @@
 *
 * https://adambalee.com
 */
-new NarwhalBoilerplate62122SearchAllFields();
+new MeanpugTestSearchAllFields();
 
-class NarwhalBoilerplate62122SearchAllFields{
+class MeanpugTestSearchAllFields{
 
 	function __construct(){
 		if( !is_admin() || wp_doing_ajax() ){

@@ -1,7 +1,7 @@
 <?php
-new NarwhalBoilerplate62122LogoTagTaxonomy();
+new MeanpugTestLogoTagTaxonomy();
 
-class NarwhalBoilerplate62122LogoTagTaxonomy{
+class MeanpugTestLogoTagTaxonomy{
 	function __construct(){
 		add_action( 'init', [ $this, 'register' ] );
 	}
@@ -12,7 +12,7 @@ class NarwhalBoilerplate62122LogoTagTaxonomy{
 				'name' => 'Tags',
 				'singular_name' => 'Tag',
 			],
-			'description' => __( '', 'narwhal-boilerplate-62122' ),
+			'description' => __( '', 'meanpug-test' ),
 			'public' => true,
 			'publicly_queryable' => false,
 			'hierarchical' => false,

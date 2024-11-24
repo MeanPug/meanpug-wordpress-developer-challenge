@@ -1,6 +1,6 @@
 <?php
 
-class NarwhalBoilerplate62122MediaGroupField{
+class MeanpugTestMediaGroupField{
 	/**
 	 * display media group
 	 * @param string $field_name Field group name

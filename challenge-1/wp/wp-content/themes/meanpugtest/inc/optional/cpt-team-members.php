@@ -3,9 +3,9 @@
  * This post type is used to run the team member tabber modules
  * Default assumes that all fields are added through ACF
  */
-new NarwhalBoilerplate62122CPT_TeamMembers();
+new MeanpugTestCPT_TeamMembers();
 
-class NarwhalBoilerplate62122CPT_TeamMembers extends NarwhalBoilerplate62122CPT_Prototype{
+class MeanpugTestCPT_TeamMembers extends MeanpugTestCPT_Prototype{
 	protected $key = 'team_member';
 	protected $label = 'Team Member';
 	protected $registration = [

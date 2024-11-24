@@ -1,13 +1,13 @@
 <?php
 /**
  * Encapsulates logic to display the footer cta, more can be added for special cases 
- * do_action( 'narwhal-boilerplate-62122/footer-cta/display' );
+ * do_action( 'meanpug-test/footer-cta/display' );
  */
-new NarwhalBoilerplate62122FooterCta();
-class NarwhalBoilerplate62122FooterCta{
+new MeanpugTestFooterCta();
+class MeanpugTestFooterCta{
 
 	function __construct(){
-		add_action( 'narwhal-boilerplate-62122/footer-cta/display', [ $this, 'display'] );
+		add_action( 'meanpug-test/footer-cta/display', [ $this, 'display'] );
 	}
 
 	/**
