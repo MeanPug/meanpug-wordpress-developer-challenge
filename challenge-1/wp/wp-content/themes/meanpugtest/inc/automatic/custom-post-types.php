@@ -12,6 +12,7 @@ include get_template_directory() . '/inc/optional/cpt-prototype.php';
 include get_template_directory() . '/inc/optional/cpt-case-studies.php';
 include get_template_directory() . '/inc/optional/cpt-faqs.php';
 include get_template_directory() . '/inc/optional/cpt-practices.php';
+include get_template_directory() . '/inc/optional/cpt-cases.php';
 //include get_template_directory() . '/inc/optional/cpt-whitepapers.php';
 //include get_template_directory() . '/inc/optional/cpt-fact-sheets.php';
 //include get_template_directory() . '/inc/optional/cpt-webinars.php';
