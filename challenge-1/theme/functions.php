@@ -150,9 +150,9 @@ function inf_scripts() {
   wp_dequeue_style('classic-theme-styles');
 	// if we're not in an admin session, dequeue the blocks library
   if ( ! is_admin() ) {
-      wp_dequeue_style( 'wp-block-library' );
-      wp_dequeue_style( 'wp-block-library-theme' );
-      wp_dequeue_style( 'wc-blocks-style' );
+      wp_enqueue_style( 'wp-block-library' );
+      wp_enqueue_style( 'wp-block-library-theme' );
+      wp_enqueue_style( 'wc-blocks-style' );
   }
 
   $theme_options = array();
@@ -160,8 +160,19 @@ function inf_scripts() {
   $theme_options['staticfiles_base'] = get_template_directory_uri();
 
 	wp_localize_script( 'inf-main-scripts', 'theme', $theme_options );
+
+	// Manrope font
+    wp_enqueue_style( 'manrope-font', 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap', array(), null );
 }
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
+
+// Preload the font CSS file
+function preload_manrope_font( $urls ) {
+    // Add preload for the Manrope font
+    $urls[] = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap';
+    return $urls;
+}
+add_filter( 'wp_resource_hints', 'preload_manrope_font', 10, 2 );
 
 function inf_add_footer_styles() {
 	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );

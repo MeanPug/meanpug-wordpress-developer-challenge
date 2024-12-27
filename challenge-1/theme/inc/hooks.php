@@ -117,3 +117,36 @@ add_action('mpdreviews/new-reviews', function($new_reviews) {
     update_field('reviewer_name', $review['reviewer']['name'], $post_id);
   }
 });
+
+/* Custom block pattern category */
+function wpdocs_block_pattern_category() {
+	register_block_pattern_category( 'meanpug', array(
+		'label' => __( 'MeanPug', 'infra' )
+	) );
+}
+add_action( 'init', 'wpdocs_block_pattern_category', 9 );
+
+/* Load the block patterns */
+add_action( 'init', function() {
+    $pattern_files = glob( get_template_directory() . '/patterns/*.php' );
+
+    foreach ( $pattern_files as $file ) {
+        $pattern = require $file;
+
+        if ( isset( $pattern['title'], $pattern['content'] ) ) {
+            $pattern_name = get_template_directory() . '/' . basename( $file, '.php' );
+            
+            // Check if the 'categories' key is set, otherwise default to 'meanpug'
+            $categories = isset( $pattern['categories'] ) ? $pattern['categories'] : [ 'meanpug' ];
+
+            register_block_pattern(
+                $pattern_name,
+                [
+                    'title'      => $pattern['title'],
+                    'content'    => $pattern['content'],
+                    'categories' => $categories,
+                ]
+            );
+        }
+    }
+} );

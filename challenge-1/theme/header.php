@@ -22,30 +22,29 @@
 <body <?php body_class(); ?>>
 
 <nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
+    <div class="nofication-banner text-center bg-zinc-100 py-4 text-sm">
+        <p>
+            <?php 
+            echo esc_html('Get the latest on our COVID-19 response and cancellation policies. ');
+            echo '<a class="font-semibold underline" href=" ' . esc_url('/learn-more') . '" target="_blank">' . esc_html('Learn More') . '</a>';
+            ?>
+        </p>
+    </div>
+    <div class="container flex items-center justify-between pt-8 pb-6 mx-auto">
+        <div class="w-24">
             <?php echo get_custom_logo() ?>
         </div>
 
         <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
-            </div>
+        <div class="pl-12 items-center justify-end hidden lg:flex font-semibold text-sm gap-2">
+            <?php wp_nav_menu(array(
+                'theme_location' => 'nav',
+                'menu_class' => 'inf-menu inf-menu--nav',
+                'container' => 'ul',
+            )); ?>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
+            <div class="items-center lg:flex font-semibold text-sm gap-2 py-2 px-3 shadow-md rounded-full">
+                <?php display_user_meta() ?>
             </div>
         </div>
 

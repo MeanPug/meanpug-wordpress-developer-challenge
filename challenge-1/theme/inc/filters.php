@@ -76,3 +76,10 @@ function mp_filter_mimetypes( $mimes ){
     return $mimes;
 }
 add_filter( 'upload_mimes', 'mp_filter_mimetypes', 10, 1 );
+
+# Use the MeanPug image as the Gravatar default
+function meanpug_avatar_url($url, $id_or_email, $args) {
+    $fallback_avatar_url = get_template_directory_uri() . '/assets/img/MeanPug-Best-In-Show-Icon.png';
+    return $fallback_avatar_url;
+}
+add_filter('get_avatar_url', 'meanpug_avatar_url', 10, 3);

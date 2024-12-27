@@ -9,3 +9,152 @@ Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 7.0
 */
+
+p,
+a {
+    font-family: 'Manrope', 'sans-serif';
+    letter-spacing: .25px;
+}
+
+/* Header */
+.inf-menu a {
+    color: black;
+}
+
+/* Patterns & Blocks
+/* The should_load_separate_block_assets function and dequeing of Gutenberg styles when not in admin 
+/* has removed some core Gutenberg styles.
+/* Some are re-added here, so as to not impact the integrity of the base theme, along with custom styles */
+.container article > div {
+    margin: 2rem 0;
+}
+
+.has-white-color {
+    color: white;
+}
+
+.has-large-font-size {
+    font-size: 28px;
+}
+
+.wp-block-navigation-is-layout-flex ul,
+div.is-layout-flex {
+    display: flex;
+    gap: 1rem;
+}
+
+.wp-block-navigation .current-menu-item a::after {
+    content: '';
+    display: block;
+    height: 1.5px;
+    width: 100%;
+    margin-top: .25rem;
+    background: black;
+}
+
+.wp-block-navigation .new-tag a::after {
+    content: 'New';
+    font-size: .75rem;
+    text-transform: uppercase;
+    background: black;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.wp-block-columns.is-layout-flex .wp-block-column {
+    flex: 1 1 calc(33.33% - 1rem);
+}
+
+.wp-block-image.size-full img {
+    width: 100%;
+}
+
+.wp-block-group.airpnp-hero-callout-grid {
+    border-radius: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, calc(33.33% - 2rem));
+}
+
+.wp-block-group.airpnp-hero-callout-grid .wp-block-group__inner-container > * {
+    margin-bottom: .875rem;
+} 
+
+.wp-block-group.airpnp-hero-callout-grid .wp-block-group__inner-container > *:last-child {
+    margin-bottom: 0;
+}
+
+.wp-block-group.airpnp-hero-callout-grid .wp-block-group__inner-container .wp-block-button__link::after {
+    content: '\003E';
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    color: white;
+}
+
+
+.airpnp-image-columns img {
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wp-block-group.airpnp-search-row {
+    box-shadow: 0 3px 12px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.08);
+    border-radius: 8px;
+}
+
+.wp-block-group.airpnp-search-row > * {
+    flex: 1 1 calc(33.33% - 1rem);
+    position: relative;
+    padding-right: .5rem;
+    border-right: 1px solid #e1e1e1;
+}
+
+.wp-block-group.airpnp-search-row > *:first-of-type {
+    padding-left: .5rem;
+}
+
+.wp-block-group.airpnp-search-row .wp-block-search__label {
+    font-size: .65rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 600;
+}
+
+.wp-block-group.airpnp-search-row .wp-block-search__input {
+    border: none;
+    width: 100%;
+    padding: 0;
+    color: #222;
+    font-size: .85rem;
+}
+
+.wp-block-group.airpnp-search-row .wp-block-search__input::placeholder {
+    font-weight: 300;
+    font-size: .85rem;
+}
+
+.wp-block-group.airpnp-search-row .wp-block-search__button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #de1461;
+    border: none;
+    border-radius: 8px;
+    font-size: .85rem;
+    color: white;
+    padding: 0 1.25rem;
+}
+
+.wp-block-group.airpnp-search-row .wp-block-search__button::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.25rem;
+    background-image: url('../theme/assets/icons/search.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
