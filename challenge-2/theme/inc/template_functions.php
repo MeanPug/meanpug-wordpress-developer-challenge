@@ -33,7 +33,6 @@ function create_terms_for_taxonomies( $post_id ) {
 
       // Get the assigned terms for the 'staff_type' taxonomy
       $staff_type_terms = wp_get_post_terms( $post->ID, 'staff_type' );
-      error_log('$staff_type_terms' . print_r($staff_type_terms, true));
 
       // Check if the post is assigned to the 'Attorney' staff type; assuming only attorneys will be needed in taxonomy.
       $is_attorney = false;
