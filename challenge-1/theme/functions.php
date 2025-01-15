@@ -126,6 +126,74 @@ function inf_widgets_init() {
 }
 add_action( 'widgets_init', 'inf_widgets_init' );
 
+
+
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
+        'key' => 'group_theme_settings',
+        'title' => 'Theme Settings',
+        'fields' => array(
+            array(
+                'key' => 'field_contact_phone',
+                'label' => 'Contact Phone',
+                'name' => 'contact_phone',
+                'type' => 'link', // or 'text' based on the required field type
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'theme-general-settings', // Match your options page slug
+                ),
+            ),
+        ),
+    ));
+}
+
+
+function create_listing_post_type() {
+    $labels = array(
+        'name'               => __('Listings'),
+        'singular_name'      => __('Listing'),
+        'menu_name'          => __('Listings'),
+        'add_new_item'       => __('Add New Listing'),
+        'edit_item'          => __('Edit Listing'),
+        'new_item'           => __('New Listing'),
+        'view_item'          => __('View Listing'),
+        'search_items'       => __('Search Listings'),
+        'not_found'          => __('No Listings Found'),
+        'not_found_in_trash' => __('No Listings Found in Trash'),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'has_archive'        => true,
+        'menu_icon'          => 'dashicons-building', // Choose a suitable icon
+        'supports'           => array('title', 'editor', 'thumbnail'),
+        'rewrite'            => array('slug' => 'listings'),
+        'taxonomies'         => array('category'), // Add categories support
+    );
+
+    register_post_type('listing', $args);
+}
+add_action('init', 'create_listing_post_type');
+
+function filter_listings_query($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('listing')) {
+        // Filter by search query (destination)
+        if (!empty($_GET['s'])) {
+            $query->set('s', sanitize_text_field($_GET['s']));
+        }
+    }
+}
+add_action('pre_get_posts', 'filter_listings_query');
+
+
+
+
 /**
  * Enqueue scripts and styles.
  */
@@ -139,11 +207,12 @@ function inf_scripts() {
   wp_enqueue_script( 'mp-core-script', 'https://static.meanpugdigital.com/2.4.4/main.js', array('jquery'), null, true);
   wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
 
-  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
+  	wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/main.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
 	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
 
+	
 	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
-  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
+  	wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
 
   wp_dequeue_style('megamenu-genericons');
   wp_dequeue_style('megamenu-fontawesome6');

@@ -22,9 +22,9 @@
   },
   "homepage": "git@github.com:MeanPug/meanpug-wordpress-developer-challenge.git#readme",
   "devDependencies": {
-    "@babel/core": "^7",
+    "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7",
-    "autoprefixer": "^10",
+    "autoprefixer": "^10.4.20",
     "babel-loader": "^8",
     "css-loader": "^3",
     "css-minimizer-webpack-plugin": "^2",
@@ -51,11 +51,11 @@
     "postcss-nested": "^4.2.3",
     "postcss-simple-vars": "^7.0.1",
     "style-loader": "^1.2.1",
+    "tailwindcss": "^3",
     "terser-webpack-plugin": "^5",
     "url-loader": "^4",
     "webpack": "^5",
-    "webpack-cli": "^4",
-    "tailwindcss": "^3"
+    "webpack-cli": "^4"
   },
   "dependencies": {
     "babel-polyfill": "^6",

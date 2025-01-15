@@ -15,3 +15,197 @@
 @import "./css/components/optional/dynamic-image.css";
 @import "./css/components/optional/tabs.css";
  */
+
+
+ body p {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+ }
+
+ .button-red-styling {
+    background: #D32F2F;
+    padding: 10px 25px;
+    font-family: "Outfit", serif;
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 5px solid #D32F2F;
+    color: #FFF;
+ }
+
+ .button-yellow-styling {
+    background: transparent;
+    padding: 10px 25px;
+    font-family: "Outfit", serif;
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 5px solid #FFC501;
+    color: #FFF;
+ }
+
+ nav.sticky.bg-green.inf-site-header.z-20 {
+    background: #0036AB;
+    border-bottom: 1px solid #FFC501;
+}  
+
+nav ul#menu-main-menu a {
+    font-size: 22px;
+    font-family: "Playfair Display", serif;
+}
+
+nav .call-now-btn-hero {
+    background-color: #D32F2F;
+}
+
+nav .call-now-btn-hero strong{
+    color: #FFF;
+    font-size: 24px;
+}
+
+section.hero-section {
+    background-image: url(/wp-content/uploads/2025/01/hero-background.jpg);
+    background-size: cover;
+}
+
+.hero-section .hero-icons p.text-xl.font-bold {
+    font-size: 50px;
+    margin: 20px 0;
+}
+
+.hero-section .hero-icons p.text-sm {
+    font-size: 25px;
+    font-family: "Playfair Display", serif;
+}
+
+.hero-section .hero-icons .flex {
+    padding-left: 0;
+}
+
+.hero-form {
+    background-color: rgb(0 40 85 / 60%);
+}
+
+.hero-left {
+    padding-left: 6vw;
+}
+
+.hero-form h3 {
+    font-size: 20px;
+    font-family: "Playfair Display", serif;
+    padding-bottom: 20px;
+}
+
+.hero-form h3:before {
+    content: "";
+    display: block;
+    background: #FFF;
+    height: 1px;
+    width: 200px;
+    margin: 0 auto 20px;
+}
+
+.hero-form form.wpcf7-form.init input, .hero-form form.wpcf7-form.init textarea {
+    width: 100%;
+    background: rgb(0 40 85 / 60%);
+    border: 1px solid #FFF;
+    padding: 7px;
+    color: #FFF;
+}
+.hero-form form.wpcf7-form.init textarea {
+    margin-top: 20px;
+    max-height: 200px;
+}
+.hero-form form.wpcf7-form.init {
+    padding: 20px 0;
+}
+
+.amount-number-data {
+    padding-left: 40px;
+}
+.social-proof-bellow-hero .case-type {
+    font-size: 30px;
+    font-family: "Outfit", serif;
+}
+.social-proof-bellow-hero .amount-number {
+    font-size: 50px;
+    font-family: "Outfit", serif;
+}
+
+.social-proof-bellow-hero{
+    background-image: url(/wp-content/uploads/2025/01/curvy-divider.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    position: relative;
+}
+.button-amount-bellow-hero {
+    float: right;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+.button-amount-bellow-hero a{
+    text-transform: uppercase;
+    font-size: 25px;
+}
+
+.about-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+.about-section h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    color: #FFC501;
+}
+
+.about-section h3 {
+    font-family: "Outfit", serif;
+    font-size: 56px;
+    color: #002855;
+}
+
+.about-section .lg\:col-span-1 {
+    padding-right: 10vw;
+}
+
+.hero-text {
+    width: 70%;
+}
+
+.playfair-font {
+    font-family: "Playfair Display", serif;
+}
+.outfit-font {
+    font-family: "Outfit", serif;
+}
+
+.yellow-text-brand {
+    color: #FFC501;
+}
+.hero-section h1 {
+    font-size: 64px;
+    font-weight: normal;
+}
+.hero-section h2 {
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.hero-section p.text-2xl.font-semibold.yellow-text-brand.playfair-font {
+    font-size:48px;
+    margin-bottom: 80px;
+}
+.hero-section p.text-2xl.font-semibold.yellow-text-brand.playfair-font:after {
+    content: "";
+    width: 210px;
+    height: 2px;
+    background: #FFF;
+    display: block;
+    bottom: -45px;
+    position: relative;
+}
+
+.about-section {
+    padding-left: 6vw;
+}

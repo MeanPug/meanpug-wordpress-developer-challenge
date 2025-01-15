@@ -17,12 +17,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <?php wp_head(); ?>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
 </head>
 
 <body <?php body_class(); ?>>
 
 <nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
+    <div class="container-fluid flex items-stretch justify-between">
         <div class="w-48 lg:w-96">
             <?php echo get_custom_logo() ?>
         </div>
@@ -36,17 +43,20 @@
                 )); ?>
             </div>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
+            <div class="pl-8 pr-8 text-center font-sans text-white-shade call-now-btn-hero flex items-center justify-center h-full">
+                <div>
+                    <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
+                    <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
+                        <?php $contact_phone = get_field('contact_phone', 'option'); ?>
+                        <span class="inf-link--square__container">
+                            <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
+                                <?php echo $contact_phone['title'] ?>
+                            </a>
+                        </span>
+                    </strong>
+                </div>
             </div>
+
         </div>
 
         <!-- Mobile Nav -->
