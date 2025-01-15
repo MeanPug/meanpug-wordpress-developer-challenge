@@ -14,28 +14,29 @@
       </div>
       <p class="text-sm text-white">*Available 24/7 & Obligation-Free</p>
 
-      <div class="flex gap-8 text-left mt-8 hero-icons">
-        <div class="flex flex-col text-left border-r border-dashed border-gray-300 last:border-0 px-6">
-            <img src="/wp-content/uploads/2025/01/icon1.png" alt="Icon 1" class="h-12 w-12 mb-2">
-            <p class="outfit-font text-xl font-bold">+100</p>
-            <p class="text-sm">years in service</p>
-        </div>
-        <div class="flex flex-col text-left border-r border-dashed border-gray-300 last:border-0 px-6">
-            <img src="/wp-content/uploads/2025/01/icon2.png" alt="Icon 2" class="h-12 w-12 mb-2">
-            <p class="outfit-font text-xl font-bold">$90m</p>
-            <p class="text-sm">recovered in cases</p>
-        </div>
-        <div class="flex flex-col text-left border-r border-dashed border-gray-300 last:border-0 px-6">
-            <img src="/wp-content/uploads/2025/01/icon3.png" alt="Icon 3" class="h-12 w-12 mb-2">
-            <p class="outfit-font text-xl font-bold">+80</p>
-            <p class="text-sm">verdicts</p>
-        </div>
-        <div class="flex flex-col text-left">
-            <img src="/wp-content/uploads/2025/01/icon4.png" alt="Icon 4" class="h-12 w-12 mb-2">
-            <p class="outfit-font text-xl font-bold">0%</p>
-            <p class="text-sm">fees until we win</p>
-        </div>
-        </div>
+      <div class="grid grid-cols-2 lg:flex lg:gap-8 text-left mt-8 hero-icons">
+  <div class="flex flex-col text-left border-r lg:border-dashed border-gray-300 last:border-0 px-6">
+      <img src="/wp-content/uploads/2025/01/icon1.png" alt="Icon 1" class="h-12 w-12 mb-2">
+      <p class="outfit-font text-xl font-bold">+100</p>
+      <p class="text-sm">years in service</p>
+  </div>
+  <div class="flex flex-col text-left border-r lg:border-dashed border-gray-300 last:border-0 px-6">
+      <img src="/wp-content/uploads/2025/01/icon2.png" alt="Icon 2" class="h-12 w-12 mb-2">
+      <p class="outfit-font text-xl font-bold">$90m</p>
+      <p class="text-sm">recovered in cases</p>
+  </div>
+  <div class="flex flex-col text-left border-r lg:border-dashed border-gray-300 last:border-0 px-6">
+      <img src="/wp-content/uploads/2025/01/icon3.png" alt="Icon 3" class="h-12 w-12 mb-2">
+      <p class="outfit-font text-xl font-bold">+80</p>
+      <p class="text-sm">verdicts</p>
+  </div>
+  <div class="flex flex-col text-left">
+      <img src="/wp-content/uploads/2025/01/icon4.png" alt="Icon 4" class="h-12 w-12 mb-2">
+      <p class="outfit-font text-xl font-bold">0%</p>
+      <p class="text-sm">fees until we win</p>
+  </div>
+</div>
+
     </div>
 
     <div class="hero-form bg-opacity-60 p-8 shadow-lg">
@@ -55,11 +56,11 @@
         </div>
 
         <div class="flex-grow amount-number-data">
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
                 <?php
                 $args = array(
                     'post_type' => 'case_results',
-                    'posts_per_page' => 4, 
+                    'posts_per_page' => wp_is_mobile() ? 1 : 4, // Display 1 item on mobile, 4 on larger screens
                 );
                 $case_results = new WP_Query($args);
 
@@ -68,24 +69,24 @@
                         $case_type = get_field('case_type');
                         $amount_won = get_field('amount_won');
                 ?>
-                    <div class="text-left">
-                        <p class="case-type uppercase"><?php echo esc_html($case_type); ?></p>
-                        <p class="amount-number font-bold"><?php echo esc_html($amount_won); ?></p>
-                    </div>
+                        <div class="text-left">
+                            <p class="case-type uppercase"><?php echo esc_html($case_type); ?></p>
+                            <p class="amount-number font-bold"><?php echo esc_html($amount_won); ?></p>
+                        </div>
                 <?php
                     endwhile;
                     wp_reset_postdata();
                 endif;
                 ?>
             </div>
-            <div class="button-amount-bellow-hero">
-            <a href="/case-results" class="text-blue-900 font-bold ">
-                SEE ALL CASE RESULTS →
-            </a>
+            <div class="button-amount-bellow-hero mt-4">
+                <a href="/case-results" class="text-blue-900 font-bold">
+                    SEE ALL CASE RESULTS →
+                </a>
+            </div>
         </div>
         </div>
 
-        
     </div>
 </div>
 
@@ -106,7 +107,7 @@
       </div>
       <p class="text-sm text-gray-500 mt-4">*Available 24/7 & Obligation-Free Consultation</p>
     </div>
-    <div class="hidden lg:block">
+    <div>
       <img src="/wp-content/uploads/2025/01/Images-About-Section.jpg" alt="Team Photo" class="w-full h-auto object-cover">
     </div>
   </div>

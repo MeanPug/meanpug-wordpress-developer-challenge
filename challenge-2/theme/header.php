@@ -57,23 +57,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
-
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
-        </div>
+        </div>        
     </div>
 </nav>
 

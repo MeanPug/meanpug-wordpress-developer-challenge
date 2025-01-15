@@ -209,3 +209,52 @@ section.hero-section {
 .about-section {
     padding-left: 6vw;
 }
+
+@media (max-width:780px) {
+    .hero-section h2 {
+        font-size: 16px;
+    }
+    .hero-section h1 {
+        font-size: 26px;
+    }
+    .hero-section p.text-2xl.font-semibold.yellow-text-brand.playfair-font {
+        font-size: 22px;
+    }
+    .hero-text {
+        width: 100%;
+    }
+    .hero-left {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .hero-form {
+        width: 100%;
+        padding: 20px;
+    }
+    .social-proof-bellow-hero img.h-42 {
+        height: 155px;
+    }
+    .social-proof-bellow-hero .case-type {
+        font-size: 20px;
+    }
+    .social-proof-bellow-hero .amount-number {
+        font-size: 28px;
+    }
+    .amount-number-data {
+        margin-top: -60px;
+    }    
+    .button-amount-bellow-hero a {
+        font-size: 20px;
+        padding-right: 30px;
+    }
+    .hero-section .hero-icons p.text-xl.font-bold {
+        font-size: 34px;
+    }
+    .hero-section .hero-icons p.text-sm {
+        font-size: 16px;
+    }
+    .hero-section .hero-icons .flex.flex-col.text-left.border-r.lg\:border-dashed.border-gray-300.last\:border-0.px-6 {
+        border-right: 0;
+        padding-bottom: 30px;
+    }
+}
