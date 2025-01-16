@@ -27,7 +27,6 @@
             <?php echo get_custom_logo() ?>
         </div>
 
-        <!-- Desktop Nav -->
         <div class="pl-12 items-center justify-end hidden lg:flex">
             <div class="flex space-x-4 nav-links-styling">
                 <?php wp_nav_menu(array(
@@ -45,41 +44,35 @@
     <div class="container-fluid">
         <?php
         $categories = get_terms(array(
-            'taxonomy'   => 'category', // Taxonomy name
-            'hide_empty' => false,      // Include empty categories
-            'object_type' => array('listing'), // Ensure it's tied to the 'listing' CPT
-            'exclude'    => 1, // Exclude the 'Uncategorized' category (ID: 1 by default)
+            'taxonomy'   => 'category',
+            'hide_empty' => false,
+            'object_type' => array('listing'),
+            'exclude'    => 1,
         ));
         ?>
         <div class="filter-navigation-form relative">
-    <!-- Full Form for Larger Screens -->
     <form action="<?php echo esc_url(home_url('/')); ?>" method="get" class="filter-form hidden md:flex">
         <div class="filter-bar flex items-center rounded-full shadow-lg p-4 bg-white">
-            <!-- Where Field -->
             <div class="filter-item flex-grow">
                 <label for="destination" class="block text-sm font-medium text-gray-700">Where</label>
                 <input type="text" id="destination" name="s" placeholder="Search destinations" class="border-none focus:ring-0 w-full bg-transparent">
             </div>
 
-            <!-- Check-in Field -->
             <div class="filter-item flex-grow border-l pl-4">
                 <label for="checkin" class="block text-sm font-medium text-gray-700">Check-in</label>
                 <input type="date" id="checkin" name="checkin" class="border-none focus:ring-0 w-full bg-transparent">
             </div>
 
-            <!-- Check-out Field -->
             <div class="filter-item flex-grow border-l pl-4">
                 <label for="checkout" class="block text-sm font-medium text-gray-700">Check-out</label>
                 <input type="date" id="checkout" name="checkout" class="border-none focus:ring-0 w-full bg-transparent">
             </div>
 
-            <!-- Who Field -->
             <div class="filter-item flex-grow border-l pl-4">
                 <label for="guests" class="block text-sm font-medium text-gray-700">Who</label>
                 <input type="number" id="guests" name="guests" min="1" placeholder="Add guests" class="border-none focus:ring-0 w-full bg-transparent">
             </div>
 
-            <!-- Search Button -->
             <button type="submit" class="ml-4 p-3 rounded-full text-white  hover:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.39 4.39l4.24 4.24a1 1 0 01-1.42 1.42l-4.24-4.24A6 6 0 012 8z" clip-rule="evenodd" />
@@ -88,7 +81,6 @@
         </div>
     </form>
 
-    <!-- Search Button for Smaller Screens -->
     <button id="search-toggle"class="block md:hidden  hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.39 4.39l4.24 4.24a1 1 0 01-1.42 1.42l-4.24-4.24A6 6 0 012 8z" clip-rule="evenodd" />
@@ -117,14 +109,12 @@
         </div>
     <?php endforeach; ?>
 
-    <!-- Add a "View All" button to scroll or expand -->
     <button class="view-all-btn flex items-center space-x-2 px-4 py-2 bg-gray-100 shadow hover:bg-gray-200">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4l8 8-8 8" />
         </svg>
     </button>
 
-    <!-- Filter Button -->
     <button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 shadow hover:bg-gray-200">
         <span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display:block;fill:none;height:16px;width:16px;stroke:currentColor;stroke-width:3;overflow:visible" aria-hidden="true" role="presentation" focusable="false">
