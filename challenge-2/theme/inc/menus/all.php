@@ -1,11 +1,8 @@
 <?php
-
-function inf_register_menus() {
-		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus( array(
-			'nav' => esc_html__( 'Nav', 'inf' ),
-      'mobile-nav' => esc_html__( 'Mobile Nav', 'inf' ),
-			'footer' => esc_html__( 'Footer', 'inf' )
-		) );
-}
-add_action( 'after_setup_theme', 'inf_register_menus' );
+/**
+ * Nav-menu locations are declared in pnp_setup() in functions.php;
+ * this file is reserved for menu-related filters (e.g. adding data-
+ * attributes for mega-menu triggers) as the site grows.
+ *
+ * @package pnp
+ */

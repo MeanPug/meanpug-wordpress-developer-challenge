@@ -1,11 +1,11 @@
 /*
-Theme Name: infra
-Theme URI: git@github.com:MeanPug/meanpug-wordpress-developer-challenge.git
+Theme Name: Pug & Puggle, ESQ.
+Theme URI: https://github.com/MeanPug/meanpug-wordpress-developer-challenge
 Author: MeanPug Digital
 Author URI: https://www.meanpug.com
-Description: The theme for infra public site
+Description: Backend schema for the Law Firm of Pug & Puggle, ESQ. Registers the custom post types, taxonomies, post-meta schema, and relationship graph behind a mid-size plaintiff-firm website.
 Version: 1.0
 Requires at least: 5.0
-Tested up to: 5.4
-Requires PHP: 7.0
+Requires PHP: 7.4
+Text Domain: pnp
 */
