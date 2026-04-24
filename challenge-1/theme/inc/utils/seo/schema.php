@@ -28,9 +28,20 @@
  */
 
 function mp_generate_office_schema( $office ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     $custom_logo_id = get_theme_mod( 'custom_logo' );
     $location = get_field( 'address', $office );
     $geopoint = get_field( 'geopoint', $office );
+
+    if ( ! $location || ! $geopoint ) {
+        return;
+    }
+
+    $phone = get_field( 'contact_phone', 'option' );
+    $email = get_field( 'contact_email', 'option' );
 
     $schema = array(
         '@context' => "http://schema.org",
@@ -40,8 +51,8 @@ function mp_generate_office_schema( $office ) {
         'description' => get_bloginfo( 'description' ),
         'url'   => get_site_url(),
         'image' => wp_get_attachment_image_url( $custom_logo_id, 'full' ),
-        'telephone' => get_field('contact_phone', 'option')['title'],
-        'email' => get_field('contact_email', 'option')['title'],
+        'telephone' => $phone ? $phone['title'] : '',
+        'email' => $email ? $email['title'] : '',
         'address' => array(
             'type'  => 'PostalAddress',
             'addressLocality'  => $location['city'],
@@ -59,9 +70,13 @@ function mp_generate_office_schema( $office ) {
     );
 
     $sameas = [];
-    $social_profiles = get_field('social_profiles', 'option');
-    foreach ( $social_profiles as $profile ) {
-        $sameas[] = $profile['url'];
+    $social_profiles = get_field( 'social_profiles', 'option' );
+    if ( is_array( $social_profiles ) ) {
+        foreach ( $social_profiles as $profile ) {
+            if ( ! empty( $profile['url'] ) ) {
+                $sameas[] = $profile['url'];
+            }
+        }
     }
     $schema['sameAs'] = $sameas;
 
@@ -76,48 +91,61 @@ function mp_generate_office_schema( $office ) {
  * @param office - if set, we use fields from the given office for business address/contact info instead of the defaults
  */
 function mp_generate_local_business_schema( $office = null ) {
-    $custom_logo_id = get_theme_mod( 'custom_logo' );
-    $location = get_field('contact_main_address', 'option');
-
-    if ($location) {
-      $schema = array(
-          '@context' => "http://schema.org",
-          '@type' => "LocalBusiness",
-          'additionalType' => "LegalService",
-          'name' => get_bloginfo( 'name' ),
-          'description' => get_bloginfo( 'description' ),
-          'url'   => get_site_url(),
-          'image' => wp_get_attachment_image_url( $custom_logo_id, 'full' ),
-          'telephone' => get_field('contact_phone', 'option')['title'],
-          'email' => get_field('contact_email', 'option')['title'],
-          'address' => array(
-              'type'  => 'PostalAddress',
-              'addressLocality'  => $location['city'],
-              'addressRegion' => $location['state'],
-              'postalCode'    => $location['post_code'],
-              'streetAddress' => $location['street_number'] . ' ' . $location['street_name']
-          ),
-          'geo'   => array(
-              'type'  => 'GeoCoordinates',
-              'latitude'  => $location['lat'],
-              'longitude' => $location['lng']
-          ),
-          'priceRange' => 'Free consultation',
-          'openingHours' => 'Mo-Su,all day'
-      );
-
-      $sameas = [];
-      $social_profiles = get_field('social_profiles', 'option');
-      foreach ( $social_profiles as $profile ) {
-          $sameas[] = $profile['url'];
-      }
-      $schema['sameAs'] = $sameas;
-
-      echo '<!-- SCHEMA: Local Business -->';
-      echo '<script type="application/ld+json">';
-      echo json_encode( $schema );
-      echo '</script>';
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
     }
+
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    $location = get_field( 'contact_main_address', 'option' );
+
+    if ( ! $location ) {
+        return;
+    }
+
+    $phone = get_field( 'contact_phone', 'option' );
+    $email = get_field( 'contact_email', 'option' );
+
+    $schema = array(
+        '@context' => "http://schema.org",
+        '@type' => "LocalBusiness",
+        'additionalType' => "LegalService",
+        'name' => get_bloginfo( 'name' ),
+        'description' => get_bloginfo( 'description' ),
+        'url'   => get_site_url(),
+        'image' => wp_get_attachment_image_url( $custom_logo_id, 'full' ),
+        'telephone' => $phone ? $phone['title'] : '',
+        'email' => $email ? $email['title'] : '',
+        'address' => array(
+            'type'  => 'PostalAddress',
+            'addressLocality'  => $location['city'],
+            'addressRegion' => $location['state'],
+            'postalCode'    => $location['post_code'],
+            'streetAddress' => $location['street_number'] . ' ' . $location['street_name']
+        ),
+        'geo'   => array(
+            'type'  => 'GeoCoordinates',
+            'latitude'  => $location['lat'],
+            'longitude' => $location['lng']
+        ),
+        'priceRange' => 'Free consultation',
+        'openingHours' => 'Mo-Su,all day'
+    );
+
+    $sameas = [];
+    $social_profiles = get_field( 'social_profiles', 'option' );
+    if ( is_array( $social_profiles ) ) {
+        foreach ( $social_profiles as $profile ) {
+            if ( ! empty( $profile['url'] ) ) {
+                $sameas[] = $profile['url'];
+            }
+        }
+    }
+    $schema['sameAs'] = $sameas;
+
+    echo '<!-- SCHEMA: Local Business -->';
+    echo '<script type="application/ld+json">';
+    echo json_encode( $schema );
+    echo '</script>';
 }
 
 function mp_generate_testimonial_schema( $testimonial, $print_out = false ) {

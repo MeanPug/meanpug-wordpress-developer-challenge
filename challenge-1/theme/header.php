@@ -21,51 +21,104 @@
 
 <body <?php body_class(); ?>>
 
-<nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
-            <?php echo get_custom_logo() ?>
-        </div>
-
-        <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
-            </div>
-
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
-            </div>
-        </div>
-
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
-
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
+<?php if ( is_front_page() ) : ?>
+    <div class="airbnb-banner">
+        <div class="airbnb-banner-inner">
+            <p>Get the latest on our COVID-19 response and cancellation policies. <a href="#">Learn more</a>.</p>
         </div>
     </div>
-</nav>
+
+    <header class="airbnb-header">
+        <div class="airbnb-header-inner">
+            <div class="airbnb-brand">
+                <span class="airbnb-brand-mark" aria-hidden="true">M</span>
+                <span class="airbnb-brand-name">MeanPugBnB</span>
+            </div>
+
+            <nav class="airbnb-nav-links" aria-label="Primary">
+                <a href="#">Places to stay</a>
+                <a href="#">Monthly stays</a>
+                <a href="#">Experiences</a>
+                <a href="#">Online Experiences <span class="airbnb-new-badge">NEW</span></a>
+            </nav>
+
+            <div class="airbnb-actions">
+                <a href="#" class="airbnb-action-link" aria-label="Choose language">🌐</a>
+                <a href="#" class="airbnb-action-link">Host your home</a>
+                <a href="#" class="airbnb-action-link">Host an experience</a>
+                <a href="#" class="airbnb-action-link">Help</a>
+                <a href="#" class="airbnb-profile">
+                    <img src="<?php echo esc_url( 'https://media.prod.meanpug.net/wp-content/uploads/sites/9/2020/01/24060038/MeanPug-Best-In-Show-Icon.png' ); ?>" alt="MeanPug icon" />
+                    <span>MeanPug</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="airbnb-search-wrap">
+        <div class="airbnb-search-card">
+            <div class="airbnb-search-item">
+                <span class="airbnb-search-label">LOCATION</span>
+                <input type="text" class="airbnb-search-input" placeholder="Where are you going?" aria-label="Location" />
+            </div>
+            <div class="airbnb-search-item">
+                <span class="airbnb-search-label">CHECK IN / CHECK OUT</span>
+                <input type="text" class="airbnb-search-input" placeholder="Add dates" aria-label="Add dates" />
+            </div>
+            <div class="airbnb-search-item">
+                <span class="airbnb-search-label">GUESTS</span>
+                <input type="text" class="airbnb-search-input" placeholder="Add guests" aria-label="Add guests" />
+            </div>
+            <button class="airbnb-search-button" type="button">🔍 Search</button>
+        </div>
+    </div>
+<?php else : ?>
+    <nav class="sticky bg-green inf-site-header z-20">
+        <div class="container flex items-center justify-between pt-8 pb-6">
+            <div class="w-48 lg:w-96">
+                <?php echo get_custom_logo() ?>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="pl-12 items-center justify-end hidden lg:flex">
+                <div class="flex-grow">
+                    <?php wp_nav_menu(array(
+                        'theme_location' => 'nav',
+                        'menu_class' => 'inf-menu inf-menu--nav',
+                    )); ?>
+                </div>
+
+                <div class="pl-8 text-center font-sans text-white-shade">
+                    <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
+                    <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
+                        <?php $contact_phone = get_field('contact_phone', 'option'); ?>
+                        <span class="inf-link--square__container">
+                            <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
+                                <?php echo $contact_phone['title'] ?>
+                            </a>
+                        </span>
+                    </strong>
+                </div>
+            </div>
+
+            <!-- Mobile Nav -->
+            <div class="xl:hidden">
+                  <div class="flex items-center">
+                      <a href="<?php echo $contact_phone['url'] ?>">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
+                      </a>
+
+                      <div class="xl:hidden relative">
+                          <?php wp_nav_menu(array(
+                            'theme_location' => 'mobile-nav',
+                            'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
+                          )); ?>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+<?php endif; ?>
 
 <div id="page" class="site">
 

@@ -140,10 +140,21 @@ function inf_scripts() {
   wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
 
   wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
-	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
 
-	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
-  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
+  $critical_css_file = get_stylesheet_directory() . '/critical.css';
+  if ( file_exists( $critical_css_file ) ) {
+      wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime( $critical_css_file ) );
+  }
+
+  $critical_js_file = get_stylesheet_directory() . '/critical.js';
+  if ( file_exists( $critical_js_file ) ) {
+      wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime( $critical_js_file ), true );
+  }
+
+  $main_js_file = get_stylesheet_directory() . '/main.js';
+  if ( file_exists( $main_js_file ) ) {
+      wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime( $main_js_file ), true );
+  }
 
   wp_dequeue_style('megamenu-genericons');
   wp_dequeue_style('megamenu-fontawesome6');
@@ -164,7 +175,10 @@ function inf_scripts() {
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
 
 function inf_add_footer_styles() {
-	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );
+	$main_css_file = get_template_directory() . '/main.css';
+	if ( file_exists( $main_css_file ) ) {
+		wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime( $main_css_file ) );
+	}
 };
 add_action( 'get_footer', 'inf_add_footer_styles' );
 
