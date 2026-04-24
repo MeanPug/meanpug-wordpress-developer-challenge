@@ -108,6 +108,48 @@ function inf_content_width() {
 }
 add_action( 'after_setup_theme', 'inf_content_width', 0 );
 
+if ( ! function_exists( 'get_field' ) ) {
+    function get_field( $field_name, $post_id = false ) {
+        return null;
+    }
+}
+
+if ( ! function_exists( 'the_field' ) ) {
+    function the_field( $field_name, $post_id = false ) {
+        $value = get_field( $field_name, $post_id );
+        if ( is_string( $value ) || is_numeric( $value ) ) {
+            echo $value;
+        }
+    }
+}
+
+if ( ! function_exists( 'have_rows' ) ) {
+    function have_rows( $field_name, $post_id = false ) {
+        return false;
+    }
+}
+
+if ( ! function_exists( 'the_row' ) ) {
+    function the_row() {
+        return false;
+    }
+}
+
+if ( ! function_exists( 'get_sub_field' ) ) {
+    function get_sub_field( $field_name ) {
+        return null;
+    }
+}
+
+if ( ! function_exists( 'the_sub_field' ) ) {
+    function the_sub_field( $field_name ) {
+        $value = get_sub_field( $field_name );
+        if ( is_string( $value ) || is_numeric( $value ) ) {
+            echo $value;
+        }
+    }
+}
+
 /**
  * Register widget area.
  *
@@ -139,15 +181,31 @@ function inf_scripts() {
   wp_enqueue_script( 'mp-core-script', 'https://static.meanpugdigital.com/2.4.4/main.js', array('jquery'), null, true);
   wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
 
-  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
-	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
+  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime( get_stylesheet_directory() . '/style.css' ) );
 
-	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
-  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
+  $critical_css_file = get_stylesheet_directory() . '/assets/critical.css';
+  if ( file_exists( $critical_css_file ) ) {
+      wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/assets/critical.css', array( 'inf-theme-style' ), filemtime( $critical_css_file ) );
+  }
 
-  wp_dequeue_style('megamenu-genericons');
-  wp_dequeue_style('megamenu-fontawesome6');
-  wp_dequeue_style('classic-theme-styles');
+  $critical_js_file = get_stylesheet_directory() . '/assets/critical.js';
+  if ( file_exists( $critical_js_file ) ) {
+      wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/assets/critical.js', array( 'jquery' ), filemtime( $critical_js_file ), true );
+  }
+
+  $main_js_file = get_stylesheet_directory() . '/assets/main.js';
+  if ( file_exists( $main_js_file ) ) {
+      wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/assets/main.js', array( 'jquery', 'mp-core-script' ), filemtime( $main_js_file ), true );
+  }
+
+  $main_css_file = get_stylesheet_directory() . '/assets/main.css';
+  if ( file_exists( $main_css_file ) ) {
+      wp_enqueue_style( 'inf-main-style', get_stylesheet_directory_uri() . '/assets/main.css', array( 'inf-theme-style' ), filemtime( $main_css_file ) );
+  }
+
+  wp_dequeue_style( 'megamenu-genericons' );
+  wp_dequeue_style( 'megamenu-fontawesome6' );
+  wp_dequeue_style( 'classic-theme-styles' );
 	// if we're not in an admin session, dequeue the blocks library
   if ( ! is_admin() ) {
       wp_dequeue_style( 'wp-block-library' );
@@ -162,11 +220,6 @@ function inf_scripts() {
 	wp_localize_script( 'inf-main-scripts', 'theme', $theme_options );
 }
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
-
-function inf_add_footer_styles() {
-	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );
-};
-add_action( 'get_footer', 'inf_add_footer_styles' );
 
 /**
  * Get Blocks
@@ -218,6 +271,10 @@ require_once __DIR__ . '/inc/template_functions.php';
 require_once __DIR__ . '/inc/cpt/all.php';
 require_once __DIR__ . '/inc/tax/all.php';
 require_once __DIR__ . '/inc/menus/all.php';
+require_once __DIR__ . '/inc/metaboxes.php';
+
+// Include custom plugins
+require_once __DIR__ . '/plugins/law-firm-contact.php';
 require_once __DIR__ . '/inc/settings/all.php';
 require_once __DIR__ . '/inc/sidebars/all.php';
 require_once __DIR__ . '/inc/widgets/all.php';

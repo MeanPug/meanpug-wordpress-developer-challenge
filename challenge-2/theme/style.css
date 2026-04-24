@@ -1,6 +1,6 @@
 /*
 Theme Name: infra
-Theme URI: git@github.com:MeanPug/meanpug-wordpress-developer-challenge.git
+Theme URI: git@github.com:MeanPug/MeanPug/meanpug-wordpress-developer-challenge.git
 Author: MeanPug Digital
 Author URI: https://www.meanpug.com
 Description: The theme for infra public site
@@ -9,3 +9,150 @@ Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 7.0
 */
+
+body {
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #0d1f30;
+  background: #ffffff;
+}
+
+.site {
+  min-height: 100vh;
+}
+
+.inf-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #0d1f30;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.inf-site-header {
+  background: #0d1f30;
+}
+
+.inf-site-header__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.inf-site-brand {
+  flex: 1 1 auto;
+  min-width: 220px;
+}
+
+.inf-site-title {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.inf-site-nav {
+  flex: 2 1 360px;
+}
+
+.inf-site-actions {
+  flex: 0 0 auto;
+}
+
+.inf-link--square__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.25rem;
+  color: #ffffff;
+  background: #0075c9;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.inf-menu--nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inf-menu--nav .menu-item {
+  list-style: none;
+}
+
+.inf-menu--nav .menu-item a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.inf-menu--nav .menu-item a:hover {
+  opacity: 0.85;
+}
+
+.header-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-menu .menu-item {
+  list-style: none;
+}
+
+.header-menu .menu-item a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.inf-menu-trigger {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .inf-site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inf-menu--nav {
+    display: none;
+    width: 100%;
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .inf-menu-trigger {
+    display: block;
+    margin-top: 1rem;
+  }
+}
+
+.challenge-2-hero {
+  padding: 4rem 1rem;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.challenge-2-hero h1,
+.challenge-2-hero h2,
+.challenge-2-hero p,
+.challenge-2-hero a {
+  line-height: 1.4;
+}
+
+.challenge-2-hero a {
+  text-decoration: none;
+}

@@ -21,48 +21,43 @@
 
 <body <?php body_class(); ?>>
 
-<nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
-            <?php echo get_custom_logo() ?>
+<nav class="inf-site-header">
+    <div class="inf-site-header__inner">
+        <div class="inf-site-brand">
+            <?php if ( function_exists( 'has_custom_logo' ) && has_custom_logo() ) : ?>
+                <?php the_custom_logo(); ?>
+            <?php else : ?>
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inf-site-title"><?php bloginfo( 'name' ); ?></a>
+            <?php endif; ?>
         </div>
 
-        <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
+        <?php if ( has_nav_menu( 'nav' ) ) : ?>
+            <div class="inf-site-nav">
+                <?php wp_nav_menu( array(
                     'theme_location' => 'nav',
                     'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
+                    'fallback_cb' => false,
+                ) ); ?>
             </div>
+        <?php endif; ?>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
-            </div>
-        </div>
+        <?php
+        if ( function_exists( 'get_field' ) ) {
+            $contact_phone = get_field( 'contact_phone', 'option' );
+        }
 
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
+        if ( ! is_array( $contact_phone ) || empty( $contact_phone['title'] ) ) {
+            $contact_phone = array(
+                'url'   => '#contact',
+                'title' => __( 'Contact Us', 'inf' ),
+            );
+        }
+        ?>
 
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
+        <div class="inf-site-actions">
+            <a href="<?php echo esc_url( $contact_phone['url'] ); ?>" class="inf-link--square__link">
+                <?php echo esc_html( $contact_phone['title'] ); ?>
+            </a>
         </div>
     </div>
 </nav>
