@@ -80,9 +80,3 @@
     </nav>
     <!-- End Main nav -->
 </header>
-
-<div id="content" class="site-content">
-
-
-
-
