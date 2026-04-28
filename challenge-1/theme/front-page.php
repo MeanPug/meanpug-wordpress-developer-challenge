@@ -82,6 +82,30 @@ get_header();
         </div>
     </section>
 		<!-- End Tabs + Search -->
+
+		<!-- #PugLivesMatter Hero -->
+    <section class="max-w-screen-3xl mx-auto mt-6 mb-10 px-6 lg:px-0" aria-labelledby="hero-title">
+        <article class="relative rounded-xl overflow-hidden text-white min-h-96 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-16 lg:py-20 bg-cover bg-center"
+                 style="background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.95) 35%, rgba(0, 0, 0, 0.65) 70%, rgba(0, 0, 0, 0.35) 100%), url('https://images.pexels.com/photos/374906/pexels-photo-374906.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+            <div class="relative max-w-sm">
+                <h1 id="hero-title" class="text-3xl md:text-4xl font-extrabold leading-[1.12] tracking-tight mb-4">
+                    We stand with<br>#PugLivesMatter
+                </h1>
+                <p class="text-base leading-relaxed mb-6 opacity-95">
+                    Now more than ever, it's important that you know how we're fighting
+                    discrimination on Pugbnb. We'd like to share our newest initiative
+                    with you, Project Lighthouse — Pug Edition.
+                </p>
+                <a href="#" class="inline-flex items-center gap-2 text-base font-bold hover:underline">
+                    Learn more
+                    <svg viewBox="0 0 16 16" class="w-3.5 h-3.5" aria-hidden="true">
+                        <path fill="currentColor" d="M5.5 1.5l1-1L13 7l-6.5 6.5-1-1L11 7.5H1v-1h10z"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+    </section>
+		<!-- End #PugLivesMatter Hero -->
 </main>
 
 <?php
