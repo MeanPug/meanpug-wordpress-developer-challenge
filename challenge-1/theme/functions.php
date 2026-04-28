@@ -224,3 +224,5 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+require_once __DIR__ . '/inc/data/featured-cards.php';

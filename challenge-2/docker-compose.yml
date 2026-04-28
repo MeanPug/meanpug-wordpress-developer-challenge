@@ -31,7 +31,7 @@ services:
        - static
      image: wordpress:latest
      volumes:
-       - wp_plugins:/var/www/html/wp-content/plugins
+       - ./plugins:/var/www/html/wp-content/plugins
        - ./theme:/var/www/html/wp-content/themes/challenge-2-theme
        - ./uploads:/var/www/html/wp-content/uploads
        - ./server_config.ini:/usr/local/etc/php/conf.d/server_config.ini
@@ -44,6 +44,23 @@ services:
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
        WP_ENVIRONMENT_TYPE: development
+
+   wpcli:
+     image: wordpress:cli
+     depends_on:
+       - wordpress
+     user: "33:33"
+     volumes:
+       - ./wp:/var/www/html
+       - ./plugins:/var/www/html/wp-content/plugins
+       - ./theme:/var/www/html/wp-content/themes/challenge-2-theme
+       - ./docker/wordpress/init.sh:/usr/local/bin/init.sh:ro
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_DB_NAME: wordpress
+     entrypoint: ["/bin/bash", "/usr/local/bin/init.sh"]
+
 volumes:
     db_data:
-    wp_plugins:
