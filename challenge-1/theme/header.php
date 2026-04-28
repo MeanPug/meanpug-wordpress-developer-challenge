@@ -15,7 +15,6 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <?php wp_head(); ?>
 </head>
 
@@ -33,7 +32,7 @@
 
     <!-- Main nav -->
     <nav class="sticky top-0 z-50 bg-white">
-        <div class="max-w-screen-3xl mx-auto flex items-center justify-between gap-6 px-6 lg:px-10 py-4 lg:py-5">
+        <div class="max-w-screen-3xl mx-auto flex items-center justify-between gap-6 px-6 lg:px-0 py-4 lg:py-5">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
                class="flex items-center gap-1 text-airbnb-pink font-extrabold text-3xl"
                aria-label="Pugbnb home">
