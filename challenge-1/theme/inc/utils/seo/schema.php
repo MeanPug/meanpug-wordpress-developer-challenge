@@ -28,6 +28,10 @@
  */
 
 function mp_generate_office_schema( $office ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     $custom_logo_id = get_theme_mod( 'custom_logo' );
     $location = get_field( 'address', $office );
     $geopoint = get_field( 'geopoint', $office );
@@ -76,6 +80,10 @@ function mp_generate_office_schema( $office ) {
  * @param office - if set, we use fields from the given office for business address/contact info instead of the defaults
  */
 function mp_generate_local_business_schema( $office = null ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     $custom_logo_id = get_theme_mod( 'custom_logo' );
     $location = get_field('contact_main_address', 'option');
 

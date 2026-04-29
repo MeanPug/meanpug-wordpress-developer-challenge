@@ -217,6 +217,7 @@ require_once __DIR__ . '/inc/template_functions.php';
 
 require_once __DIR__ . '/inc/cpt/all.php';
 require_once __DIR__ . '/inc/tax/all.php';
+require_once __DIR__ . '/inc/acf/all.php';
 require_once __DIR__ . '/inc/menus/all.php';
 require_once __DIR__ . '/inc/settings/all.php';
 require_once __DIR__ . '/inc/sidebars/all.php';
