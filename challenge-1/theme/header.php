@@ -20,6 +20,19 @@
 </head>
 
 <body <?php body_class(); ?>>
+<?php
+$contact_phone = array(
+	'url'   => 'tel:18005551234',
+	'title' => '(800) 555-1234',
+);
+
+if ( function_exists( 'get_field' ) ) {
+	$acf_contact_phone = get_field( 'contact_phone', 'option' );
+	if ( is_array( $acf_contact_phone ) && ! empty( $acf_contact_phone['url'] ) && ! empty( $acf_contact_phone['title'] ) ) {
+		$contact_phone = $acf_contact_phone;
+	}
+}
+?>
 
 <nav class="sticky bg-green inf-site-header z-20">
     <div class="container flex items-center justify-between pt-8 pb-6">
@@ -39,10 +52,9 @@
             <div class="pl-8 text-center font-sans text-white-shade">
                 <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
                 <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
                     <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
+                        <a href="<?php echo esc_url( $contact_phone['url'] ); ?>" class="inf-link--square__link">
+                            <?php echo esc_html( $contact_phone['title'] ); ?>
                         </a>
                     </span>
                 </strong>
@@ -52,7 +64,7 @@
         <!-- Mobile Nav -->
         <div class="xl:hidden">
               <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
+                  <a href="<?php echo esc_url( $contact_phone['url'] ); ?>">
                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
                   </a>
 
