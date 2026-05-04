@@ -5,5 +5,10 @@ function inf_get_asset_url($path) {
 }
 
 function inf_acf_link($link_field, $class='') {
-  printf('<a href=%s class="%s">%s</a>', $link_field['url'], $class, $link_field['title']);
+  printf(
+    '<a href="%s" class="%s">%s</a>',
+    esc_url( $link_field['url'] ),
+    esc_attr( $class ),
+    esc_html( $link_field['title'] )
+  );
 }

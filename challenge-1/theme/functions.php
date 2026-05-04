@@ -136,14 +136,26 @@ function inf_scripts() {
 	wp_register_script( 'jquery', get_template_directory_uri() . '/assets/js/vendor/jquery-3.6.0.min.js', false, NULL, true );
   wp_enqueue_script( 'jquery' );
 
+  // NOTE: External CDN scripts loaded without Subresource Integrity (SRI).
+  // For production, add SRI hashes or host files locally.
   wp_enqueue_script( 'mp-core-script', 'https://static.meanpugdigital.com/2.4.4/main.js', array('jquery'), null, true);
   wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
 
-  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
-	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
+  // Helper function to safely get file modification time with fallback
+  $get_file_version = function( $file_path ) {
+    return file_exists( $file_path ) ? filemtime( $file_path ) : '1.0.0';
+  };
 
-	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
-  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
+  $style_file = get_stylesheet_directory() . '/style.css';
+  $critical_style_file = get_stylesheet_directory() . '/critical.css';
+  $critical_js_file = get_stylesheet_directory() . '/critical.js';
+  $main_js_file = get_stylesheet_directory() . '/main.js';
+
+  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), $get_file_version( $style_file ) );
+	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), $get_file_version( $critical_style_file ));
+
+	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), $get_file_version( $critical_js_file ), true);
+  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), $get_file_version( $main_js_file ), true);
 
   wp_dequeue_style('megamenu-genericons');
   wp_dequeue_style('megamenu-fontawesome6');
@@ -224,3 +236,47 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+// Add custom classes to menu items in the 'nav' location
+add_filter( 'nav_menu_link_attributes', 'infra_nav_menu_link_classes', 10, 4 );
+function infra_nav_menu_link_classes( $atts, $item, $args, $depth ) {
+    if ( 'nav' === $args->theme_location ) {
+        $existing_class = isset( $atts['class'] ) ? $atts['class'] : '';
+        $atts['class'] = $existing_class . ' px-4 py-3 rounded-full text-sm font-semibold hover:bg-airbnb-soft transition-colors';
+    }
+    return $atts;
+}
+
+/** Add custom classes to the custom logo image */
+add_filter( 'get_custom_logo_image_attributes', function( $attr ) {
+    if ( ! isset( $attr['class'] ) ) {
+        $attr['class'] = '';
+    }
+    $attr['class'] .= ' max-w-[150px] h-auto';
+    return $attr;
+} );
+
+/**
+ * Get the ID of the Theme Options page.
+ * Searches for a page that uses the 'template-theme-options.php' template.
+ *
+ * @return int|false Page ID or false if not found.
+ */
+function airpug_get_options_page_id() {
+    static $options_page_id = null;
+
+    if ( null !== $options_page_id ) {
+        return $options_page_id;
+    }
+
+    $pages = get_posts( array(
+        'post_type'      => 'page',
+        'posts_per_page' => 1,
+        'meta_key'       => '_wp_page_template',
+        'meta_value'     => 'template-theme-options.php',
+        'fields'         => 'ids',
+    ) );
+
+    $options_page_id = ! empty( $pages ) ? $pages[0] : false;
+    return $options_page_id;
+}

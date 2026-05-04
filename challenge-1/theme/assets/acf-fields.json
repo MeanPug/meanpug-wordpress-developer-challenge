@@ -1,0 +1,169 @@
+{
+    "key": "group_theme_options",
+    "title": "Theme Options",
+    "fields": [
+        {
+            "key": "field_banner_text",
+            "label": "Banner Text",
+            "name": "banner_text",
+            "type": "text",
+            "default_value": "Get the latest on our pandemic response and pug-friendly cancellation policies."
+        },
+        {
+            "key": "field_banner_link",
+            "label": "Banner Link URL",
+            "name": "banner_link",
+            "type": "url",
+            "default_value": "#"
+        },
+        {
+            "key": "field_banner_link_text",
+            "label": "Banner Link Text",
+            "name": "banner_link_text",
+            "type": "text",
+            "default_value": "Learn more"
+        },
+        {
+            "key": "field_notification_count",
+            "label": "Notification Count",
+            "name": "notification_count",
+            "type": "number",
+            "default_value": 0
+        },
+        {
+            "key": "field_tab_1_label",
+            "label": "Tab 1 Label",
+            "name": "tab_1_label",
+            "type": "text",
+            "default_value": "Places to stay"
+        },
+        {
+            "key": "field_tab_1_new_badge",
+            "label": "Show NEW badge",
+            "name": "tab_1_new_badge",
+            "type": "true_false",
+            "ui": 1
+        },
+        {
+            "key": "field_tab_2_label",
+            "label": "Tab 2 Label",
+            "name": "tab_2_label",
+            "type": "text",
+            "default_value": "Monthly stays"
+        },
+        {
+            "key": "field_tab_2_new_badge",
+            "label": "Show NEW badge",
+            "name": "tab_2_new_badge",
+            "type": "true_false",
+            "ui": 1
+        },
+        {
+            "key": "field_tab_3_label",
+            "label": "Tab 3 Label",
+            "name": "tab_3_label",
+            "type": "text",
+            "default_value": "Experiences"
+        },
+        {
+            "key": "field_tab_3_new_badge",
+            "label": "Show NEW badge",
+            "name": "tab_3_new_badge",
+            "type": "true_false",
+            "ui": 1
+        },
+        {
+            "key": "field_tab_4_label",
+            "label": "Tab 4 Label",
+            "name": "tab_4_label",
+            "type": "text",
+            "default_value": "Online Experiences"
+        },
+        {
+            "key": "field_tab_4_new_badge",
+            "label": "Show NEW badge",
+            "name": "tab_4_new_badge",
+            "type": "true_false",
+            "ui": 1
+        },
+        {
+            "key": "field_tab_5_label",
+            "label": "Tab 5 Label",
+            "name": "tab_5_label",
+            "type": "text"
+        },
+        {
+            "key": "field_tab_5_new_badge",
+            "label": "Show NEW badge",
+            "name": "tab_5_new_badge",
+            "type": "true_false",
+            "ui": 1
+        },
+        {
+            "key": "field_location_label",
+            "label": "Location Label",
+            "name": "location_label",
+            "type": "text",
+            "default_value": "Location"
+        },
+        {
+            "key": "field_location_placeholder",
+            "label": "Location Placeholder",
+            "name": "location_placeholder",
+            "type": "text",
+            "default_value": "Where are you going?"
+        },
+        {
+            "key": "field_dates_label",
+            "label": "Dates Label",
+            "name": "dates_label",
+            "type": "text",
+            "default_value": "Check in / Check out"
+        },
+        {
+            "key": "field_dates_placeholder",
+            "label": "Dates Placeholder",
+            "name": "dates_placeholder",
+            "type": "text",
+            "default_value": "Add dates"
+        },
+        {
+            "key": "field_guests_label",
+            "label": "Guests Label",
+            "name": "guests_label",
+            "type": "text",
+            "default_value": "Guests"
+        },
+        {
+            "key": "field_guests_placeholder",
+            "label": "Guests Placeholder",
+            "name": "guests_placeholder",
+            "type": "text",
+            "default_value": "Add pugs"
+        },
+        {
+            "key": "field_search_button_text",
+            "label": "Search Button Text",
+            "name": "search_button_text",
+            "type": "text",
+            "default_value": "Search"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-theme-options.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}

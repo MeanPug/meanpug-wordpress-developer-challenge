@@ -100,20 +100,42 @@ add_action('mpdcontent/ask-question/submission', function($data) {
 });
 
 add_action('mpdreviews/new-reviews', function($new_reviews) {
+  if ( ! is_array( $new_reviews ) ) {
+    return;
+  }
+
   foreach ($new_reviews as $review) {
+    // Validate review data
+    if ( ! isset( $review['title'], $review['body'], $review['rating'] ) ) {
+      continue;
+    }
+
+    // Sanitize inputs
     $post_data = [
-      'post_title'    => $review['title'],
-      'post_content'  => $review['body'],
+      'post_title'    => sanitize_text_field( $review['title'] ),
+      'post_content'  => wp_kses_post( $review['body'] ),
       'post_status'   => 'publish',
       'post_category' => [],
       'post_type'     => 'testimonials',
       'tags_input'    => [],
     ];
 
-    // Insert the post into the database
-    $post_id = wp_insert_post($post_data);
+    // Validate rating is numeric
+    $rating = isset( $review['rating'] ) ? intval( $review['rating'] ) : 0;
+    if ( $rating < 0 || $rating > 5 ) {
+      $rating = 0;
+    }
 
-    update_field('rating', $review['rating'], $post_id);
-    update_field('reviewer_name', $review['reviewer']['name'], $post_id);
+    // Insert the post into the database
+    $post_id = wp_insert_post( $post_data );
+
+    if ( is_wp_error( $post_id ) ) {
+      continue;
+    }
+
+    update_field( 'rating', $rating, $post_id );
+    
+    $reviewer_name = isset( $review['reviewer']['name'] ) ? sanitize_text_field( $review['reviewer']['name'] ) : '';
+    update_field( 'reviewer_name', $reviewer_name, $post_id );
   }
 });

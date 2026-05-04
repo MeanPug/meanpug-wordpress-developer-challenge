@@ -17,7 +17,7 @@ $inf_aria_label = ! empty( $args['aria_label'] ) ? 'aria-label="' . esc_attr( $a
 
                 <div class="container">
                     <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                        <label class="text-white" for="<?php echo esc_attr( $ps_unique_id ); ?>"><?php _e( 'Search', 'inf' ); ?></label>
+                        <label class="text-white" for="<?php echo esc_attr( $inf_unique_id ); ?>"><?php _e( 'Search', 'inf' ); ?></label>
 
                         <div class="flex pt-16 md:pt-32">
                             <input type="search" id="<?php echo esc_attr( $inf_unique_id ); ?>" placeholder="<?php _e('Start typing', 'inf') ?>" class="py-4 px-6 rounded-none flex-grow bg-transparent border-b-2 border-white font-sans text-base text-white" value="<?php echo get_search_query(); ?>" name="s" />

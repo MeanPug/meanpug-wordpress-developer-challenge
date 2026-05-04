@@ -12,3 +12,5 @@ import './js/widgets/shared/location-navigator';
  * import './components/optional/tabs.js';
  * import './js/components/shared/tabs';
  **/
+import './js/components/mobile-menu.js';
+import './js/components/tabs.js';
