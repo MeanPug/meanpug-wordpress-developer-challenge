@@ -25,7 +25,7 @@
                     <div class="mp-banner__close">
                         <?php $image = get_field('banner_close_icon') ?>
                         <button>
-                            <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>" />
+                            <img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>" />
                         </button>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             $background = get_field('hero_background_image');
             $cta = get_field('hero_cta');
             ?>
-            <section class="mp-hero" style="background-image: url(<?php echo $background['url'] ?>);">
+            <section class="mp-hero" style="background-image: url('<?php echo esc_url( $background['url'] ); ?>');">
                 <div class="container mx-auto">
                     <h1 class="mp-hero__header mp-header mp-header--5">
                         <?php the_field('hero_header') ?>
@@ -90,8 +90,8 @@
                     </div>
 
                     <div class="mp-hero__cta">
-                        <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary">
-                            <?php echo $cta['title'] ?>
+                        <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary">
+                            <?php echo esc_html( $cta['title'] ); ?>
                         </a>
                     </div>
                 </div>
@@ -109,33 +109,33 @@
             $cta = get_field('verdicts_cta');
             ?>
             <section class="mp-verdicts">
-                <img src="<?php echo $bg_image['url'] ?>" alt="<?php echo $bg_image['alt'] ?>" class="mp-verdicts__bg" />
+                <img src="<?php echo esc_url( $bg_image['url'] ); ?>" alt="<?php echo esc_attr( $bg_image['alt'] ); ?>" class="mp-verdicts__bg" />
 
                 <div class="mp-verdicts__label mp-label-box">
-                    <?php echo $label ?>
+                    <?php echo wp_kses_post( $label ); ?>
                 </div>
 
                 <div class="container mx-auto">
                     <div class="mp-verdicts__stats mp-comparison-boxes">
                         <div class="mp-verdicts__stats__single mp-comparison-box">
-                            <p class="mp-verdicts__stats__single-label mp-comparison-box__label mp-label"><?php echo $firm_stats_label ?></p>
+                            <p class="mp-verdicts__stats__single-label mp-comparison-box__label mp-label"><?php echo esc_html( $firm_stats_label ); ?></p>
                             <div class="mp-verdicts__stats__single-content mp-comparison-box__content">
-                                <?php echo $firm_stats_content ?>
+                                <?php echo wp_kses_post( $firm_stats_content ); ?>
                             </div>
                         </div>
 
                         <div class="mp-verdicts__stats__single mp-comparison-box">
-                            <p class="mp-verdicts__stats__single-label mp-comparison-box__label mp-label"><?php echo $other_firms_stats_label ?></p>
+                            <p class="mp-verdicts__stats__single-label mp-comparison-box__label mp-label"><?php echo esc_html( $other_firms_stats_label ); ?></p>
                             <div class="mp-verdicts__stats__single-content mp-comparison-box__content">
-                                <?php echo $other_firms_stats_content ?>
+                                <?php echo wp_kses_post( $other_firms_stats_content ); ?>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="mp-verdicts__cta">
-                    <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary">
-                        <?php echo $cta['title'] ?>
+                    <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary">
+                        <?php echo esc_html( $cta['title'] ); ?>
                     </a>
                 </div>
             </section>
@@ -152,8 +152,8 @@
             <section class="mp-comp-grid">
                 <div class="container mx-auto">
                     <div class="mp-comp-grid__header" data-inviewport="true">
-                        <h2 class="mp-comp-grid__title"><?php echo $title ?></h2>
-                        <p class="mp-comp-grid__description"><?php echo $description ?></p>
+                        <h2 class="mp-comp-grid__title"><?php echo esc_html( $title ); ?></h2>
+                        <p class="mp-comp-grid__description"><?php echo esc_html( $description ); ?></p>
                     </div>
 
                     <div class="mp-comp-grid__body">
@@ -168,28 +168,28 @@
 
                         <ul class="mp-comp-grid__table mp-comp-grid__table--primary">
                             <li class="mp-comp-grid__table__header mp-comp-grid__table__header--primary">
-                                <?php echo $main_title ?>
+                                <?php echo esc_html( $main_title ); ?>
                             </li>
                             <?php while ( have_rows('comparison_grid_items') ) : the_row(); ?>
                                 <li class="mp-comp-grid__table__cell mp-comp-grid__table__cell--primary">
                                     <?php $primary_data = get_sub_field('primary_value'); ?>
                                     <?php if ( $primary_data['value_type'] == 'Text' ) : ?>
-                                        <p><?php echo $primary_data['text'] ?></p>
+                                        <p><?php echo esc_html( $primary_data['text'] ); ?></p>
                                     <?php else : ?>
-                                        <img src="<?php echo $primary_data['icon'] ?>" alt="<?php echo _e('Comparison Icon', 'mp') ?>" class="mp-comp-grid__icon" />
+                                        <img src="<?php echo esc_url( $primary_data['icon'] ); ?>" alt="<?php _e('Comparison Icon', 'mp') ?>" class="mp-comp-grid__icon" />
                                     <?php endif ?>
 
                                     <?php if ( $primary_data['tooltip'] ) : ?>
-                                    <span class="mp-comp-grid__tooltip mp-tooltip mp-tooltip--bottom" data-text="<?php echo $primary_data['tooltip'] ?>">
-                                        <img src="<?php echo $tooltip_icon ?>" />
+                                    <span class="mp-comp-grid__tooltip mp-tooltip mp-tooltip--bottom" data-text="<?php echo esc_attr( $primary_data['tooltip'] ); ?>">
+                                        <img src="<?php echo esc_url( $tooltip_icon ); ?>" />
                                     </span>
                                     <?php endif ?>
                                 </li>
                             <?php endwhile ?>
 
                             <li class="mp-comp-grid__table__cell mp-comp-grid__table__cell--cta">
-                                <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary">
-                                    <?php echo $cta['title'] ?>
+                                <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary">
+                                    <?php echo esc_html( $cta['title'] ); ?>
                                 </a>
                             </li>
                         </ul>
@@ -201,9 +201,9 @@
                             <li class="mp-comp-grid__table__cell mp-comp-grid__table__cell--secondary">
                                 <?php $secondary_data = get_sub_field('comparison_value'); ?>
                                 <?php if ( $secondary_data['value_type'] == 'Text' ) : ?>
-                                    <p><?php echo $secondary_data['text'] ?></p>
+                                    <p><?php echo esc_html( $secondary_data['text'] ); ?></p>
                                 <?php else : ?>
-                                    <img src="<?php echo $secondary_data['icon'] ?>" alt="<?php echo _e('Comparison Icon', 'mp') ?>" class="mp-comp-grid__icon" />
+                                    <img src="<?php echo esc_url( $secondary_data['icon'] ); ?>" alt="<?php _e('Comparison Icon', 'mp') ?>" class="mp-comp-grid__icon" />
                                 <?php endif ?>
                             </li>
                             <?php endwhile ?>
@@ -230,36 +230,36 @@
             <section class="mp-overview">
                 <div class="container mx-auto">
                     <div class="flex justify-between items-center">
-                        <p class="mp-overview__label mp-label mp-label--primary"><?php echo $label ?></p>
+                        <p class="mp-overview__label mp-label mp-label--primary"><?php echo esc_html( $label ); ?></p>
 
                         <?php if ($badge) : ?>
-                        <img src="<?php echo $badge['url'] ?>" alt="<?php echo $badge['alt'] ?>" class="mp-overview__badge" />
+                        <img src="<?php echo esc_url( $badge['url'] ); ?>" alt="<?php echo esc_attr( $badge['alt'] ); ?>" class="mp-overview__badge" />
                         <?php endif ?>
                     </div>
 
                     <div class="mp-overview__container">
                         <div class="mp-overview__header mp-header mp-header--3">
-                            <?php echo $header ?>
+                            <?php echo esc_html( $header ); ?>
                         </div>
 
                         <div class="mp-overview__content mp-text mp-text--main">
-                            <?php echo $content ?>
+                            <?php echo wp_kses_post( $content ); ?>
                         </div>
                     </div>
 
                     <ul class="mp-overview__highlights">
                         <?php $ix_delay_map = array( 0 => '200', 1 => '500', 2 => '700' ); ?>
                        <?php $i = 0; foreach ($highlights as $highlight) : ?>
-                       <li class="mp-overview__highlights__single w-full md:w-1/<?php echo sizeof( $highlights ) ?> delay-<?php echo $ix_delay_map[$i] ?>" data-inviewport="fadein">
-                           <strong><?php echo $highlight['title'] ?></strong>
-                           <p><?php echo $highlight['subtitle'] ?></p>
+                       <li class="mp-overview__highlights__single w-full md:w-1/<?php echo esc_attr( sizeof( $highlights ) ); ?> delay-<?php echo esc_attr( $ix_delay_map[$i] ); ?>" data-inviewport="fadein">
+                           <strong><?php echo esc_html( $highlight['title'] ); ?></strong>
+                           <p><?php echo esc_html( $highlight['subtitle'] ); ?></p>
                        </li>
                        <?php $i++; endforeach ?>
                     </ul>
 
                     <div class="mp-overview__cta">
-                        <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary">
-                            <?php echo $cta['title'] ?>
+                        <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary">
+                            <?php echo esc_html( $cta['title'] ); ?>
                         </a>
                     </div>
                 </div>
@@ -275,15 +275,15 @@
             <section class="mp-form" id="lpForm">
                 <div class="container mx-auto">
                     <hr class="mp-form__bar" data-inviewport="expand" />
-                    <p class="mp-form__label mp-label mp-label--primary"><?php echo $label ?></p>
+                    <p class="mp-form__label mp-label mp-label--primary"><?php echo esc_html( $label ); ?></p>
 
                     <div class="flex flex-col md:flex-row justify-between pt-8 md:pt-16">
                         <div class="mp-form__header mp-header mp-header--5">
-                            <?php echo $header ?>
+                            <?php echo esc_html( $header ); ?>
                         </div>
 
                         <div class="mp-form__form">
-                            <?php echo do_shortcode( $shortcode ) ?>
+                            <?php echo do_shortcode( $shortcode ); ?>
                         </div>
                     </div>
                 </div>
@@ -305,23 +305,23 @@
                             $title = get_sub_field('title');
                             $firm_value_content = get_sub_field('firm_value_content');
                             $comparator_value_content = get_sub_field('comparator_value_content'); ?>
-                            <div class="mp-comparisons__comparison<?php if ( $i % 2 == 0 ) { echo ' mp-comparisons__comparison--even'; } ?> container mx-auto">
+                            <div class="mp-comparisons__comparison<?php if ( $i % 2 == 0 ) { echo esc_attr( ' mp-comparisons__comparison--even' ); } ?> container mx-auto">
                                 <div class="mp-comparisons__comparison__header mp-header mp-header--3">
-                                    <?php echo $title ?>
+                                    <?php echo esc_html( $title ); ?>
                                 </div>
 
                                 <div class="mp-comparison-boxes delay-500" data-inviewport="fadein">
                                     <div class="mp-comparisons__comparison__single mp-comparison-box">
-                                        <p class="mp-comparisons__comparison__single-label mp-comparison-box__label mp-label"><?php echo $firm_value_label ?></p>
+                                        <p class="mp-comparisons__comparison__single-label mp-comparison-box__label mp-label"><?php echo esc_html( $firm_value_label ); ?></p>
                                         <div class="mp-comparisons__comparison__single-content mp-comparison-box__content">
-                                            <?php echo $firm_value_content ?>
+                                            <?php echo wp_kses_post( $firm_value_content ); ?>
                                         </div>
                                     </div>
 
                                     <div class="mp-comparisons__comparison__single mp-comparison-box">
-                                        <p class="mp-comparisons__comparison__single-label mp-comparison-box__label mp-label"><?php echo $comparator_value_label ?></p>
+                                        <p class="mp-comparisons__comparison__single-label mp-comparison-box__label mp-label"><?php echo esc_html( $comparator_value_label ); ?></p>
                                         <div class="mp-comparisons__comparison__single-content mp-comparison-box__content">
-                                            <?php echo $comparator_value_content ?>
+                                            <?php echo wp_kses_post( $comparator_value_content ); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -342,12 +342,12 @@
             $bg_image = get_field('call_marquee_background_image');
             $main_phone = get_field('contact_phone', 'option');
             ?>
-            <section class="mp-call-marquee" style="background-image: url(<?php echo $bg_image ?>);">
+            <section class="mp-call-marquee" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');">
                 <div class="w-full md:w-1/2 mx-auto">
-                    <img src="<?php echo $icon['url'] ?>" alt="<?php echo $icon['alt'] ?>" class="mp-call-marquee__icon" />
+                    <img src="<?php echo esc_url( $icon['url'] ); ?>" alt="<?php echo esc_attr( $icon['alt'] ); ?>" class="mp-call-marquee__icon" />
 
                     <div class="mp-call-marquee__text">
-                        <?php echo $text ?>
+                        <?php echo wp_kses_post( $text ); ?>
                     </div>
 
                     <hr class="mp-call-marquee__divider" />
@@ -355,8 +355,8 @@
 
                 <div class="mp-call-marquee__marquee mp-marquee" data-per-page="1" data-per-page-xl="2">
                     <ul class="mp-marquee__content">
-                        <li class="mp-marquee__item"><?php echo $main_phone['title'] ?></li>
-                        <li class="mp-marquee__item"><?php echo $main_phone['title'] ?></li>
+                        <li class="mp-marquee__item"><?php echo esc_html( $main_phone['title'] ); ?></li>
+                        <li class="mp-marquee__item"><?php echo esc_html( $main_phone['title'] ); ?></li>
                     </ul>
                 </div>
             </section>
@@ -380,26 +380,26 @@
             <section class="mp-testimonials">
                 <div class="container mx-auto">
                     <div class="mp-testimonials__label mp-label mp-label--primary">
-                        <p><?php echo $label ?></p>
+                        <p><?php echo esc_html( $label ); ?></p>
                     </div>
 
                     <div class="mp-testimonials__header mp-testimonials__content-wrap mp-header mp-header--5">
-                        <?php echo $header ?>
+                        <?php echo esc_html( $header ); ?>
                     </div>
                 </div>
 
-                <div class="mp-testimonials__items" style="background-image: url(<?php echo $bg_image ?>);">
+                <div class="mp-testimonials__items" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');">
                     <div class="container mx-auto">
                         <div class="mp-carousel mp-testimonials__carousel glide mp-testimonials__content-wrap">
-                            <img src="<?php echo $open_quote_icon['url'] ?>" alt="<?php echo $open_quote_icon['alt'] ?>" class="mp-testimonials__quote top-0 left-0 mt-8 lg:ml-32 z-10" />
-                            <img src="<?php echo $close_quote_icon['url'] ?>" alt="<?php echo $close_quote_icon['alt'] ?>" class="mp-testimonials__quote bottom-0 right-0 mb-8 lg:mr-32 z-10" />
+                            <img src="<?php echo esc_url( $open_quote_icon['url'] ); ?>" alt="<?php echo esc_attr( $open_quote_icon['alt'] ); ?>" class="mp-testimonials__quote top-0 left-0 mt-8 lg:ml-32 z-10" />
+                            <img src="<?php echo esc_url( $close_quote_icon['url'] ); ?>" alt="<?php echo esc_attr( $close_quote_icon['alt'] ); ?>" class="mp-testimonials__quote bottom-0 right-0 mb-8 lg:mr-32 z-10" />
 
                             <div class="glide__arrows" data-glide-el="controls">
                                 <button class="glide__arrow glide__arrow--left mp-testimonials__items__arrow" data-glide-dir="<">
-                                    <img src="<?php echo $left_icon['url'] ?>" alt="<?php echo $left_icon['alt'] ?>" />
+                                    <img src="<?php echo esc_url( $left_icon['url'] ); ?>" alt="<?php echo esc_attr( $left_icon['alt'] ); ?>" />
                                 </button>
                                 <button class="glide__arrow glide__arrow--right mp-testimonials__items__arrow" data-glide-dir=">">
-                                    <img src="<?php echo $right_icon['url'] ?>" alt="<?php echo $right_icon['alt'] ?>" />
+                                    <img src="<?php echo esc_url( $right_icon['url'] ); ?>" alt="<?php echo esc_attr( $right_icon['alt'] ); ?>" />
                                 </button>
                             </div>
 
@@ -408,11 +408,11 @@
                                     <?php foreach ($selected_testimonials as $testimonial) : ?>
                                     <li class="glide__slide mp-testimonials__testimonial">
                                         <p class="mp-testimonials__testimonial__review mp-text mp-text--main">
-                                            <?php echo get_the_content(null, null, $testimonial) ?>
+                                            <?php echo wp_kses_post( get_the_content(null, null, $testimonial) ); ?>
                                         </p>
 
                                         <strong class="mp-testimonials__testimonial__reviewer">
-                                            <?php echo get_field('reviewer', $testimonial)['name'] ?>
+                                            <?php echo esc_html( get_field('reviewer', $testimonial)['name'] ); ?>
                                         </strong>
                                     </li>
                                     <?php endforeach ?>
@@ -435,26 +435,26 @@
             ?>
             <section class="mp-awards">
                 <div class="container mx-auto">
-                    <p class="mp-awards__label mp-label mp-label--primary"><?php echo $label ?></p>
+                    <p class="mp-awards__label mp-label mp-label--primary"><?php echo esc_html( $label ); ?></p>
 
                     <div class="flex flex-col md:flex-row items-start">
                         <div class="w-full md:w-5/12 md:pr-12">
                             <div class="mp-awards__header mp-header mp-header--3">
-                                <?php echo $header ?>
+                                <?php echo esc_html( $header ); ?>
                             </div>
 
-                            <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary mp-awards__desktop-cta">
-                                <?php echo $cta['title'] ?>
+                            <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary mp-awards__desktop-cta">
+                                <?php echo esc_html( $cta['title'] ); ?>
                             </a>
                         </div>
 
                         <div class="mp-carousel mp-awards__carousel glide w-full md:w-7/12">
                             <div class="glide__arrows" data-glide-el="controls">
                                 <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
-                                    <img src="<?php echo $left_icon['url'] ?>" alt="<?php echo $left_icon['alt'] ?>" />
+                                    <img src="<?php echo esc_url( $left_icon['url'] ); ?>" alt="<?php echo esc_attr( $left_icon['alt'] ); ?>" />
                                 </button>
                                 <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
-                                    <img src="<?php echo $right_icon['url'] ?>" alt="<?php echo $right_icon['alt'] ?>" />
+                                    <img src="<?php echo esc_url( $right_icon['url'] ); ?>" alt="<?php echo esc_attr( $right_icon['alt'] ); ?>" />
                                 </button>
                             </div>
 
@@ -462,7 +462,7 @@
                                 <ul class="glide__slides">
                                     <?php foreach ($awards_list as $award) : ?>
                                         <li class="glide__slide mp-awards__award">
-                                            <img src="<?php echo $award['image']['url'] ?>" alt="<?php echo $award['image']['alt'] ?>" class="mp-awards__award__image" />
+                                            <img src="<?php echo esc_url( $award['image']['url'] ); ?>" alt="<?php echo esc_attr( $award['image']['alt'] ); ?>" class="mp-awards__award__image" />
                                         </li>
                                     <?php endforeach ?>
                                 </ul>
@@ -471,8 +471,8 @@
                     </div>
 
                     <div class="block md:hidden pt-8 text-center">
-                        <a href="<?php echo $cta['url'] ?>" class="mp-button mp-button--primary">
-                            <?php echo $cta['title'] ?>
+                        <a href="<?php echo esc_url( $cta['url'] ); ?>" class="mp-button mp-button--primary">
+                            <?php echo esc_html( $cta['title'] ); ?>
                         </a>
                     </div>
                 </div>

@@ -41,8 +41,8 @@
                 <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
                     <?php $contact_phone = get_field('contact_phone', 'option'); ?>
                     <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
+                        <a href="<?php echo esc_url( $contact_phone['url'] ); ?>" class="inf-link--square__link">
+                            <?php echo esc_html( $contact_phone['title'] ); ?>
                         </a>
                     </span>
                 </strong>
@@ -52,8 +52,8 @@
         <!-- Mobile Nav -->
         <div class="xl:hidden">
               <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
+                  <a href="<?php echo esc_url( $contact_phone['url'] ); ?>">
+                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ); ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
                   </a>
 
                   <div class="xl:hidden relative">

@@ -1,9 +1,33 @@
 <?php
 
 function mp_location_navigator_search_init() {
-    $q = $_POST['q'] ? $_POST['q'] : '';
-    $post_type = $_POST['post_type'] ? $_POST['post_type'] : '';
-    $user_geopoint = $_POST['user_loc'] ? $_POST['user_loc'] : null;
+    // Verify AJAX nonce
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'mp_location_navigator_nonce' ) ) {
+        wp_die( 'Nonce verification failed.' );
+    }
+
+    // Check user capabilities (allow public access if needed, but log it)
+    if ( ! is_user_logged_in() ) {
+        // Optional: Add rate limiting or logging here
+    }
+
+    // Sanitize input
+    $q = isset( $_POST['q'] ) ? sanitize_text_field( wp_unslash( $_POST['q'] ) ) : '';
+    $post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : '';
+    $user_geopoint = isset( $_POST['user_loc'] ) ? wp_unslash( $_POST['user_loc'] ) : null;
+
+    // Validate post_type against registered post types
+    if ( ! empty( $post_type ) && ! post_type_exists( $post_type ) ) {
+        $post_type = '';
+    }
+
+    // Sanitize geopoint array if present
+    if ( is_array( $user_geopoint ) ) {
+        $user_geopoint = array(
+            'latitude'  => isset( $user_geopoint['latitude'] ) ? floatval( $user_geopoint['latitude'] ) : null,
+            'longitude' => isset( $user_geopoint['longitude'] ) ? floatval( $user_geopoint['longitude'] ) : null,
+        );
+    }
 
     $links = array();
 
@@ -84,6 +108,7 @@ function mp_location_navigator_search_init() {
 
 add_action('wp_ajax_mp_location_navigator_search', 'mp_location_navigator_search_init'); // wp_ajax_{action}
 add_action('wp_ajax_nopriv_mp_location_navigator_search', 'mp_location_navigator_search_init'); // wp_ajax_nopriv_{action}
+// Note: Frontend AJAX calls must include 'nonce' parameter with value from 'mp_location_navigator_nonce' nonce
 
 function mp_location_navigator_search_results_flat( $result_links, $header = null ) {
     if ( $header ) : ?>
@@ -94,8 +119,8 @@ function mp_location_navigator_search_results_flat( $result_links, $header = nul
     <ul>
         <?php foreach ( $result_links as $link ) : ?>
             <li>
-                <a href="<?php echo $link['url'] ?>" class="mp-link mp-link--underline">
-                    <?php echo $link['title'] ?>
+                <a href="<?php echo esc_url( $link['url'] ); ?>" class="mp-link mp-link--underline">
+                    <?php echo esc_html( $link['title'] ); ?>
                 </a>
             </li>
         <?php endforeach ?>
