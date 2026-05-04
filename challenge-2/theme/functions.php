@@ -215,8 +215,6 @@ require_once __DIR__ . '/inc/filters.php';
 require_once __DIR__ . '/inc/hooks.php';
 require_once __DIR__ . '/inc/template_functions.php';
 
-require_once __DIR__ . '/inc/cpt/all.php';
-require_once __DIR__ . '/inc/tax/all.php';
 require_once __DIR__ . '/inc/menus/all.php';
 require_once __DIR__ . '/inc/settings/all.php';
 require_once __DIR__ . '/inc/sidebars/all.php';
@@ -224,3 +222,10 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+// post types, taxonomies, meta boxes, and REST fields
+require_once __DIR__ . '/inc/meta/all.php';
+require_once __DIR__ . '/inc/rest/all.php';
+require_once __DIR__ . '/inc/plugins/all.php';
+require_once __DIR__ . '/inc/cpt/all.php';
+require_once __DIR__ . '/inc/tax/all.php';
