@@ -8,5 +8,6 @@
 @import "./css/components/cards.css";
 @import "./css/components/sections.css";
 @import "./css/components/search-bar.css";
+@import "./css/components/hero.css";
 
 @import "tailwindcss/utilities";

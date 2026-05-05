@@ -47,6 +47,61 @@ get_header();
     </div>
 </section>
 
+<!-- Hero Banner (HERO-01 through HERO-04) -->
+<section class="airpnp-container py-4" id="hero-section">
+    <div class="airpnp-hero" id="hero-banner">
+        <div class="airpnp-hero__content">
+            <h1 class="airpnp-hero__heading">
+                We stand with<br>#BlackLivesMatter
+            </h1>
+            <p class="airpnp-hero__body">
+                Now more than ever, it's important that you know how we're fighting discrimination on Airbnb. We'd like to share our newest initiative with you, Project Lighthouse.
+            </p>
+            <a href="#" class="airpnp-hero__cta" id="hero-cta">
+                Learn more
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Category Cards (CARD-01 through CARD-03) -->
+<section class="airpnp-container py-6" id="cards-section">
+    <div class="airpnp-grid">
+
+        <!-- Card 1: Outdoor (with NEW badge) -->
+        <a href="#" class="airpnp-card" id="card-outdoor">
+            <div class="airpnp-card__image">
+                <span class="airpnp-card__badge">NEW</span>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-outdoor.png"
+                     alt="Outdoor getaway with hammock"
+                     loading="lazy" />
+            </div>
+        </a>
+
+        <!-- Card 2: Workspace -->
+        <a href="#" class="airpnp-card" id="card-workspace">
+            <div class="airpnp-card__image">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-workspace.png"
+                     alt="Remote workspace with a view"
+                     loading="lazy" />
+            </div>
+        </a>
+
+        <!-- Card 3: Cabin -->
+        <a href="#" class="airpnp-card" id="card-cabin">
+            <div class="airpnp-card__image">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-cabin.png"
+                     alt="Cozy cabin in the forest"
+                     loading="lazy" />
+            </div>
+        </a>
+
+    </div>
+</section>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
