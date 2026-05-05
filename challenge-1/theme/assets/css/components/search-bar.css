@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Search Bar Component — Airbnb-style pill search bar
+   ========================================================================== */
+
+/* Search bar container */
+.airpnp-search {
+  @apply flex items-center border border-airbnb-border rounded-full
+         bg-white shadow-airbnb mx-auto max-w-4xl;
+}
+
+/* Individual field section */
+.airpnp-search__field {
+  @apply flex-1 px-6 py-4 cursor-pointer rounded-full
+         transition-colors duration-200;
+}
+
+.airpnp-search__field:hover {
+  @apply bg-airbnb-light;
+}
+
+/* Vertical dividers between fields */
+.airpnp-search__divider {
+  @apply w-px h-10 bg-airbnb-border flex-shrink-0;
+}
+
+/* Field label (uppercase) */
+.airpnp-search__label {
+  @apply block text-xs font-bold uppercase tracking-wider text-airbnb-dark;
+}
+
+/* Field placeholder text */
+.airpnp-search__placeholder {
+  @apply block text-sm text-airbnb-gray mt-0.5;
+}
+
+/* Search button */
+.airpnp-search__button {
+  @apply flex items-center gap-2 bg-airbnb-pink text-white
+         font-semibold px-6 py-3 rounded-full mr-2
+         hover:bg-[#E31C5F] transition-colors duration-200
+         cursor-pointer flex-shrink-0;
+}
+
+.airpnp-search__button svg {
+  @apply w-4 h-4;
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+  .airpnp-search {
+    @apply flex-col rounded-airbnb-lg border-0 shadow-none gap-0;
+  }
+
+  .airpnp-search__field {
+    @apply w-full rounded-airbnb border border-airbnb-border mb-2;
+  }
+
+  .airpnp-search__divider {
+    @apply hidden;
+  }
+
+  .airpnp-search__button {
+    @apply w-full justify-center mr-0 mt-2 rounded-airbnb;
+  }
+}

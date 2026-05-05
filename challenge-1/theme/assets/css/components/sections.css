@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Section & Layout Components — Full-width sections for AirPnP
+   ========================================================================== */
+
+/* Centered container */
+.airpnp-container {
+  @apply max-w-7xl mx-auto px-6 lg:px-10;
+}
+
+/* Full-width section */
+.airpnp-section {
+  @apply w-full py-8 lg:py-12;
+}
+
+/* Dark section (hero) */
+.airpnp-section--dark {
+  @apply bg-airbnb-dark text-white rounded-airbnb-lg;
+}
+
+/* Light gray section */
+.airpnp-section--light {
+  @apply bg-airbnb-light;
+}
+
+/* Section heading */
+.airpnp-section__heading {
+  @apply text-3xl lg:text-4xl font-bold text-white mb-4;
+}
+
+/* Section description */
+.airpnp-section__description {
+  @apply text-base lg:text-lg text-gray-300 max-w-md mb-6;
+  line-height: 1.6;
+}
+
+/* 3-column responsive grid (for cards) */
+.airpnp-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}

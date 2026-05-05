@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Card Components — Listing category cards for AirPnP
+   ========================================================================== */
+
+/* Card container */
+.airpnp-card {
+  @apply relative rounded-airbnb overflow-hidden cursor-pointer
+         transition-shadow duration-200;
+}
+
+.airpnp-card:hover {
+  @apply shadow-airbnb-hover;
+}
+
+/* Card image wrapper */
+.airpnp-card__image {
+  @apply relative w-full overflow-hidden rounded-airbnb;
+  aspect-ratio: 4 / 3;
+}
+
+.airpnp-card__image img {
+  @apply w-full h-full object-cover transition-transform duration-300;
+}
+
+.airpnp-card:hover .airpnp-card__image img {
+  @apply scale-105;
+}
+
+/* NEW badge overlay */
+.airpnp-card__badge {
+  @apply absolute top-3 left-3 bg-white text-airbnb-dark text-xs
+         font-bold px-2 py-1 rounded-sm shadow-sm uppercase;
+}
+
+/* Card body / caption area */
+.airpnp-card__body {
+  @apply pt-3;
+}
+
+.airpnp-card__title {
+  @apply text-lg font-semibold text-airbnb-dark;
+}
+
+.airpnp-card__subtitle {
+  @apply text-sm text-airbnb-gray mt-1;
+}
