@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Base Typography — Airbnb-style defaults
+   ========================================================================== */
+
+body {
+  @apply font-airbnb text-airbnb-dark antialiased;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-airbnb font-bold text-airbnb-dark;
+  line-height: 1.2;
+}
+
+a {
+  @apply text-airbnb-dark no-underline;
+}
+
+p {
+  @apply text-airbnb-dark;
+}
+
+small {
+  @apply text-airbnb-gray text-sm;
+}

@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Header Component — Airbnb-style header for MeanPug Challenge
+   ========================================================================== */
+
+/* COVID-19 Top Banner */
+.airpnp-banner {
+  @apply w-full py-3 text-center text-sm bg-black text-white;
+}
+
+.airpnp-banner a {
+  @apply underline font-semibold ml-1 hover:text-gray-300 transition-colors duration-200;
+}
+
+/* Main Header Bar */
+.airpnp-header {
+  @apply bg-white shadow-sm sticky top-0 z-50;
+}
+
+.airpnp-header__inner {
+  @apply max-w-7xl mx-auto;
+}
+
+/* Top section: Logo + User Menu */
+.airpnp-header__top {
+  @apply flex items-center justify-between px-6 lg:px-10 py-4;
+}
+
+/* Logo */
+.airpnp-header__logo {
+  @apply flex-shrink-0;
+}
+
+.airpnp-header__logo-link {
+  @apply flex items-center gap-2 no-underline;
+}
+
+.airpnp-header__logo-icon {
+  @apply h-10 w-auto object-contain;
+}
+
+.airpnp-header__logo a {
+  @apply block;
+}
+
+/* Right-side actions */
+.airpnp-header__actions {
+  @apply hidden lg:flex items-center gap-4 text-sm text-gray-700;
+}
+
+.airpnp-header__action-link {
+  @apply px-3 py-2 rounded-full hover:bg-gray-100 transition-colors duration-200 font-medium whitespace-nowrap;
+}
+
+/* Globe icon button */
+.airpnp-header__globe {
+  @apply p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 cursor-pointer;
+}
+
+/* User menu pill */
+.airpnp-header__user-menu {
+  @apply flex items-center gap-3 border border-gray-300 rounded-full py-1 px-2 ml-2 cursor-pointer hover:shadow-md transition-shadow duration-200 relative;
+}
+
+.airpnp-header__hamburger {
+  @apply flex flex-col gap-[3px] p-2;
+}
+
+.airpnp-header__hamburger-line {
+  @apply w-4 h-[2px] bg-gray-800 block;
+}
+
+.airpnp-header__avatar {
+  @apply w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-bold;
+}
+
+.airpnp-header__avatar img {
+  @apply w-full h-full object-cover rounded-full;
+}
+
+/* Notification badge — positioned relative to the user-menu pill, outside the avatar */
+.airpnp-header__badge {
+  @apply absolute -top-1 -right-1 w-5 h-5 bg-airbnb-pink text-white text-[10px] font-bold rounded-full flex items-center justify-center z-10 border-2 border-white;
+}
+
+/* Navigation Tabs */
+.airpnp-nav {
+  @apply px-6 lg:px-10 border-b border-gray-200;
+}
+
+.airpnp-nav__tabs {
+  @apply flex items-center gap-6 overflow-x-auto;
+}
+
+.airpnp-nav__tab {
+  @apply text-base text-gray-500 pb-3 border-b-2 border-transparent whitespace-nowrap cursor-pointer transition-colors duration-200;
+}
+
+.airpnp-nav__tab:hover {
+  @apply text-gray-900 border-gray-300;
+}
+
+.airpnp-nav__tab--active {
+  @apply text-gray-900 border-gray-900;
+}
+
+/* NEW badge on tab */
+.airpnp-nav__new-badge {
+  @apply inline-block ml-2 px-1.5 py-0.5 bg-gray-800 text-white text-[10px] font-bold rounded uppercase;
+}
+
+/* Mobile menu toggle */
+.airpnp-header__mobile-toggle {
+  @apply lg:hidden p-2 rounded-full hover:bg-gray-100 transition-colors;
+}
+
+.airpnp-header__mobile-toggle svg {
+  @apply w-6 h-6 text-gray-800;
+}
+
+/* Mobile navigation overlay */
+.airpnp-mobile-nav {
+  @apply fixed inset-0 bg-white z-[100] transform translate-x-full transition-transform duration-300 lg:hidden;
+}
+
+.airpnp-mobile-nav--open {
+  @apply translate-x-0;
+}
+
+.airpnp-mobile-nav__header {
+  @apply flex items-center justify-between p-4 border-b border-gray-200;
+}
+
+.airpnp-mobile-nav__close {
+  @apply p-2 rounded-full hover:bg-gray-100 cursor-pointer;
+}
+
+.airpnp-mobile-nav__close svg {
+  @apply w-6 h-6;
+}
+
+.airpnp-mobile-nav__links {
+  @apply p-6 space-y-4;
+}
+
+.airpnp-mobile-nav__link {
+  @apply block text-lg text-gray-800 py-3 border-b border-gray-100;
+}
+
+.airpnp-mobile-nav__link--active {
+  @apply font-semibold;
+}

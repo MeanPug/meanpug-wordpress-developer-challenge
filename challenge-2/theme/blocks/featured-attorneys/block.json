@@ -1,0 +1,16 @@
+{
+    "name": "acf/featured-attorneys",
+    "title": "Featured Attorneys",
+    "description": "Displays a grid of our top attorneys.",
+    "category": "formatting",
+    "icon": "businessman",
+    "keywords": ["attorneys", "team", "lawyers"],
+    "acf": {
+      "mode": "preview",
+      "renderTemplate": "featured-attorneys.php"
+    },
+    "supports": {
+      "anchor": true,
+      "align": true
+    }
+}

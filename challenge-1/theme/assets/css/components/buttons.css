@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Button Components — Reusable button styles for AirPnP
+   ========================================================================== */
+
+/* Base button */
+.airpnp-btn {
+  @apply inline-flex items-center justify-center font-semibold rounded-full
+         transition-all duration-200 cursor-pointer border-0;
+}
+
+/* Primary button (pink search button) */
+.airpnp-btn--primary {
+  @apply bg-airbnb-pink text-white px-6 py-3 text-base
+         hover:bg-[#E31C5F] active:scale-95;
+}
+
+/* Large primary variant */
+.airpnp-btn--primary-lg {
+  @apply bg-airbnb-pink text-white px-8 py-4 text-lg
+         hover:bg-[#E31C5F] active:scale-95;
+}
+
+/* Icon inside button */
+.airpnp-btn__icon {
+  @apply mr-2 w-4 h-4;
+}
+
+/* Link-style button with arrow chevron */
+.airpnp-btn--link {
+  @apply text-white font-semibold text-base bg-transparent p-0
+         hover:underline;
+}
+
+.airpnp-btn--link::after {
+  content: '›';
+  @apply ml-2 text-xl inline-block transition-transform duration-200;
+}
+
+.airpnp-btn--link:hover::after {
+  @apply translate-x-1;
+}
+
+/* Dark link variant */
+.airpnp-btn--link-dark {
+  @apply text-airbnb-dark;
+}

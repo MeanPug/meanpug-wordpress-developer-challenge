@@ -1,0 +1,16 @@
+{
+    "name": "acf/verdicts",
+    "title": "Verdicts & Settlements",
+    "description": "Displays the latest case results.",
+    "category": "formatting",
+    "icon": "awards",
+    "keywords": ["verdicts", "settlements", "results"],
+    "acf": {
+      "mode": "preview",
+      "renderTemplate": "verdicts.php"
+    },
+    "supports": {
+      "anchor": true,
+      "align": true
+    }
+}

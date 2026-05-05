@@ -19,54 +19,50 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class('overflow-x-hidden'); ?>>
 
-<nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
-            <?php echo get_custom_logo() ?>
+<header class="sticky top-0 z-50 w-full h-[80px] bg-[#0b1120] border-b border-white/5 flex items-center">
+    <div class="max-w-[1400px] mx-auto px-6 w-full flex items-center justify-between gap-6">
+        <div class="flex-shrink-0">
+            <a href="<?php echo home_url(); ?>" class="text-white text-xl font-black tracking-tight hover:text-[#d4af37] transition-colors uppercase">
+                MeanPug
+            </a>
         </div>
 
-        <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
-            </div>
+        <nav class="hidden xl:block">
+            <?php wp_nav_menu(array(
+                'theme_location' => 'nav',
+                'container' => false,
+                'menu_class' => 'flex items-center space-x-10 text-[11px] font-bold uppercase tracking-[0.2em] text-white/70',
+                'items_wrap' => '<ul class="%2$s">%3$s</ul>',
+                'fallback_cb' => false,
+            )); ?>
+        </nav>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
-            </div>
+        <div class="hidden lg:flex items-center">
+            <a href="tel:1-800-PUG-FIRM" class="text-white font-black text-lg tracking-widest hover:text-[#d4af37] transition-colors">
+                1-800-PUG-FIRM
+            </a>
         </div>
 
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
-
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
+        <div class="lg:hidden">
+            <button id="mobile-menu-toggle" class="text-white p-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle mobile menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </div>
     </div>
-</nav>
+    <nav id="mobile-menu" class="hidden lg:hidden bg-[#0b1120] border-t border-white/10 px-6 py-6" aria-hidden="true">
+        <?php wp_nav_menu(array(
+            'theme_location' => 'nav',
+            'container' => false,
+            'menu_class' => 'flex flex-col gap-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/70',
+            'items_wrap' => '<ul class="%2$s">%3$s</ul>',
+            'fallback_cb' => false,
+        )); ?>
+        <a href="tel:1-800-PUG-FIRM" class="inline-block mt-4 text-[#d4af37] font-black tracking-widest">1-800-PUG-FIRM</a>
+    </nav>
+</header>
 
-<div id="page" class="site">
+<div id="page" class="site bg-white min-h-screen flex flex-col">
 
-	<div id="content" class="site-content">
+	<div id="content" class="site-content flex-grow">
