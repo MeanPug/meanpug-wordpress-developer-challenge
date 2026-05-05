@@ -41,9 +41,9 @@ function register_block_acf_fields() {
         'location' => array(
             array(
                 array(
-                    'param' => 'block',
+                    'param' => 'page_type',
                     'operator' => '==',
-                    'value' => 'acf/hero-banner',
+                    'value' => 'front_page',
                 ),
             ),
         ),
@@ -65,9 +65,9 @@ function register_block_acf_fields() {
         'location' => array(
             array(
                 array(
-                    'param' => 'block',
+                    'param' => 'page_type',
                     'operator' => '==',
-                    'value' => 'acf/verdicts',
+                    'value' => 'front_page',
                 ),
             ),
         ),
@@ -89,9 +89,9 @@ function register_block_acf_fields() {
         'location' => array(
             array(
                 array(
-                    'param' => 'block',
+                    'param' => 'page_type',
                     'operator' => '==',
-                    'value' => 'acf/featured-attorneys',
+                    'value' => 'front_page',
                 ),
             ),
         ),

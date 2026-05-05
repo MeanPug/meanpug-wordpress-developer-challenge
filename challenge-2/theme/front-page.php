@@ -15,16 +15,19 @@
 get_header();
 ?>
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+        <main id="main" class="site-main">
+            <?php
+            // Since ACF PRO is not available for ACF Blocks, we natively include the sections
+            // 1. Hero Banner
+            include get_template_directory() . '/blocks/hero-banner/hero-banner.php';
 
-			<?php
-			while ( have_posts() ) :
-				the_post();
+            // 2. Verdicts
+            include get_template_directory() . '/blocks/verdicts/verdicts.php';
 
-				get_template_part( 'template-parts/content', 'front-page' );
-			endwhile;
-			?>
-		</main><!-- #main -->
+            // 3. Featured Attorneys
+            include get_template_directory() . '/blocks/featured-attorneys/featured-attorneys.php';
+            ?>
+        </main><!-- #main -->
 	</div><!-- #primary -->
 
 <?php

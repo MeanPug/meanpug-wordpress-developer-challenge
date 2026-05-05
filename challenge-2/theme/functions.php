@@ -196,8 +196,13 @@ function inf_load_blocks() {
 
             $block_css_path = '/dist/' . $block . '/' . $block . '.min.css';
             $block_js_path = '/dist/' . $block . '/' . $block . '.min.js';
-            wp_register_style( 'blocks/' . $block . '-style', get_template_directory_uri() . $block_css_path, null, filemtime(get_template_directory() . $block_css_path) );
-            wp_register_script( 'blocks/' . $block . '-script', get_template_directory_uri() . $block_js_path, array('mp-core-script'), filemtime(get_template_directory() . $block_js_path) );
+            
+            if (file_exists(get_template_directory() . $block_css_path)) {
+                wp_register_style( 'blocks/' . $block . '-style', get_template_directory_uri() . $block_css_path, null, filemtime(get_template_directory() . $block_css_path) );
+            }
+            if (file_exists(get_template_directory() . $block_js_path)) {
+                wp_register_script( 'blocks/' . $block . '-script', get_template_directory_uri() . $block_js_path, array('mp-core-script'), filemtime(get_template_directory() . $block_js_path) );
+            }
 
 //            if ( file_exists( get_template_directory() . '/blocks/' . $block . '/init.php' ) ) {
 //                include_once get_template_directory() . '/blocks/' . $block . '/init.php';
