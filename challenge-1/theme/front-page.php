@@ -12,13 +12,13 @@
 get_header();
 ?>
 
-<!-- Search Bar (SRC-01 through SRC-04) -->
+<!-- Search Bar  -->
 <section class="airpnp-container py-6" id="search-section">
     <div class="airpnp-search" id="search-bar">
         <!-- Location Field -->
         <div class="airpnp-search__field" id="search-location">
             <span class="airpnp-search__label">Location</span>
-            <span class="airpnp-search__placeholder">Where are you going?</span>
+            <span class="airpnp-search__placeholder">Where is your pug going?</span>
         </div>
 
         <div class="airpnp-search__divider" aria-hidden="true"></div>
@@ -26,15 +26,15 @@ get_header();
         <!-- Check In / Check Out Field -->
         <div class="airpnp-search__field" id="search-dates">
             <span class="airpnp-search__label">Check in / Check out</span>
-            <span class="airpnp-search__placeholder">Add dates</span>
+            <span class="airpnp-search__placeholder">Add sniff dates</span>
         </div>
 
         <div class="airpnp-search__divider" aria-hidden="true"></div>
 
         <!-- Guests Field -->
         <div class="airpnp-search__field" id="search-guests">
-            <span class="airpnp-search__label">Guests</span>
-            <span class="airpnp-search__placeholder">Add guests</span>
+            <span class="airpnp-search__label">Pugs</span>
+            <span class="airpnp-search__placeholder">How many pugs?</span>
         </div>
 
         <!-- Search Button -->
@@ -47,7 +47,7 @@ get_header();
     </div>
 </section>
 
-<!-- Hero Banner (HERO-01 through HERO-04) -->
+<!-- Hero Banner  -->
 <section class="airpnp-container py-4" id="hero-section">
     <div class="airpnp-hero" id="hero-banner">
         <div class="airpnp-hero__content">
@@ -67,17 +67,20 @@ get_header();
     </div>
 </section>
 
-<!-- Category Cards (CARD-01 through CARD-03) -->
+<!-- Category Cards  -->
 <section class="airpnp-container py-6" id="cards-section">
     <div class="airpnp-grid">
 
-        <!-- Card 1: Outdoor (with NEW badge) -->
+        <!-- Card 1: Outdoor  -->
         <a href="#" class="airpnp-card" id="card-outdoor">
             <div class="airpnp-card__image">
                 <span class="airpnp-card__badge">NEW</span>
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-outdoor.png"
-                     alt="Outdoor getaway with hammock"
+                     alt="Pug relaxing in a tropical hammock"
                      loading="lazy" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/MeanPug-Best-In-Show-Icon.png"
+                     alt="Pug mascot"
+                     class="airpnp-card__mascot" />
             </div>
         </a>
 
@@ -85,8 +88,11 @@ get_header();
         <a href="#" class="airpnp-card" id="card-workspace">
             <div class="airpnp-card__image">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-workspace.png"
-                     alt="Remote workspace with a view"
+                     alt="Pug at a cozy remote workspace"
                      loading="lazy" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/MeanPug-Best-In-Show-Icon.png"
+                     alt="Pug mascot"
+                     class="airpnp-card__mascot" />
             </div>
         </a>
 
@@ -94,26 +100,16 @@ get_header();
         <a href="#" class="airpnp-card" id="card-cabin">
             <div class="airpnp-card__image">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/card-cabin.png"
-                     alt="Cozy cabin in the forest"
+                     alt="Pug at a cozy forest cabin"
                      loading="lazy" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/MeanPug-Best-In-Show-Icon.png"
+                     alt="Pug mascot"
+                     class="airpnp-card__mascot" />
             </div>
         </a>
 
     </div>
 </section>
-
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-
-			<?php
-			while ( have_posts() ) :
-				the_post();
-
-				get_template_part( 'template-parts/content', 'front-page' );
-			endwhile;
-			?>
-		</main><!-- #main -->
-	</div><!-- #primary -->
 
 <?php
 get_footer();

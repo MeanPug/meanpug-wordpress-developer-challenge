@@ -1,17 +1,11 @@
-/* ==========================================================================
-   Search Bar Component — Airbnb-style pill search bar
-   ========================================================================== */
-
 /* Search bar container */
 .airpnp-search {
-  @apply flex items-center border border-airbnb-border rounded-full
-         bg-white shadow-airbnb mx-auto max-w-4xl;
+  @apply flex items-center border border-airbnb-border rounded-airbnb bg-white shadow-airbnb;
 }
 
 /* Individual field section */
 .airpnp-search__field {
-  @apply flex-1 px-6 py-4 cursor-pointer rounded-full
-         transition-colors duration-200;
+  @apply flex-1 px-6 py-4 cursor-pointer rounded-airbnb transition-colors duration-200;
 }
 
 .airpnp-search__field:hover {
@@ -35,10 +29,7 @@
 
 /* Search button */
 .airpnp-search__button {
-  @apply flex items-center gap-2 bg-airbnb-pink text-white
-         font-semibold px-6 py-3 rounded-full mr-2
-         hover:bg-[#E31C5F] transition-colors duration-200
-         cursor-pointer flex-shrink-0;
+  @apply flex items-center gap-2 bg-airbnb-pink text-white font-semibold px-6 py-3 rounded-airbnb mr-2 hover:bg-[#E31C5F] transition-colors duration-200 cursor-pointer flex-shrink-0;
 }
 
 .airpnp-search__button svg {

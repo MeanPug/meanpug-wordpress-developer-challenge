@@ -30,8 +30,12 @@
   @apply flex-shrink-0;
 }
 
-.airpnp-header__logo img {
-  @apply h-8 w-auto;
+.airpnp-header__logo-link {
+  @apply flex items-center gap-2 no-underline;
+}
+
+.airpnp-header__logo-icon {
+  @apply h-10 w-auto object-contain;
 }
 
 .airpnp-header__logo a {
@@ -54,7 +58,7 @@
 
 /* User menu pill */
 .airpnp-header__user-menu {
-  @apply flex items-center gap-3 border border-gray-300 rounded-full py-1 px-2 ml-2 cursor-pointer hover:shadow-md transition-shadow duration-200;
+  @apply flex items-center gap-3 border border-gray-300 rounded-full py-1 px-2 ml-2 cursor-pointer hover:shadow-md transition-shadow duration-200 relative;
 }
 
 .airpnp-header__hamburger {
@@ -66,16 +70,16 @@
 }
 
 .airpnp-header__avatar {
-  @apply w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-bold overflow-hidden;
+  @apply w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-bold;
 }
 
 .airpnp-header__avatar img {
-  @apply w-full h-full object-cover;
+  @apply w-full h-full object-cover rounded-full;
 }
 
-/* Notification badge */
+/* Notification badge — positioned relative to the user-menu pill, outside the avatar */
 .airpnp-header__badge {
-  @apply absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center;
+  @apply absolute -top-1 -right-1 w-5 h-5 bg-airbnb-pink text-white text-[10px] font-bold rounded-full flex items-center justify-center z-10 border-2 border-white;
 }
 
 /* Navigation Tabs */

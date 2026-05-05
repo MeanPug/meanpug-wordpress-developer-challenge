@@ -21,33 +21,32 @@
 
 <body <?php body_class(); ?>>
 
-<!-- COVID-19 Top Banner (HDR-01) -->
+<!-- COVID-19 Top Banner -->
 <div class="airpnp-banner" id="covid-banner">
-    Get the latest on our COVID-19 response and cancellation policies.
+    Get the latest on our Pug Adoption initiatives and foster policies.
     <a href="#">Learn more</a>
 </div>
 
-<!-- Main Site Header (HDR-02, HDR-04, HDR-05) -->
+<!-- Main Site Header  -->
 <header class="airpnp-header" id="site-header">
     <div class="airpnp-header__inner">
 
         <!-- Top Row: Logo + Actions -->
         <div class="airpnp-header__top">
 
-            <!-- Logo (HDR-02) -->
+            <!-- Logo -->
             <div class="airpnp-header__logo">
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php bloginfo( 'name' ); ?> — Home">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Pugs Sactuary — Home" class="airpnp-header__logo-link">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/meanpug-logo.png"
-                         alt="<?php bloginfo( 'name' ); ?>"
-                         width="250"
-                         height="150" />
+                         alt="Pugs Sactuary"
+                         class="airpnp-header__logo-icon" />
                 </a>
             </div>
 
-            <!-- Right-side User Menu (HDR-04) -->
+            <!-- Right-side User Menu  -->
             <div class="airpnp-header__actions">
-                <a href="#" class="airpnp-header__action-link">Host your home</a>
-                <a href="#" class="airpnp-header__action-link">Host an experience</a>
+                <a href="#" class="airpnp-header__action-link">Host a pug home</a>
+                <a href="#" class="airpnp-header__action-link">Foster a pug</a>
                 <a href="#" class="airpnp-header__action-link">Help</a>
 
                 <!-- Globe Icon -->
@@ -59,6 +58,8 @@
 
                 <!-- User Menu Pill -->
                 <button class="airpnp-header__user-menu" aria-label="User menu" id="user-menu-toggle">
+                    <!-- Notification Badge -->
+                    <span class="airpnp-header__badge">2</span>
                     <!-- Hamburger Icon -->
                     <div class="airpnp-header__hamburger" aria-hidden="true">
                         <span class="airpnp-header__hamburger-line"></span>
@@ -66,17 +67,15 @@
                         <span class="airpnp-header__hamburger-line"></span>
                     </div>
                     <!-- Avatar -->
-                    <div class="airpnp-header__avatar relative">
+                    <div class="airpnp-header__avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
                             <path d="M16 1a15 15 0 1 0 0 30 15 15 0 0 0 0-30zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 22a12 12 0 0 1-9.4-4.6C9.4 20.3 13.5 19 16 19s6.6 1.3 9.4 4.4A12 12 0 0 1 16 28z"/>
                         </svg>
-                        <!-- Notification Badge -->
-                        <span class="airpnp-header__badge">2</span>
                     </div>
                 </button>
             </div>
 
-            <!-- Mobile Menu Toggle (HDR-05) -->
+            <!-- Mobile Menu Toggle  -->
             <button class="airpnp-header__mobile-toggle" id="mobile-menu-toggle" aria-label="Open menu">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -85,14 +84,14 @@
 
         </div>
 
-        <!-- Navigation Tabs (HDR-03) -->
+        <!-- Navigation Tabs -->
         <nav class="airpnp-nav" id="main-navigation" aria-label="Main navigation">
             <ul class="airpnp-nav__tabs">
-                <li class="airpnp-nav__tab airpnp-nav__tab--active">Places to stay</li>
-                <li class="airpnp-nav__tab">Monthly stays</li>
+                <li class="airpnp-nav__tab airpnp-nav__tab--active">Pug Stays</li>
+                <li class="airpnp-nav__tab">Monthly Fosters</li>
                 <li class="airpnp-nav__tab">Experiences</li>
                 <li class="airpnp-nav__tab">
-                    Online Experiences
+                    Online Meet & Greets
                     <span class="airpnp-nav__new-badge">NEW</span>
                 </li>
             </ul>
@@ -101,14 +100,13 @@
     </div>
 </header>
 
-<!-- Mobile Navigation Overlay (HDR-05) -->
+<!-- Mobile Navigation Overlay  -->
 <div class="airpnp-mobile-nav" id="mobile-nav-overlay" aria-hidden="true">
     <div class="airpnp-mobile-nav__header">
         <div class="airpnp-header__logo">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/meanpug-logo.png"
-                 alt="<?php bloginfo( 'name' ); ?>"
-                 width="250"
-                 height="150" />
+                 alt="Pugs Sactuary"
+                 class="airpnp-header__logo-icon" />
         </div>
         <button class="airpnp-mobile-nav__close" id="mobile-menu-close" aria-label="Close menu">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -117,12 +115,12 @@
         </button>
     </div>
     <div class="airpnp-mobile-nav__links">
-        <a href="#" class="airpnp-mobile-nav__link airpnp-mobile-nav__link--active">Places to stay</a>
-        <a href="#" class="airpnp-mobile-nav__link">Monthly stays</a>
+        <a href="#" class="airpnp-mobile-nav__link airpnp-mobile-nav__link--active">Pug Stays</a>
+        <a href="#" class="airpnp-mobile-nav__link">Monthly Fosters</a>
         <a href="#" class="airpnp-mobile-nav__link">Experiences</a>
-        <a href="#" class="airpnp-mobile-nav__link">Online Experiences</a>
-        <a href="#" class="airpnp-mobile-nav__link">Host your home</a>
-        <a href="#" class="airpnp-mobile-nav__link">Host an experience</a>
+        <a href="#" class="airpnp-mobile-nav__link">Online Meet & Greets</a>
+        <a href="#" class="airpnp-mobile-nav__link">Host a pug home</a>
+        <a href="#" class="airpnp-mobile-nav__link">Foster a pug</a>
         <a href="#" class="airpnp-mobile-nav__link">Help</a>
     </div>
 </div>

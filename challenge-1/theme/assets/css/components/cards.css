@@ -4,8 +4,7 @@
 
 /* Card container */
 .airpnp-card {
-  @apply relative rounded-airbnb overflow-hidden cursor-pointer
-         transition-shadow duration-200;
+  @apply relative rounded-airbnb overflow-hidden cursor-pointer transition-shadow duration-200;
 }
 
 .airpnp-card:hover {
@@ -18,18 +17,27 @@
   aspect-ratio: 4 / 3;
 }
 
-.airpnp-card__image img {
+.airpnp-card__image img:not(.airpnp-card__mascot) {
   @apply w-full h-full object-cover transition-transform duration-300;
 }
 
-.airpnp-card:hover .airpnp-card__image img {
+.airpnp-card:hover .airpnp-card__image img:not(.airpnp-card__mascot) {
   @apply scale-105;
 }
 
 /* NEW badge overlay */
 .airpnp-card__badge {
-  @apply absolute top-3 left-3 bg-white text-airbnb-dark text-xs
-         font-bold px-2 py-1 rounded-sm shadow-sm uppercase;
+  @apply absolute top-3 left-3 bg-white text-airbnb-dark text-xs font-bold px-2 py-1 rounded-sm shadow-sm uppercase z-10;
+}
+
+/* Pug mascot decoration — top-right corner */
+.airpnp-card__mascot {
+  @apply absolute top-2 right-2 w-12 h-12 rounded-full z-10 drop-shadow-md transition-transform duration-300;
+  object-fit: contain;
+}
+
+.airpnp-card:hover .airpnp-card__mascot {
+  @apply scale-110 rotate-6;
 }
 
 /* Card body / caption area */
