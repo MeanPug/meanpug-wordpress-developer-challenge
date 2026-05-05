@@ -131,19 +131,32 @@ add_action( 'widgets_init', 'inf_widgets_init' );
  */
 function inf_scripts() {
 	global $wp_query;
+  $theme_dir = get_stylesheet_directory();
+  $theme_uri = get_stylesheet_directory_uri();
 
-	wp_deregister_script( 'jquery' );
+  wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', get_template_directory_uri() . '/assets/js/vendor/jquery-3.6.0.min.js', false, NULL, true );
   wp_enqueue_script( 'jquery' );
 
-  wp_enqueue_script( 'mp-core-script', 'https://static.meanpugdigital.com/2.4.4/main.js', array('jquery'), null, true);
-  wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
+  wp_enqueue_script( 'mp-core-script', 'https://static.meanpugdigital.com/2.4.4/main.js', array( 'jquery' ), null, true );
+  wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null );
+  wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0' );
 
-  wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
-	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
+  if ( file_exists( $theme_dir . '/critical.css' ) ) {
+	  wp_enqueue_style( 'inf-critical-style', $theme_uri . '/critical.css', array(), filemtime( $theme_dir . '/critical.css' ) );
+  }
 
-	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
-  wp_enqueue_script( 'inf-main-scripts', get_stylesheet_directory_uri() . '/main.js', array('jquery', 'mp-core-script'), filemtime(get_stylesheet_directory() . '/main.js'), true);
+  if ( file_exists( $theme_dir . '/critical.js' ) ) {
+	  wp_enqueue_script( 'inf-critical-scripts', $theme_uri . '/critical.js', array( 'jquery' ), filemtime( $theme_dir . '/critical.js' ), true );
+  }
+
+  if ( file_exists( $theme_dir . '/main.css' ) ) {
+    wp_enqueue_style( 'inf-main-style', $theme_uri . '/main.css', array( 'inf-critical-style' ), filemtime( $theme_dir . '/main.css' ) );
+  }
+
+  if ( file_exists( $theme_dir . '/main.js' ) ) {
+    wp_enqueue_script( 'inf-main-scripts', $theme_uri . '/main.js', array( 'jquery', 'mp-core-script' ), filemtime( $theme_dir . '/main.js' ), true );
+  }
 
   wp_dequeue_style('megamenu-genericons');
   wp_dequeue_style('megamenu-fontawesome6');
@@ -163,10 +176,29 @@ function inf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
 
-function inf_add_footer_styles() {
-	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );
-};
-add_action( 'get_footer', 'inf_add_footer_styles' );
+/**
+ * Ensure local challenge installs have working pretty permalinks and rewrite rules.
+ */
+function inf_ensure_pretty_permalinks() {
+  $target_structure = '/%postname%/';
+  $rewrite_version = get_option( 'inf_rewrite_bootstrap_version' );
+  $current_structure = get_option( 'permalink_structure' );
+
+  if ( $current_structure !== $target_structure ) {
+    global $wp_rewrite;
+
+    $wp_rewrite->set_permalink_structure( $target_structure );
+    flush_rewrite_rules( true );
+    update_option( 'inf_rewrite_bootstrap_version', '1' );
+    return;
+  }
+
+  if ( '1' !== $rewrite_version ) {
+    flush_rewrite_rules( true );
+    update_option( 'inf_rewrite_bootstrap_version', '1' );
+  }
+}
+add_action( 'init', 'inf_ensure_pretty_permalinks', 99 );
 
 /**
  * Get Blocks

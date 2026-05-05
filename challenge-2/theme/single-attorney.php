@@ -10,9 +10,9 @@ if (have_posts()) :
         $direct_phone = get_field('direct_phone');
 ?>
 
-<div class="bg-gray-50 min-h-screen py-12">
+<div class="bg-gray-900 min-h-screen py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row">
+        <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-700">
             
             <!-- Left Sidebar -->
             <div class="md:w-1/3 bg-gray-900 text-white p-8 flex flex-col items-center md:items-start text-center md:text-left">
@@ -60,34 +60,34 @@ if (have_posts()) :
 
             <!-- Right Main Content -->
             <div class="md:w-2/3 p-8 md:p-12">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b-2 border-gray-100">Biography</h2>
-                <div class="prose max-w-none text-gray-700 mb-12 leading-relaxed">
+                <h2 class="text-2xl font-bold text-white mb-6 pb-2 border-b-2 border-gray-700">Biography</h2>
+                <div class="prose max-w-none text-gray-300 mb-12 leading-relaxed">
                     <?php the_content(); ?>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php if ($education) : ?>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-4 border-l-4 border-yellow-500 pl-3">Education</h3>
-                            <div class="text-gray-700 prose prose-sm">
+                            <h3 class="text-xl font-bold text-white mb-4 border-l-4 border-yellow-500 pl-3">Education</h3>
+                            <div class="text-gray-300 prose prose-sm">
                                 <?php echo wp_kses_post($education); ?>
                             </div>
                         </div>
                     <?php endif; ?>
-
+ 
                     <?php if ($bar_admissions) : ?>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-4 border-l-4 border-yellow-500 pl-3">Bar Admissions</h3>
-                            <div class="text-gray-700">
+                            <h3 class="text-xl font-bold text-white mb-4 border-l-4 border-yellow-500 pl-3">Bar Admissions</h3>
+                            <div class="text-gray-300">
                                 <?php echo wpautop(wp_kses_post($bar_admissions)); ?>
                             </div>
                         </div>
                     <?php endif; ?>
-
+ 
                     <?php if ($awards) : ?>
                         <div class="md:col-span-2 mt-4">
-                            <h3 class="text-xl font-bold text-gray-900 mb-4 border-l-4 border-yellow-500 pl-3">Awards & Recognitions</h3>
-                            <div class="text-gray-700">
+                            <h3 class="text-xl font-bold text-white mb-4 border-l-4 border-yellow-500 pl-3">Awards & Recognitions</h3>
+                            <div class="text-gray-300">
                                 <?php echo wpautop(wp_kses_post($awards)); ?>
                             </div>
                         </div>

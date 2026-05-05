@@ -1,66 +1,47 @@
 <?php
-$heading = get_field('attorneys_heading') ?: 'Meet Our Experienced Team';
+/**
+ * Block Name: Featured Attorneys
+ * Description: Display attorneys in Harkness style
+ */
 
 $args = array(
     'post_type'      => 'attorney',
-    'posts_per_page' => 4,
-    'post_status'    => 'publish',
+    'posts_per_page' => 2,
 );
 $query = new WP_Query($args);
 
-if (isset($block['data']['is_preview'])) : ?>
-    <div style="padding:20px; border:2px dashed #ccc; background:#fafafa;">
-        <h3 style="text-align:center;"><?php echo esc_html($heading); ?></h3>
-        <p style="text-align:center; color:#666;">[ Preview of 4 recent Attorneys will display here ]</p>
-    </div>
-<?php else : ?>
-    <section class="py-20 px-6 bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
-                <?php echo esc_html($heading); ?>
-            </h2>
+if ($query->have_posts()) : ?>
+    <section class="py-32 px-6 bg-white border-t border-gray-100">
+        <div class="max-w-[1000px] mx-auto">
+            <div class="mb-16">
+                <span class="section-label text-[#d4af37] text-4xl font-bold">Our Firm</span>
+                <h2 class="text-black text-3xl font-medium">The Faces of Justice.</h2>
+            </div>
             
-            <?php if ($query->have_posts()) : ?>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <?php while ($query->have_posts()) : $query->the_post(); ?>
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-2">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <a href="<?php the_permalink(); ?>" class="block h-64 overflow-hidden">
-                                    <?php the_post_thumbnail('medium_large', ['class' => 'w-full h-full object-cover object-top']); ?>
-                                </a>
-                            <?php else : ?>
-                                <div class="h-64 bg-gray-300 flex items-center justify-center">
-                                    <span class="text-gray-500">No Photo</span>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <div class="p-6 flex-grow flex flex-col">
-                                <h3 class="text-xl font-bold text-gray-900 mb-1">
-                                    <a href="<?php the_permalink(); ?>" class="hover:text-yellow-600 transition-colors">
-                                        <?php the_title(); ?>
-                                    </a>
-                                </h3>
-                                
-                                <div class="text-gray-600 text-sm flex-grow mb-4">
-                                    <?php echo wp_trim_words(get_the_excerpt(), 15, '...'); ?>
-                                </div>
-                                
-                                <a href="<?php the_permalink(); ?>" class="text-yellow-600 font-semibold uppercase tracking-wider text-sm hover:text-yellow-700">
-                                    View Profile &rarr;
-                                </a>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <?php while ($query->have_posts()) : $query->the_post(); 
+                    $headshot = get_field('attorney_headshot');
+                    $title = get_field('attorney_title') ?: 'Attorney at Law';
+                    $img_url = $headshot ? $headshot['url'] : get_template_directory_uri() . '/assets/images/harkness_hero_pug.png';
+                ?>
+                    <div class="attorney-card-harkness group">
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img src="<?php echo esc_url($img_url); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100">
+                            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60"></div>
                         </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
-                </div>
-                
-                <div class="text-center mt-12">
-                    <a href="<?php echo get_post_type_archive_link('attorney'); ?>" class="inline-block bg-gray-900 text-white font-bold py-3 px-8 rounded shadow hover:bg-gray-800 transition-colors duration-300">
-                        See All Attorneys
-                    </a>
-                </div>
-            <?php else : ?>
-                <p class="text-center text-gray-500">No attorneys published yet.</p>
-            <?php endif; ?>
+                        <div class="p-8 text-center border-t-4 border-[#d4af37]">
+                            <h3 class="text-xl font-black text-[#0b1120] uppercase tracking-tight mb-1"><?php the_title(); ?></h3>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"><?php echo esc_html($title); ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; wp_reset_postdata(); ?>
+            </div>
+
+            <div class="mt-20 text-center">
+                <a href="<?php echo get_post_type_archive_link('attorney'); ?>" class="bg-[#d4af37] text-black px-10 py-4 rounded text-[10px] font-black uppercase tracking-widest hover:bg-[#0b1120] hover:text-white transition-colors shadow-xl inline-block">
+                    Meet Our Firm
+                </a>
+            </div>
         </div>
     </section>
 <?php endif; ?>
