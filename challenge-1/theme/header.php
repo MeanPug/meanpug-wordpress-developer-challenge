@@ -21,51 +21,130 @@
 
 <body <?php body_class(); ?>>
 
-<nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
-            <?php echo get_custom_logo() ?>
-        </div>
+<!-- COVID-19 Top Banner (HDR-01) -->
+<div class="airpnp-banner" id="covid-banner">
+    Get the latest on our COVID-19 response and cancellation policies.
+    <a href="#">Learn more</a>
+</div>
 
-        <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
+<!-- Main Site Header (HDR-02, HDR-04, HDR-05) -->
+<header class="airpnp-header" id="site-header">
+    <div class="airpnp-header__inner">
+
+        <!-- Top Row: Logo + Actions -->
+        <div class="airpnp-header__top">
+
+            <!-- Logo (HDR-02) -->
+            <div class="airpnp-header__logo">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php bloginfo( 'name' ); ?> — Home">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/meanpug-logo.png"
+                         alt="<?php bloginfo( 'name' ); ?>"
+                         width="250"
+                         height="150" />
+                </a>
             </div>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
+            <!-- Right-side User Menu (HDR-04) -->
+            <div class="airpnp-header__actions">
+                <a href="#" class="airpnp-header__action-link">Host your home</a>
+                <a href="#" class="airpnp-header__action-link">Host an experience</a>
+                <a href="#" class="airpnp-header__action-link">Help</a>
+
+                <!-- Globe Icon -->
+                <button class="airpnp-header__globe" aria-label="Choose a language">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm5.9 7h-2.2a12.6 12.6 0 0 0-1.1-4.7A6.5 6.5 0 0 1 13.9 7zM8 14.5c-.8 0-2-2-2.3-5.5h4.6c-.3 3.5-1.5 5.5-2.3 5.5zM5.7 7C6 3.5 7.2 1.5 8 1.5s2 2 2.3 5.5H5.7zM5.4 2.3A12.6 12.6 0 0 0 4.3 7H2.1a6.5 6.5 0 0 1 3.3-4.7zM2.1 9h2.2a12.6 12.6 0 0 0 1.1 4.7A6.5 6.5 0 0 1 2.1 9zm8.5 4.7A12.6 12.6 0 0 0 11.7 9h2.2a6.5 6.5 0 0 1-3.3 4.7z"/>
+                    </svg>
+                </button>
+
+                <!-- User Menu Pill -->
+                <button class="airpnp-header__user-menu" aria-label="User menu" id="user-menu-toggle">
+                    <!-- Hamburger Icon -->
+                    <div class="airpnp-header__hamburger" aria-hidden="true">
+                        <span class="airpnp-header__hamburger-line"></span>
+                        <span class="airpnp-header__hamburger-line"></span>
+                        <span class="airpnp-header__hamburger-line"></span>
+                    </div>
+                    <!-- Avatar -->
+                    <div class="airpnp-header__avatar relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M16 1a15 15 0 1 0 0 30 15 15 0 0 0 0-30zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 22a12 12 0 0 1-9.4-4.6C9.4 20.3 13.5 19 16 19s6.6 1.3 9.4 4.4A12 12 0 0 1 16 28z"/>
+                        </svg>
+                        <!-- Notification Badge -->
+                        <span class="airpnp-header__badge">2</span>
+                    </div>
+                </button>
             </div>
+
+            <!-- Mobile Menu Toggle (HDR-05) -->
+            <button class="airpnp-header__mobile-toggle" id="mobile-menu-toggle" aria-label="Open menu">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+
         </div>
 
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
+        <!-- Navigation Tabs (HDR-03) -->
+        <nav class="airpnp-nav" id="main-navigation" aria-label="Main navigation">
+            <ul class="airpnp-nav__tabs">
+                <li class="airpnp-nav__tab airpnp-nav__tab--active">Places to stay</li>
+                <li class="airpnp-nav__tab">Monthly stays</li>
+                <li class="airpnp-nav__tab">Experiences</li>
+                <li class="airpnp-nav__tab">
+                    Online Experiences
+                    <span class="airpnp-nav__new-badge">NEW</span>
+                </li>
+            </ul>
+        </nav>
 
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
-        </div>
     </div>
-</nav>
+</header>
+
+<!-- Mobile Navigation Overlay (HDR-05) -->
+<div class="airpnp-mobile-nav" id="mobile-nav-overlay" aria-hidden="true">
+    <div class="airpnp-mobile-nav__header">
+        <div class="airpnp-header__logo">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/meanpug-logo.png"
+                 alt="<?php bloginfo( 'name' ); ?>"
+                 width="250"
+                 height="150" />
+        </div>
+        <button class="airpnp-mobile-nav__close" id="mobile-menu-close" aria-label="Close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    <div class="airpnp-mobile-nav__links">
+        <a href="#" class="airpnp-mobile-nav__link airpnp-mobile-nav__link--active">Places to stay</a>
+        <a href="#" class="airpnp-mobile-nav__link">Monthly stays</a>
+        <a href="#" class="airpnp-mobile-nav__link">Experiences</a>
+        <a href="#" class="airpnp-mobile-nav__link">Online Experiences</a>
+        <a href="#" class="airpnp-mobile-nav__link">Host your home</a>
+        <a href="#" class="airpnp-mobile-nav__link">Host an experience</a>
+        <a href="#" class="airpnp-mobile-nav__link">Help</a>
+    </div>
+</div>
+
+<script>
+(function() {
+    var toggle = document.getElementById('mobile-menu-toggle');
+    var overlay = document.getElementById('mobile-nav-overlay');
+    var close = document.getElementById('mobile-menu-close');
+
+    if (toggle && overlay && close) {
+        toggle.addEventListener('click', function() {
+            overlay.classList.add('airpnp-mobile-nav--open');
+            overlay.setAttribute('aria-hidden', 'false');
+        });
+        close.addEventListener('click', function() {
+            overlay.classList.remove('airpnp-mobile-nav--open');
+            overlay.setAttribute('aria-hidden', 'true');
+        });
+    }
+})();
+</script>
 
 <div id="page" class="site">
 

@@ -7,6 +7,13 @@ module.exports = {
         fontFamily: {
         },
         extend: {
+            colors: {
+                'airbnb-pink': '#FF385C',
+                'airbnb-dark': '#222222',
+                'airbnb-gray': '#717171',
+                'airbnb-light': '#F7F7F7',
+                'airbnb-border': '#DDDDDD',
+            },
             zIndex: {
                 '-10': '-10'
             },
