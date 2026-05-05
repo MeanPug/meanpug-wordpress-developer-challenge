@@ -1,0 +1,147 @@
+<?php
+
+function register_practice_area_acf_fields() {
+    if( function_exists('acf_add_local_field_group') ):
+
+    acf_add_local_field_group(array(
+        'key' => 'group_practice_area_meta',
+        'title' => 'Practice Area Meta',
+        'fields' => array(
+            array(
+                'key' => 'field_pa_icon_class',
+                'label' => 'Icon Class',
+                'name' => 'icon_class',
+                'type' => 'text',
+                'instructions' => 'e.g., FontAwesome class like fa-solid fa-gavel',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => 'fa-solid fa-gavel',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_pa_short_description',
+                'label' => 'Short Description',
+                'name' => 'short_description',
+                'type' => 'textarea',
+                'instructions' => 'A brief description to show on cards or listings.',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'maxlength' => '',
+                'rows' => 3,
+                'new_lines' => '',
+            ),
+            array(
+                'key' => 'field_pa_faq_1_question',
+                'label' => 'FAQ 1 Question',
+                'name' => 'faq_1_question',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_pa_faq_1_answer',
+                'label' => 'FAQ 1 Answer',
+                'name' => 'faq_1_answer',
+                'type' => 'textarea',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'maxlength' => '',
+                'rows' => 3,
+                'new_lines' => 'br',
+            ),
+            array(
+                'key' => 'field_pa_faq_2_question',
+                'label' => 'FAQ 2 Question',
+                'name' => 'faq_2_question',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_pa_faq_2_answer',
+                'label' => 'FAQ 2 Answer',
+                'name' => 'faq_2_answer',
+                'type' => 'textarea',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'maxlength' => '',
+                'rows' => 3,
+                'new_lines' => 'br',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'practice-area',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    endif;
+}
+
+add_action('acf/init', 'register_practice_area_acf_fields');

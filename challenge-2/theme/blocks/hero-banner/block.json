@@ -1,0 +1,16 @@
+{
+    "name": "acf/hero-banner",
+    "title": "Hero Banner",
+    "description": "A high-impact hero section for the law firm.",
+    "category": "formatting",
+    "icon": "shield",
+    "keywords": ["hero", "banner", "law firm"],
+    "acf": {
+      "mode": "preview",
+      "renderTemplate": "hero-banner.php"
+    },
+    "supports": {
+      "anchor": true,
+      "align": true
+    }
+}
