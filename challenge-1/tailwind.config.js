@@ -1,7 +1,8 @@
 module.exports = {
     content: [
         './theme/**/*.php',
-        './theme/**/*.js'
+        './theme/**/*.js',
+        './theme/**/*.css' // ADDED THIS LINE
     ],
     theme: {
         fontFamily: {

@@ -1,0 +1,11 @@
+.inf-logo-block {
+    @apply font-normal text-9xl;
+    .logo-text {
+        color: red;
+        @apply font-normal text-8xl;
+        text-decoration: none;
+    }
+}
+.pug-logo{
+    font-size: 1000px;
+}

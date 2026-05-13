@@ -224,3 +224,18 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+
+
+/**
+ * Enqueue Google Fonts - Roboto
+ */
+function my_theme_enqueue_fonts() {
+    wp_enqueue_style(
+        'google-fonts-roboto',
+        'https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap',
+        array(),
+        null
+    );
+}
+add_action('wp_enqueue_scripts', 'my_theme_enqueue_fonts');

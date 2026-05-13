@@ -1,5 +1,6 @@
 <?php
 /**
+ *  Template Name: Home Jorge Robles
  * The template for displaying all pages
  *
  * This is the template that displays all pages by default.
@@ -13,10 +14,13 @@
  */
 
 get_header();
+echo do_blocks('<!-- wp:acf/topribbon /-->');
+echo do_blocks('<!-- wp:acf/header /-->');
+echo do_blocks('<!-- wp:acf/searchbar /-->');
+echo do_blocks('<!-- wp:acf/hero /-->');
 ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-
 			<?php
 			while ( have_posts() ) :
 				the_post();
