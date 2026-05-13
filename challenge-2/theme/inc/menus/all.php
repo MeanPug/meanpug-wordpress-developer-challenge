@@ -9,3 +9,19 @@ function inf_register_menus() {
 		) );
 }
 add_action( 'after_setup_theme', 'inf_register_menus' );
+
+/*-----------------------------------------------------------------------------------*/
+/* PRACTICE AREAS MENU
+/*-----------------------------------------------------------------------------------*/
+function practice_areas_admin_menu() {
+    add_menu_page(
+        'Practice Areas',
+        'Practice Areas',
+        'read',
+        'practice-areas-menu',
+        '',
+        'dashicons-awards',
+        41
+    );
+}
+add_action('admin_menu', 'practice_areas_admin_menu');

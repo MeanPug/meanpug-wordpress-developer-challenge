@@ -1,0 +1,19 @@
+.inf-topribbon {
+    @apply flex justify-center mb-[30px] px-[30px] py-[15px] bg-[#F7F7F7];
+    h3{
+        @apply flex justify-center items-center font-normal;
+        font-family: Roboto, sans-serif;
+        a{
+            @apply text-[#000000] font-bold;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .inf-topribbon {
+        @apply flex justify-center mb-[30px] px-[30px] py-[15px] bg-[#F7F7F7];
+        h3{
+            flex-flow: column;
+            gap: 20px;
+        }
+    }
+}

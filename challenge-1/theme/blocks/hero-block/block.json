@@ -1,0 +1,23 @@
+{
+    "name": "acf/hero",
+    "title": "hero Block",
+    "description": "hero Block for this challenge",
+    "category": "child-theme-blocks",
+    "icon": "admin-home",
+    "keywords": ["hero", "block", "jorge"],
+    "acf": {
+      "mode": "preview",
+      "renderTemplate": "block.php"
+    },
+    "example": {
+      "attributes": {
+        "data": {
+          "is_preview": true
+        }
+      }
+    },
+    "supports": {
+      "anchor": true
+    },
+    "style": "blocks/hero-block-style"
+  }

@@ -1,0 +1,24 @@
+.inf-hero {
+    @apply flex justify-center m-[30px] py-[15px] rounded-[10px];
+    .inf-hero__img{
+        @apply rounded-[10px];
+        width: 100%;
+        height: 80vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+@media only screen and (max-width: 768px){
+    .inf-hero {
+        @apply flex justify-center m-[30px] py-[15px] rounded-[10px];
+        .inf-hero__img{
+            @apply rounded-[10px];
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}

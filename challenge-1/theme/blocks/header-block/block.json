@@ -1,0 +1,23 @@
+{
+    "name": "acf/header",
+    "title": "Header Block",
+    "description": "Header Block for this challenge",
+    "category": "child-theme-blocks",
+    "icon": "admin-home",
+    "keywords": ["header", "block", "jorge"],
+    "acf": {
+      "mode": "preview",
+      "renderTemplate": "block.php"
+    },
+    "example": {
+      "attributes": {
+        "data": {
+          "is_preview": true
+        }
+      }
+    },
+    "supports": {
+      "anchor": true
+    },
+    "style": "blocks/header-block-style"
+  }
