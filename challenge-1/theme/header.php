@@ -12,61 +12,35 @@
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
 
-<nav class="sticky bg-green inf-site-header z-20">
-    <div class="container flex items-center justify-between pt-8 pb-6">
-        <div class="w-48 lg:w-96">
-            <?php echo get_custom_logo() ?>
-        </div>
+    <div id="page" class="site">
 
-        <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden lg:flex">
-            <div class="flex-grow">
-                <?php wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_class' => 'inf-menu inf-menu--nav',
-                )); ?>
+        <?php get_template_part('template-parts/headers/announcement', 'bar'); ?>
+
+        <header class="site-header bg-white z-50 font-sans">
+            <div class="container mx-auto px-4 md:px-8">
+
+                <?php get_template_part('template-parts/headers/navbar'); ?>
+
+                <?php if (is_front_page()): ?>
+
+                    <?php get_template_part('template-parts/headers/search', 'expanded'); ?>
+
+                <?php endif; ?>
+
             </div>
+        </header>
 
-            <div class="pl-8 text-center font-sans text-white-shade">
-                <strong class="uppercase font-normal text-sm block tracking-widest"><?php _e('Free Call 24/7', 'inf') ?></strong>
-                <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
-                    <?php $contact_phone = get_field('contact_phone', 'option'); ?>
-                    <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
-                    </span>
-                </strong>
-            </div>
-        </div>
-
-        <!-- Mobile Nav -->
-        <div class="xl:hidden">
-              <div class="flex items-center">
-                  <a href="<?php echo $contact_phone['url'] ?>">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/icons/ic-phone.svg' ?>" alt="<?php _e('Phone Icon', 'inf') ?>" class="w-7 mr-6"/>
-                  </a>
-
-                  <div class="xl:hidden relative">
-                      <?php wp_nav_menu(array(
-                        'theme_location' => 'mobile-nav',
-                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
-                      )); ?>
-                  </div>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<div id="page" class="site">
-
-	<div id="content" class="site-content">
+        <div id="content" class="site-content">
