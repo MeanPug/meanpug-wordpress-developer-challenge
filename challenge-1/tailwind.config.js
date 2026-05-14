@@ -21,7 +21,10 @@ module.exports = {
             },
             maxHeight: {
                 96: '24rem'
-            }
+            },
+            fontFamily: {
+               sans: ['Inter', 'sans-serif'],
+            },
         }
     },
     variants: {},
