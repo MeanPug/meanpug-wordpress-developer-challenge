@@ -4,6 +4,7 @@ We've tried to make it _super easy_ to get up and running on this [challenge](ht
 # About my changes during this challenge
 
 ### Architectural Refactoring
+* ** The ACP plugin must be installed and activated! 
 * **Decoupled Header:** Refactored `header.php` to load modular components from `template-parts/headers/`:
     * `navbar.php`: Branding and user navigation.
     * `search-expanded.php`: Responsive search interface.
