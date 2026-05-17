@@ -224,3 +224,339 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+
+function pa_listing(){
+
+	$args= [
+		'post_type' => 'PA',
+		'status' => 'published'
+	];
+
+	// The Query.
+		$the_query = new WP_Query( $args );
+
+		// The Loop.
+		if ( $the_query->have_posts() ) {
+			echo '<ul>';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo '<li>' . esc_html( get_the_title() ) . '</li>';
+			}
+			echo '</ul>';
+		} else {
+			esc_html_e( 'Sorry, no posts matched your criteria.' );
+		}
+		// Restore original Post Data.
+		wp_reset_postdata();
+}
+
+add_shortcode('pa_listing', 'pa_listing');
+
+function pa_single($atts){
+	 $atts = shortcode_atts(
+        array(
+            'id' => '',
+        ),
+        $atts,
+        'pa_single'
+    );
+
+	 // Validate that an ID was provided
+    if ( empty( $atts['id'] ) ) {
+        return '';
+    }
+
+    $post_id = intval( $atts['id'] );
+
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_type !== 'pa' ) {
+        return '';
+    }
+
+    if ( $post->post_status !== 'publish' ) {
+        return '';
+    }
+
+	$title     = get_the_title( $post_id );
+	$permalink = get_permalink( $post_id );
+
+	ob_start();
+    ?>
+    <div class="my-shortcode">
+        <h3><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></h3>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('pa_single', 'pa_single');
+
+function review_listing(){
+
+	$args= [
+		'post_type' => 'review',
+		'status' => 'published'
+	];
+
+	// The Query.
+		$the_query = new WP_Query( $args );
+
+		// The Loop.
+		if ( $the_query->have_posts() ) {
+			echo '<ul>';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo '<li>' . esc_html( get_the_title() ) . '</li>';
+			}
+			echo '</ul>';
+		} else {
+			esc_html_e( 'Sorry, no posts matched your criteria.' );
+		}
+		// Restore original Post Data.
+		wp_reset_postdata();
+}
+
+add_shortcode('review_listing', 'review_listing');
+
+function review_single($atts){
+	 $atts = shortcode_atts(
+        array(
+            'id' => '',
+        ),
+        $atts,
+        'review_single'
+    );
+
+	 // Validate that an ID was provided
+    if ( empty( $atts['id'] ) ) {
+        return '';
+    }
+
+    $post_id = intval( $atts['id'] );
+
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_type !== 'review' ) {
+        return '';
+    }
+
+    if ( $post->post_status !== 'publish' ) {
+        return '';
+    }
+
+	$title     = get_the_title( $post_id );
+	$permalink = get_permalink( $post_id );
+
+	ob_start();
+    ?>
+    <div class="my-shortcode">
+        <h3><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></h3>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('review_single', 'review_single');
+
+function staff_listing(){
+
+	$args= [
+		'post_type' => 'staff',
+		'status' => 'published'
+	];
+
+	// The Query.
+		$the_query = new WP_Query( $args );
+
+		// The Loop.
+		if ( $the_query->have_posts() ) {
+			echo '<ul>';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo '<li>' . esc_html( get_the_title() ) . '</li>';
+			}
+			echo '</ul>';
+		} else {
+			esc_html_e( 'Sorry, no posts matched your criteria.' );
+		}
+		// Restore original Post Data.
+		wp_reset_postdata();
+}
+
+add_shortcode('staff_listing', 'staff_listing');
+
+function staff_single($atts){
+	 $atts = shortcode_atts(
+        array(
+            'id' => '',
+        ),
+        $atts,
+        'staff_single'
+    );
+
+	 // Validate that an ID was provided
+    if ( empty( $atts['id'] ) ) {
+        return '';
+    }
+
+    $post_id = intval( $atts['id'] );
+
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_type !== 'staff' ) {
+        return '';
+    }
+
+    if ( $post->post_status !== 'publish' ) {
+        return '';
+    }
+
+	$title     = get_the_title( $post_id );
+	$permalink = get_permalink( $post_id );
+
+	ob_start();
+    ?>
+    <div class="my-shortcode">
+        <h3><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></h3>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('staff_single', 'staff_single');
+
+function result_listing(){
+
+	$args= [
+		'post_type' => 'result',
+		'status' => 'published'
+	];
+
+	// The Query.
+		$the_query = new WP_Query( $args );
+
+		// The Loop.
+		if ( $the_query->have_posts() ) {
+			echo '<ul>';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo '<li>' . esc_html( get_the_title() ) . '</li>';
+			}
+			echo '</ul>';
+		} else {
+			esc_html_e( 'Sorry, no posts matched your criteria.' );
+		}
+		// Restore original Post Data.
+		wp_reset_postdata();
+}
+
+add_shortcode('result_listing', 'result_listing');
+
+function result_single($atts){
+	 $atts = shortcode_atts(
+        array(
+            'id' => '',
+        ),
+        $atts,
+        'result_single'
+    );
+
+	 // Validate that an ID was provided
+    if ( empty( $atts['id'] ) ) {
+        return '';
+    }
+
+    $post_id = intval( $atts['id'] );
+
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_type !== 'result' ) {
+        return '';
+    }
+
+    if ( $post->post_status !== 'publish' ) {
+        return '';
+    }
+
+	$title     = get_the_title( $post_id );
+	$permalink = get_permalink( $post_id );
+
+	ob_start();
+    ?>
+    <div class="my-shortcode">
+        <h3><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></h3>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('result_single', 'result_single');
+
+function location_listing(){
+
+	$args= [
+		'post_type' => 'location',
+		'status' => 'published'
+	];
+
+	// The Query.
+		$the_query = new WP_Query( $args );
+
+		// The Loop.
+		if ( $the_query->have_posts() ) {
+			echo '<ul>';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo '<li>' . esc_html( get_the_title() ) . '</li>';
+			}
+			echo '</ul>';
+		} else {
+			esc_html_e( 'Sorry, no posts matched your criteria.' );
+		}
+		// Restore original Post Data.
+		wp_reset_postdata();
+}
+
+add_shortcode('location_listing', 'location_listing');
+
+function location_single($atts){
+	 $atts = shortcode_atts(
+        array(
+            'id' => '',
+        ),
+        $atts,
+        'result_single'
+    );
+
+	 // Validate that an ID was provided
+    if ( empty( $atts['id'] ) ) {
+        return '';
+    }
+
+    $post_id = intval( $atts['id'] );
+
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_type !== 'location' ) {
+        return '';
+    }
+
+    if ( $post->post_status !== 'publish' ) {
+        return '';
+    }
+
+	$title     = get_the_title( $post_id );
+	$permalink = get_permalink( $post_id );
+
+	ob_start();
+    ?>
+    <div class="my-shortcode">
+        <h3><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></h3>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('location_single', 'location_single');
