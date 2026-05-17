@@ -9,3 +9,257 @@ Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 7.0
 */
+
+body{
+    margin: 0;
+}
+
+a{
+    color: #000;
+    font-weight: bold;
+}
+
+#menu-main-menu{
+   list-style: none;
+   display: flex;
+   justify-content: end;
+}
+
+#menu-main-menu .menu-item{
+    padding-left: 2rem;
+    
+}
+
+#menu-main-menu .menu-item a{
+    text-decoration: none;
+}
+
+.top-header-bar{
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: #eee;
+}
+
+.custom-logo-link {
+    max-width: 300px;
+}
+
+.nav-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.travel-options ul{
+    list-style: none;
+    display: flex;
+    max-width: 40%;
+    justify-content: space-between;
+}
+
+.travel-options ul li{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.travel-options ul li:hover{
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 3px; 
+}
+
+.user-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2rem;
+    padding: 0 1rem;
+    box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+    border-radius: 50px;
+    text-decoration: none;
+}
+
+.user-profile p{
+    padding-right: 1rem;
+    
+}
+
+.form-container {
+    max-width: 93vw;
+    margin: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.form-group:not(:last-of-type):before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 2rem;
+    border-right: 1px solid #ccc;
+}
+
+.form-group label {
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.form-group input {
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    z-index: 1;
+    background-color: transparent;
+}
+
+.submit-btn {
+    margin-left: 150px;
+    padding: 10px 20px;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+.blm-container{
+    display: flex;
+    justify-content: center;
+}
+
+.blm-banner{
+    background-color: #000;
+    color: #fff;
+    padding: 8rem;
+    padding-bottom: 4rem;
+    margin-top: 2rem;
+    border-radius: 12px;
+    width: 80%;
+}
+
+.blm-inner{
+    width: 30%;
+}
+
+.blm-inner h2{
+    font-size: 50px;
+}
+
+.blm-link{
+    color: #fff;
+}
+
+.mobile-nav{
+    display: none;
+}
+
+.hamburger{
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dashicons.dashicons-menu.menu-toggle{
+    display: none;
+}
+
+@media(max-width: 1199px){
+    .desktop-nav{
+        display: none;
+    }
+
+    .mobile-nav{
+        display: block;
+         position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background: #fff;
+        transition: right 0.3s ease;
+        padding-top: 80px;
+    }
+
+    .mobile-nav.active {
+      right: 0;
+    }
+
+    .mobile-nav ul{
+        list-style-type: none;
+    }
+
+    .mobile-nav ul li{
+        margin-bottom: 1rem;
+    }
+
+    .dashicons.dashicons-menu.menu-toggle{
+        position: absolute;
+        right: 0; 
+    }
+
+    .dashicons.dashicons-menu.menu-toggle, .dashicons.dashicons-no-alt.menu-toggle{
+        width: 50px;
+        font-size: 30px;
+    }
+
+    .top-header-bar{
+        padding: 2rem;
+    }
+
+    .travel-options ul{
+        flex-direction: column;
+    }
+
+    .travel-options ul li{
+        margin-bottom: 0.6rem;
+    }
+
+    .form-container form{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-group{
+        margin-bottom: 1rem;
+    }
+    .form-group:not(:last-of-type):before{
+        content: none;
+    }
+
+    .submit-btn{
+        margin-left: 0;
+    }
+
+    .blm-banner{
+        padding: 2rem 1rem;
+    }
+}

@@ -224,3 +224,8 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+function my_theme_scripts() {
+    wp_enqueue_style('dashicons');
+}
+add_action('wp_enqueue_scripts', 'my_theme_scripts');
