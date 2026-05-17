@@ -27,7 +27,7 @@
         
 
         <!-- Desktop Nav -->
-        <div class="pl-12 items-center justify-end hidden flex">
+        <div class="pl-12 items-center justify-end hidden flex desktop-nav">
             <div class="nav-container">
                 <div class="w-48 lg:w-96">
                     <?php echo get_custom_logo() ?>
@@ -50,8 +50,45 @@
                 
             </div>
         </div>
+
+         <!-- Mobile Nav -->
+          <div class="hamburguer dashicons dashicons-menu menu-toggle" id="menuToggle">
+          </div>
+        <div class="xl:hidden mobile-nav" id="mobile-nav">
+            
+              <div class="flex items-center">
+                  <div class="w-48 lg:w-96">
+                    <?php echo get_custom_logo() ?>
+                    </div>
+
+                  <div class="xl:hidden relative">
+                      <?php wp_nav_menu(array(
+                        'theme_location' => 'mobile-nav',
+                        'menu_class' => "header-menu", // (string) CSS class to use for the ul element which forms the menu. Default 'menu'.
+                      )); ?>
+                  </div>
+            </div>
+        </div>
     </div>
 </nav>
+
+<script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobile-nav");
+
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+
+      // Switch icon
+      if (mobileMenu.classList.contains("active")) {
+        menuToggle.classList.remove("dashicons-menu");
+        menuToggle.classList.add("dashicons-no-alt");
+      } else {
+        menuToggle.classList.remove("dashicons-no-alt");
+        menuToggle.classList.add("dashicons-menu");
+      }
+    });
+  </script>
 
 <div id="page" class="site">
 
