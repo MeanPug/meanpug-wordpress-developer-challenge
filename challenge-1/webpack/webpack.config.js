@@ -6,6 +6,7 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const root = path.dirname(__dirname);
 
 const prod = {
+    devtool: 'source-map',
     optimization: {
         minimize: true,
         minimizer: [new TerserJSPlugin({}), new CssMinimizerPlugin()]
@@ -13,6 +14,7 @@ const prod = {
 };
 
 const dev = {
+    devtool: 'eval-cheap-module-source-map',
     watchOptions: {
         ignored: ['**/dist']
     }
@@ -21,7 +23,8 @@ const dev = {
 const base = {
     entry: {
         critical: path.resolve(root, 'theme/assets/critical.js'),
-        main: path.resolve(root, 'theme/assets/main.js')
+        main: path.resolve(root, 'theme/assets/main.js'),
+        'front-page': path.resolve(root, 'theme/assets/front-page.js')
     },
     output: {
         path: path.resolve(root, 'theme'),

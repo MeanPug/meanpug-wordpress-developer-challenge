@@ -33,7 +33,11 @@ function buildJs(cb) {
 }
 
 exports.default = parallel(buildJs, buildCss);
-exports.dev = function devWatch() {
+// `dev` does an initial build then watches — without the initial build there
+// would be no dist files on first boot, which trips `inf_load_blocks()` in
+// functions.php (`filemtime()` on a non-existent path emits a PHP warning).
+exports.dev = series(parallel(buildJs, buildCss), function devWatch(cb) {
     watch(path.resolve(blockSources, '**/*.(css|js)'), parallel(buildJs, buildCss));
     watch(path.resolve(moduleSources, '**/*.(css|js)'), parallel(buildJs, buildCss));
-};
+    cb();
+});

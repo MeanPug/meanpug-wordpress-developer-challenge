@@ -1,0 +1,22 @@
+/**
+ * Listing cards block — minimal styles.
+ *
+ * Most layout handled by Tailwind utility classes in render.php; this file
+ * just exists so Gulp's `blocks/**\/*.css` glob produces a corresponding
+ * dist/listing-cards/listing-cards.min.css and `inf_load_blocks()`'s
+ * `filemtime()` call doesn't emit a PHP warning on cold boot.
+ */
+.airpnp-listings:focus-within .airpnp-card a:focus-visible {
+    outline: 2px solid #ff385c;
+    outline-offset: 2px;
+}
+
+@keyframes airpnp-skeleton-shimmer {
+    0%   { opacity: 0.85; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.85; }
+}
+
+.airpnp-listings-skeleton-card {
+    animation: airpnp-skeleton-shimmer 1.6s ease-in-out infinite;
+}
