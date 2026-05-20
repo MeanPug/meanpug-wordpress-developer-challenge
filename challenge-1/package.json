@@ -51,14 +51,14 @@
     "postcss-nested": "^4.2.3",
     "postcss-simple-vars": "^7.0.1",
     "style-loader": "^1.2.1",
+    "tailwindcss": "^3",
     "terser-webpack-plugin": "^5",
     "url-loader": "^4",
     "webpack": "^5",
-    "webpack-cli": "^4",
-    "tailwindcss": "^3"
+    "webpack-cli": "^4"
   },
   "dependencies": {
-    "babel-polyfill": "^6",
+    "flatpickr": "^4.6.13",
     "micromodal": "^0.4"
   }
 }

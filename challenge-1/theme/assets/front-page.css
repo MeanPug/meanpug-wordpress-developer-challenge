@@ -1,0 +1,15 @@
+/**
+ * Front-page stylesheet.
+ *
+ * Generates Tailwind base/components/utilities scoped to the front page
+ * bundle (only enqueued via Airpnp\Assets when is_front_page()), plus
+ * the small set of hand-written rules Tailwind utilities can't express
+ * cleanly (e.g. the system-font stack we want on body.home).
+ */
+
+@import "flatpickr/dist/flatpickr.min.css";
+@import "./css/templates/front-page.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

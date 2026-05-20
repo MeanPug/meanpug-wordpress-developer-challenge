@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/office-map",
+    "title": "Pug & Puggle: Office Map",
+    "description": "Google Map with office locations and an address list.",
+    "category": "pug-puggle-blocks",
+    "icon": "location-alt",
+    "keywords": ["offices", "map"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "Visit an Office" }
+    },
+    "editorScript": "blocks/office-map-editor-script",
+    "render": "file:./office-map.php",
+    "example": {
+        "attributes": {
+            "heading": "Visit an Office"
+        }
+    }
+}

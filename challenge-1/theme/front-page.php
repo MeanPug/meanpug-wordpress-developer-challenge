@@ -1,31 +1,36 @@
 <?php
 /**
- * The template for displaying all pages
+ * Front page template — AirPnP aesthetic above-the-fold.
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
+ * Renders the queried object's content (a static front-page's blocks, or
+ * the latest-posts list if `show_on_front` is set to "posts"). When no
+ * content is available (fresh install before the seed runs), falls back
+ * to a bare airpnp/listing-cards render so the fold still reads correctly.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * The listing-cards block has its own transient-cached data layer
+ * (see Airpnp\Front_Page::get_listing_cards), so wherever the editor
+ * drops it, it stays cheap.
  *
- * @package infra
+ * @package Airpnp
  */
 
-get_header();
+get_header( 'front-page' );
 ?>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-
-			<?php
-			while ( have_posts() ) :
-				the_post();
-
-				get_template_part( 'template-parts/content', 'front-page' );
-			endwhile;
-			?>
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
+<main id="main" class="site-main">
+	<?php
+	// Render the queried object's content (a static front-page's blocks,
+	// or the latest posts' content). The editor is expected to place the
+	// listing-cards block where they want it; we only fall back to a bare
+	// listing-cards render when there's no content at all (fresh installs).
+	if ( have_posts() ) {
+		while ( have_posts() ) :
+			the_post();
+			the_content();
+		endwhile;
+	} else {
+		echo do_blocks( '<!-- wp:airpnp/listing-cards /-->' );
+	}
+	?>
+</main>
 <?php
 get_footer();

@@ -1,0 +1,119 @@
+/**
+ * Front-page custom rules (non-Tailwind).
+ *
+ * Imported by `theme/assets/front-page.css`. Anything Tailwind can express
+ * stays as utility classes in the PHP markup; this file holds things that
+ * are awkward or impossible as utilities.
+ */
+
+/* Figtree (Google Fonts) with a system fallback stack to avoid FOIT/CLS while loading. */
+body.home,
+body.airpnp {
+    font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Visually-hidden helper, in case Tailwind's `sr-only` isn't generated. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Smooth hover lift on listing cards without overriding focus outlines. */
+.airpnp-card a:focus-visible {
+    outline: 2px solid #ff385c;
+    outline-offset: 2px;
+}
+
+/* Search-card hairline dividers, mobile collapse. */
+@media (max-width: 767px) {
+    .airpnp-search .airpnp-search-cell + .airpnp-search-cell {
+        border-top: 1px solid #e7e5e4;
+    }
+    .airpnp-search-cell:focus-within {
+        background-color: #fafaf9;
+    }
+}
+
+/* Hide scrollbar on the mobile nav-tabs strip (no Tailwind plugin available). */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Edge-fade so the strip clearly looks scrollable on mobile. */
+@media (max-width: 1023px) {
+    .airpnp-nav-tabs {
+        -webkit-overflow-scrolling: touch;
+        mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+    }
+}
+
+/* Focus-visible ring for keyboard nav across the tabs. */
+.airpnp-nav-tab:focus-visible {
+    outline: 2px solid #ff385c;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* The host-nav UL carries Tailwind's `.flex` utility (needed for the mobile
+   dropdown to stack items as a column when open), which would otherwise win
+   over the browser's `[hidden] { display: none }` rule because author CSS
+   beats the UA stylesheet at equal specificity. Force-honor the `hidden`
+   attribute on mobile, then re-force inline visibility on desktop. */
+.airpnp-host-nav[hidden] {
+    display: none !important;
+}
+@media (min-width: 768px) {
+    .airpnp-host-nav[hidden] {
+        display: flex !important;
+    }
+}
+
+/* Toast fade-in. */
+.airpnp-toast {
+    animation: airpnp-toast-in 200ms ease-out;
+}
+
+@keyframes airpnp-toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respect user motion preference. */
+@media (prefers-reduced-motion: reduce) {
+    .airpnp-toast,
+    .airpnp-card img,
+    .airpnp-search-submit {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -29,12 +29,16 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+# but commit the AirPnP seed export so reviewers get a fully-configured site
+!airpnp-seed.sql
 
 # compiled files
 theme/main.js
 theme/main.css
 theme/critical.js
 theme/critical.css
+theme/front-page.js
+theme/front-page.css
 theme/dist
 theme/assets/images/build/*
 !theme/assets/images/build/.gitkeep

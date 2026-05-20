@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/faq-accordion",
+    "title": "Pug & Puggle: FAQ Accordion",
+    "description": "Accordion of FAQs with FAQ Page JSON-LD schema.",
+    "category": "pug-puggle-blocks",
+    "icon": "editor-help",
+    "keywords": ["faq", "questions"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "Frequently Asked Questions" },
+        "faqIds": { "type": "array", "default": [] }
+    },
+    "editorScript": "blocks/faq-accordion-editor-script",
+    "render": "file:./faq-accordion.php",
+    "example": {
+        "attributes": {
+            "heading": "Frequently Asked Questions",
+            "faqIds": []
+        }
+    }
+}

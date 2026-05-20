@@ -1,14 +1,14 @@
 <?php
 
 #-- Default Hooks
-add_action( 'block_categories', 'inf_block_categories', 10, 2 );
+add_filter( 'block_categories_all', 'inf_block_categories', 10, 2 );
 function inf_block_categories( $categories ) {
     return array_merge(
         $categories,
         [
             [
-                'slug'  => 'child-theme-blocks',
-                'title' => __( 'inf Formatting Blocks' ),
+                'slug'  => 'pug-puggle-blocks',
+                'title' => __( 'Pug & Puggle Blocks', 'inf' ),
             ],
         ]
     );
@@ -21,12 +21,12 @@ function mp_parent_block_categories( $categories ) {
         [
             [
                 'slug'  => 'mp-parent',
-                'title' => __( 'Parent Theme Blocks' ),
+                'title' => __( 'Parent Theme Blocks', 'inf' ),
             ]
         ]
     );
 }
-add_action( 'block_categories', 'mp_parent_block_categories', 10, 2 );
+add_filter( 'block_categories_all', 'mp_parent_block_categories', 10, 2 );
 
 # Fix SVG
 function mp_fix_svg() {
@@ -99,21 +99,48 @@ add_action('mpdcontent/ask-question/submission', function($data) {
   );
 });
 
-add_action('mpdreviews/new-reviews', function($new_reviews) {
-  foreach ($new_reviews as $review) {
-    $post_data = [
-      'post_title'    => $review['title'],
-      'post_content'  => $review['body'],
-      'post_status'   => 'publish',
-      'post_category' => [],
-      'post_type'     => 'testimonials',
-      'tags_input'    => [],
-    ];
+add_action('mpdreviews/new-reviews', function( $new_reviews ) {
+    if ( ! is_array( $new_reviews ) ) {
+        return;
+    }
 
-    // Insert the post into the database
-    $post_id = wp_insert_post($post_data);
+    foreach ( $new_reviews as $review ) {
+        $title  = isset( $review['title'] ) ? sanitize_text_field( $review['title'] ) : '';
+        $body   = isset( $review['body'] ) ? wp_kses_post( $review['body'] ) : '';
+        $rating = isset( $review['rating'] ) && is_numeric( $review['rating'] )
+            ? max( 1, min( 5, (int) $review['rating'] ) )
+            : 0;
+        $reviewer_name = isset( $review['reviewer']['name'] )
+            ? sanitize_text_field( $review['reviewer']['name'] )
+            : '';
 
-    update_field('rating', $review['rating'], $post_id);
-    update_field('reviewer_name', $review['reviewer']['name'], $post_id);
-  }
+        if ( '' === $title && '' === $body ) {
+            continue;
+        }
+
+        $post_id = wp_insert_post(
+            [
+                'post_title'    => $title,
+                'post_content'  => $body,
+                'post_status'   => 'publish',
+                'post_category' => [],
+                'post_type'     => 'testimonials',
+                'tags_input'    => [],
+            ],
+            true
+        );
+
+        if ( is_wp_error( $post_id ) || ! $post_id ) {
+            continue;
+        }
+
+        if ( function_exists( 'update_field' ) ) {
+            if ( $rating > 0 ) {
+                update_field( 'rating', $rating, $post_id );
+            }
+            if ( '' !== $reviewer_name ) {
+                update_field( 'reviewer', [ 'name' => $reviewer_name ], $post_id );
+            }
+        }
+    }
 });

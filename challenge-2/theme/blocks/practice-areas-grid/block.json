@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/practice-areas-grid",
+    "title": "Pug & Puggle: Practice Areas Grid",
+    "description": "Grid of practice area cards with optional category filter.",
+    "category": "pug-puggle-blocks",
+    "icon": "portfolio",
+    "keywords": ["practice", "areas"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "Practice Areas" },
+        "intro": { "type": "string", "default": "" },
+        "limit": { "type": "number", "default": 6 },
+        "category": { "type": "number", "default": 0 }
+    },
+    "editorScript": "blocks/practice-areas-grid-editor-script",
+    "render": "file:./practice-areas-grid.php",
+    "example": {
+        "attributes": {
+            "heading": "Practice Areas",
+            "intro": "Decades of trial experience across personal injury, mass tort, and class action work.",
+            "limit": 6,
+            "category": 0
+        }
+    }
+}

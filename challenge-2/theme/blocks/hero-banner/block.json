@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/hero-banner",
+    "title": "Pug & Puggle: Hero Banner",
+    "description": "Full-bleed hero with heading, subheading, two CTAs, and an optional background image.",
+    "category": "pug-puggle-blocks",
+    "icon": "cover-image",
+    "keywords": ["hero", "banner"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "" },
+        "subheading": { "type": "string", "default": "" },
+        "primaryCtaUrl": { "type": "string", "default": "" },
+        "primaryCtaTitle": { "type": "string", "default": "" },
+        "primaryCtaNewTab": { "type": "boolean", "default": false },
+        "secondaryCtaUrl": { "type": "string", "default": "" },
+        "secondaryCtaTitle": { "type": "string", "default": "" },
+        "secondaryCtaNewTab": { "type": "boolean", "default": false },
+        "backgroundImageId": { "type": "number", "default": 0 },
+        "backgroundImageUrl": { "type": "string", "default": "" }
+    },
+    "editorScript": "blocks/hero-banner-editor-script",
+    "render": "file:./hero-banner.php",
+    "example": {
+        "attributes": {
+            "heading": "Justice. Pursued with bite.",
+            "subheading": "The Law Firm of Pug and Puggle, ESQ — fighting for you since day one.",
+            "primaryCtaUrl": "#",
+            "primaryCtaTitle": "Free Consultation",
+            "primaryCtaNewTab": false,
+            "secondaryCtaUrl": "#",
+            "secondaryCtaTitle": "Our Attorneys",
+            "secondaryCtaNewTab": false,
+            "backgroundImageId": 0,
+            "backgroundImageUrl": ""
+        }
+    }
+}

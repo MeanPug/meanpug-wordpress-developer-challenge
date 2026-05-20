@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/cta-banner",
+    "title": "Pug & Puggle: CTA Banner",
+    "description": "Full-bleed accent banner with a heading, body, and CTA button.",
+    "category": "pug-puggle-blocks",
+    "icon": "megaphone",
+    "keywords": ["cta", "banner"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "" },
+        "body": { "type": "string", "default": "" },
+        "ctaUrl": { "type": "string", "default": "" },
+        "ctaTitle": { "type": "string", "default": "" },
+        "ctaNewTab": { "type": "boolean", "default": false }
+    },
+    "editorScript": "blocks/cta-banner-editor-script",
+    "render": "file:./cta-banner.php",
+    "example": {
+        "attributes": {
+            "heading": "Hurt in an accident?",
+            "body": "Schedule a free consultation with our team today.",
+            "ctaUrl": "#",
+            "ctaTitle": "Get a Free Consultation",
+            "ctaNewTab": false
+        }
+    }
+}
