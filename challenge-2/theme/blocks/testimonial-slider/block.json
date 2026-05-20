@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/testimonial-slider",
+    "title": "Pug & Puggle: Testimonial Slider",
+    "description": "Horizontally scrollable testimonial slider with snap behavior.",
+    "category": "pug-puggle-blocks",
+    "icon": "format-quote",
+    "keywords": ["testimonials", "reviews"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "What Clients Say" },
+        "limit": { "type": "number", "default": 6 }
+    },
+    "editorScript": "blocks/testimonial-slider-editor-script",
+    "render": "file:./testimonial-slider.php",
+    "example": {
+        "attributes": {
+            "heading": "What Clients Say",
+            "limit": 4
+        }
+    }
+}

@@ -1,11 +1,11 @@
 /*
-Theme Name: infra
-Theme URI: git@github.com:MeanPug/meanpug-wordpress-developer-challenge.git
-Author: MeanPug Digital
-Author URI: https://www.meanpug.com
-Description: The theme for infra public site
-Version: 1.0
+Theme Name: Pug & Puggle ESQ by Filipe Coutinho
+Theme URI: https://github.com/filipecoutinho/meanpug-wordpress-developer-challenge
+Author: Filipe Coutinho
+Author URI: https://github.com/filipecoutinho
+Description: Law firm WordPress theme for Pug & Puggle ESQ built for the MeanPug developer challenge — custom CPTs (Attorneys, Practice Areas, Offices, Case Results, Testimonials, FAQs), taxonomies, Gutenberg blocks, and a PSR-4 OOP layer over the MeanPug infra scaffold.
+Version: 1.1.0
 Requires at least: 5.0
-Tested up to: 5.4
-Requires PHP: 7.0
+Tested up to: 6.4
+Requires PHP: 8.0
 */

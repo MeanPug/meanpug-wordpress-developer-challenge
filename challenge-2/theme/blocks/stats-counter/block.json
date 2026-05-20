@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/stats-counter",
+    "title": "Pug & Puggle: Stats Counter",
+    "description": "Grid of stat tiles with large values, labels, and descriptions.",
+    "category": "pug-puggle-blocks",
+    "icon": "chart-bar",
+    "keywords": ["stats", "numbers"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "" },
+        "stats": {
+            "type": "array",
+            "default": [],
+            "items": {
+                "type": "object"
+            }
+        }
+    },
+    "editorScript": "blocks/stats-counter-editor-script",
+    "render": "file:./stats-counter.php",
+    "example": {
+        "attributes": {
+            "heading": "By the numbers",
+            "stats": [
+                { "value": "$1B+", "label": "Recovered for clients", "description": "Across thousands of cases." },
+                { "value": "40+", "label": "Years experience", "description": "Trial-tested attorneys." },
+                { "value": "98%", "label": "Win rate", "description": "On cases we accept." }
+            ]
+        }
+    }
+}

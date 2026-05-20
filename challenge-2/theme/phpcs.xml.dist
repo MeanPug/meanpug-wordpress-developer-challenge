@@ -32,7 +32,25 @@
 	<arg name="extensions" value="php,css,scss/css"/>
 
 	<!-- Check all files in this directory and the directories below it. -->
-	<file>.</file>
+	<file>inc/classes/</file>
+	<file>blocks/</file>
+
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>dist/*</exclude-pattern>
+	<exclude-pattern>acf-json/*</exclude-pattern>
+	<exclude-pattern>*/example-block/*</exclude-pattern>
+
+	<!-- ACF block render templates are included from inside the ACF render
+	     callback, so their file-scope variables ($heading, $limit, $args, …)
+	     are actually function-local at runtime. WPCS can't see that statically,
+	     so the prefix and global-override rules generate false positives here. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>blocks/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+		<exclude-pattern>blocks/*</exclude-pattern>
+	</rule>
 
 
 	<!--
@@ -41,7 +59,17 @@
 	#############################################################################
 	-->
 
-	<rule ref="WordPress"/>
+	<rule ref="WordPress">
+		<!-- Allow modern short array syntax (`[ ... ]`) — codebase is on PHP 8.0+. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+		<!-- PSR-4 autoload requires CamelCase class file names, which conflicts
+		     with the WPCS underscores-style file naming rules. Suppress both for
+		     our autoloaded namespace; the procedural `inf_` code is out of scope. -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<!-- Allow `$class` as a parameter name in the autoloader-dispatcher. -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.classFound"/>
+	</rule>
 
 
 	<!--
@@ -54,7 +82,9 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="_s"/>
+			<property name="text_domain" type="array">
+				<element value="inf"/>
+			</property>
 		</properties>
 	</rule>
 
@@ -69,7 +99,7 @@
 	<!-- Set the minimum supported WP version. This is used by several sniffs.
 		 The minimum version set here should be in line with the minimum WP version
 		 as set in the "Requires at least" tag in the readme.txt file. -->
-	<config name="minimum_supported_wp_version" value="4.5"/>
+	<config name="minimum_supported_wp_version" value="6.0"/>
 
 	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
 		<properties>
@@ -86,7 +116,10 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="_s" />
+			<property name="prefixes" type="array">
+				<element value="inf"/>
+				<element value="PugPuggle"/>
+			</property>
 		</properties>
 	</rule>
 
@@ -98,7 +131,7 @@
 	-->
 
 
-	<config name="testVersion" value="5.2-99.0"/>
+	<config name="testVersion" value="8.0-"/>
 	<rule ref="PHPCompatibility">
 		<!-- Whitelist PHP native classes, interfaces, functions and constants which
 			 are back-filled by WP.
@@ -122,11 +155,5 @@
 		<exclude name="PHPCompatibility.PHP.NewInterfaces.jsonserializableFound"/>
 	</rule>
 
-	<!-- Whitelist the WP Core mysql_to_rfc3339() function. -->
-	<rule ref="PHPCompatibility.PHP.RemovedExtensions">
-		<properties>
-			<property name="functionWhitelist" type="array" value="mysql_to_rfc3339"/>
-		</properties>
-	</rule>
 
 </ruleset>

@@ -72,8 +72,27 @@ class inf_PracticeAreas_Widget extends WP_Widget
     if (!empty($practice_areas)) :
       echo $args['before_widget']; ?>
 
-      <div class="inf-widget inf-practice-areas-widget">
-      </div>
+      <aside class="inf-widget inf-practice-areas-widget bg-stone-50 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold mb-4 text-stone-900"><?php esc_html_e( 'Related Practice Areas', 'inf' ); ?></h3>
+        <ul class="space-y-2">
+          <?php foreach ( $practice_areas as $pa ) : ?>
+            <?php
+            $pa_id    = is_object( $pa ) ? (int) $pa->ID : (int) $pa;
+            $pa_title = get_the_title( $pa_id );
+            $pa_link  = get_permalink( $pa_id );
+
+            if ( ! $pa_link || ! $pa_title ) {
+                continue;
+            }
+            ?>
+            <li>
+              <a href="<?php echo esc_url( $pa_link ); ?>" class="block text-stone-700 hover:text-stone-900 hover:underline">
+                <?php echo esc_html( $pa_title ); ?>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </aside>
 
       <?php
       echo $args['after_widget'];

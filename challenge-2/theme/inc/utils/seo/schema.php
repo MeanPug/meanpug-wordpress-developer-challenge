@@ -33,7 +33,7 @@ function mp_generate_office_schema( $office ) {
     $geopoint = get_field( 'geopoint', $office );
 
     $schema = array(
-        '@context' => "http://schema.org",
+        '@context' => "https://schema.org",
         '@type' => "LocalBusiness",
         'additionalType' => "LegalService",
         'name' => get_bloginfo( 'name' ),
@@ -81,7 +81,7 @@ function mp_generate_local_business_schema( $office = null ) {
 
     if ($location) {
       $schema = array(
-          '@context' => "http://schema.org",
+          '@context' => "https://schema.org",
           '@type' => "LocalBusiness",
           'additionalType' => "LegalService",
           'name' => get_bloginfo( 'name' ),
@@ -157,7 +157,7 @@ function mp_generate_testimonials_schema($testimonials, $name_override = null, $
     $custom_logo_id = get_theme_mod( 'custom_logo' );
 
     $schema = array(
-        '@context' => "http://schema.org",
+        '@context' => "https://schema.org",
         '@type' => "Product",
         'description' => $description_override ?: get_bloginfo( 'description' ),
         'name' => $name_override ?: get_bloginfo( 'name' ),
@@ -191,7 +191,7 @@ function mp_generate_practice_area_schema( $practice_area, $agg_values = null ) 
     $pa_testimonials = get_field( 'testimonials', $practice_area );
 
     $schema = array(
-        '@context' => "http://schema.org",
+        '@context' => "https://schema.org",
         '@type' => "Product",
         'description' => get_post_meta($practice_area->ID, '_yoast_wpseo_metadesc', true),
         'name' => get_the_title($practice_area),
@@ -230,7 +230,7 @@ function mp_generate_practice_area_schema( $practice_area, $agg_values = null ) 
  */
 function mp_generate_question_answer_schema( $question, $answer, $print_out = false ) {
     $schema = array(
-        '@context' => "http://schema.org",
+        '@context' => "https://schema.org",
         '@type' => "Question",
         'name' => $question,
         'acceptedAnswer' => array(
@@ -251,7 +251,7 @@ function mp_generate_question_answer_schema( $question, $answer, $print_out = fa
 
 function mp_generate_faq_page_schema( $faq_markup, $comment = '' ) {
     $schema = array(
-        '@context' => "http://schema.org",
+        '@context' => "https://schema.org",
         '@type' => "FAQPage",
         'mainEntity' => $faq_markup
     );

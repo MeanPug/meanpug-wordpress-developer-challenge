@@ -12,7 +12,7 @@ function inf_add_reviews_schema_for_post( $content ) {
             }
 
             $output_schema = array(
-                "@context"  => "http://schema.org",
+                "@context"  => "https://schema.org",
                 "@graph"    => $review_schema_array
             );
 

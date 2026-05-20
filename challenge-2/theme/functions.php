@@ -187,22 +187,48 @@ function inf_get_blocks() {
 }
 
 function inf_load_blocks() {
-    $theme = wp_get_theme();
     $blocks = inf_get_blocks();
 
+    $editor_deps = array(
+        'wp-blocks',
+        'wp-element',
+        'wp-block-editor',
+        'wp-components',
+        'wp-i18n',
+        'wp-server-side-render',
+    );
+
     foreach( $blocks as $block ) {
-        if ( file_exists( get_template_directory() . '/blocks/' . $block . '/block.json' ) ) {
-            register_block_type( get_template_directory() . '/blocks/' . $block . '/block.json' );
-
-            $block_css_path = '/dist/' . $block . '/' . $block . '.min.css';
-            $block_js_path = '/dist/' . $block . '/' . $block . '.min.js';
-            wp_register_style( 'blocks/' . $block . '-style', get_template_directory_uri() . $block_css_path, null, filemtime(get_template_directory() . $block_css_path) );
-            wp_register_script( 'blocks/' . $block . '-script', get_template_directory_uri() . $block_js_path, array('mp-core-script'), filemtime(get_template_directory() . $block_js_path) );
-
-//            if ( file_exists( get_template_directory() . '/blocks/' . $block . '/init.php' ) ) {
-//                include_once get_template_directory() . '/blocks/' . $block . '/init.php';
-//            }
+        $block_dir = get_template_directory() . '/blocks/' . $block;
+        if ( ! file_exists( $block_dir . '/block.json' ) ) {
+            continue;
         }
+
+        // Editor script must be registered BEFORE register_block_type so block.json's
+        // editorScript handle reference resolves correctly.
+        $editor_js_rel = '/dist/' . $block . '/' . $block . '.editor.min.js';
+        $editor_js_abs = get_template_directory() . $editor_js_rel;
+        if ( file_exists( $editor_js_abs ) ) {
+            wp_register_script(
+                'blocks/' . $block . '-editor-script',
+                get_template_directory_uri() . $editor_js_rel,
+                $editor_deps,
+                filemtime( $editor_js_abs ),
+                true
+            );
+        }
+
+        // Frontend script + style (optional — only register if built).
+        $block_css_path = '/dist/' . $block . '/' . $block . '.min.css';
+        $block_js_path  = '/dist/' . $block . '/' . $block . '.min.js';
+        if ( file_exists( get_template_directory() . $block_css_path ) ) {
+            wp_register_style( 'blocks/' . $block . '-style', get_template_directory_uri() . $block_css_path, null, filemtime( get_template_directory() . $block_css_path ) );
+        }
+        if ( file_exists( get_template_directory() . $block_js_path ) ) {
+            wp_register_script( 'blocks/' . $block . '-script', get_template_directory_uri() . $block_js_path, array( 'mp-core-script' ), filemtime( get_template_directory() . $block_js_path ), true );
+        }
+
+        register_block_type( $block_dir . '/block.json' );
     }
 }
 add_action( 'init', 'inf_load_blocks' );
@@ -214,6 +240,7 @@ add_filter('should_load_separate_core_block_assets', '__return_true');
 require_once __DIR__ . '/inc/filters.php';
 require_once __DIR__ . '/inc/hooks.php';
 require_once __DIR__ . '/inc/template_functions.php';
+require_once __DIR__ . '/inc/acf/field-groups.php';
 
 require_once __DIR__ . '/inc/cpt/all.php';
 require_once __DIR__ . '/inc/tax/all.php';
@@ -224,3 +251,14 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+/**
+ * PugPuggle OOP layer — autoloaded via composer.
+ *
+ * Guarded so the theme keeps working if composer install was forgotten;
+ * the procedural inf_* layer continues to function on its own.
+ */
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+	\PugPuggle\Bootstrap::init();
+}

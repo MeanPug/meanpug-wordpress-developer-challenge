@@ -9,7 +9,10 @@
     "dev": "npm-run-all --parallel watch-*",
     "build-blocks": "gulp",
     "build-js": "NODE_ENV=production webpack --mode=production --config=./webpack/webpack.config.js",
-    "build": "npm-run-all --parallel build-*"
+    "build": "npm-run-all --parallel build-*",
+    "lint:js": "eslint theme/blocks --ext .js --no-error-on-unmatched-pattern",
+    "lint:php": "cd theme && composer run-script lint",
+    "lint": "npm-run-all lint:js lint:php"
   },
   "repository": {
     "type": "git",

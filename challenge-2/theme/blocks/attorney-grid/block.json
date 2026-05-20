@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pugpuggle/attorney-grid",
+    "title": "Pug & Puggle: Attorney Grid",
+    "description": "Grid of attorney cards with optional specialty filter.",
+    "category": "pug-puggle-blocks",
+    "icon": "businessperson",
+    "keywords": ["attorneys", "team"],
+    "textdomain": "inf",
+    "supports": {
+        "align": ["wide", "full"],
+        "anchor": true,
+        "html": false
+    },
+    "attributes": {
+        "heading": { "type": "string", "default": "Our Attorneys" },
+        "intro": { "type": "string", "default": "" },
+        "limit": { "type": "number", "default": 6 },
+        "specialty": { "type": "number", "default": 0 }
+    },
+    "editorScript": "blocks/attorney-grid-editor-script",
+    "render": "file:./attorney-grid.php",
+    "example": {
+        "attributes": {
+            "heading": "Our Attorneys",
+            "intro": "Meet the team representing you.",
+            "limit": 3,
+            "specialty": 0
+        }
+    }
+}
