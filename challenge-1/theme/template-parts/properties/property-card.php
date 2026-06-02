@@ -1,10 +1,22 @@
 <?php
+/**
+ * Property card template part.
+ *
+ * Renders a single property listing card with image, rating,
+ * title, location, bedrooms, and price.
+ *
+ * @package infra
+ * @var WP_Post $post The property post object.
+ */
+
 $price      = get_post_meta( $post->ID, '_inf_price',  true ) ?: '120';
 $bedrooms   = get_post_meta( $post->ID, '_inf_bedrooms', true ) ?: '2';
-$location   = get_post_meta( $post->ID, '_inf_location', true ) ?: 'Sunny Vacation';
-$rating     = get_post_meta( $post->ID, '_inf_rating', true ) ?: '4.9';
+$location   = get_post_meta( $post->ID, '_inf_location', true );
+$rating     = get_post_meta( $post->ID, '_inf_rating', true );
 $title      = get_the_title( $post->ID );
-$image_url  = get_the_post_thumbnail_url( $post->ID, 'large' ) ?: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80';
+
+$fallback_img = get_theme_file_uri( '/assets/images/placeholder-property.svg' );
+$image_url    = get_the_post_thumbnail_url( $post->ID, 'large' ) ?: $fallback_img;
 ?>
 <article class="group cursor-pointer">
     <div class="relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm">
@@ -12,7 +24,7 @@ $image_url  = get_the_post_thumbnail_url( $post->ID, 'large' ) ?: 'https://image
         
         <!-- Rating bubble (top-right overlay) -->
         <span class="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-gray-800 shadow-sm flex items-center gap-1">
-            <svg class="w-3 h-3 text-[#FF385C] fill-current" viewBox="0 0 24 24">
+            <svg class="w-3 h-3 text-airbnb fill-current" viewBox="0 0 24 24">
                 <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.21l8.2-1.192z"/>
             </svg>
             <?php echo esc_html( round(floatval($rating), 2) ); ?>

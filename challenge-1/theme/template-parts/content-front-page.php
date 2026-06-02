@@ -1,11 +1,21 @@
-<article id="post-<?php the_ID(); ?>" <?php post_class('pb-12'); ?>>
+<?php
+/**
+ * Front page content template part.
+ *
+ * Renders the above-fold content for the front page: search bar,
+ * campaign hero banner, and promotional image grid.
+ *
+ * @package infra
+ */
+
+?><article id="post-<?php the_ID(); ?>" <?php post_class('pb-12'); ?>>
 
     <!-- FLOATING SEARCH BAR CONTAINER -->
     <div class="container mx-auto px-6 max-w-7xl mt-0 pb-2 relative z-10">
         <!-- Mobile Compact Search Bar -->
         <div class="md:hidden bg-white rounded-full border border-gray-200 shadow-md p-3 flex items-center justify-between cursor-pointer w-full hover:shadow-lg transition">
             <div class="flex items-center gap-3 pl-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 text-[#FF385C]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 text-airbnb">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.602 10.602z" />
                 </svg>
                 <div class="text-left">
@@ -47,7 +57,7 @@
             </div>
 
             <!-- SEARCH BUTTON -->
-            <button class="bg-[#DE1E4F] hover:bg-[#C1143F] text-white px-6 py-3.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow transition-all">
+            <button class="bg-airbnb-btn hover:bg-airbnb-dark text-white px-6 py-3.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.602 10.602z" />
                 </svg>

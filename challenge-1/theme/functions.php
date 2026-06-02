@@ -11,24 +11,31 @@ define('ACF_EARLY_ACCESS', '5');
 
 /**
  * Fallback ACF functions to prevent critical errors when Advanced Custom Fields is inactive.
+ *
+ * These stubs allow the theme to render without fatal errors if the ACF plugin is not active.
+ * They trigger _doing_it_wrong() in debug mode so developers know when ACF is expected.
+ * @see https://www.advancedcustomfields.com/
  */
 if ( ! function_exists( 'get_field' ) ) {
     function get_field( $selector, $post_id = false, $format_value = true ) {
-        return false;
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
+        return null;
     }
 }
 if ( ! function_exists( 'the_field' ) ) {
     function the_field( $selector, $post_id = false, $format_value = true ) {
-        echo '';
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
     }
 }
 if ( ! function_exists( 'get_fields' ) ) {
     function get_fields( $post_id = false, $format_value = true ) {
-        return false;
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required.', '1.0.0' );
+        return array();
     }
 }
 if ( ! function_exists( 'have_rows' ) ) {
     function have_rows( $selector, $post_id = false ) {
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
         return false;
     }
 }
@@ -109,6 +116,15 @@ if ( ! function_exists( 'inf_setup' ) ) :
     add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
 
     /**
+    * Register navigation menu locations.
+    *
+    * @link https://developer.wordpress.org/themes/functionality/navigation-menus/
+    */
+    register_nav_menus( array(
+        'front-header' => esc_html__( 'Front Page Header', 'inf' ),
+    ) );
+
+    /**
     * SAMPLE: additional post thumbnail sizes
     * add_image_size('attorney-headshot-square', 720, 720 );
     * add_image_size('attorney-headshot-tall', 600, 625 );
@@ -187,13 +203,18 @@ function inf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
 
+/**
+ * Enqueue footer styles separately for performance.
+ */
 function inf_add_footer_styles() {
 	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );
 };
 add_action( 'get_footer', 'inf_add_footer_styles' );
 
 /**
- * Get Blocks
+ * Get registered block directories.
+ *
+ * @return string[] List of block directory names.
  */
 function inf_get_blocks() {
     $theme = wp_get_theme();
@@ -210,6 +231,9 @@ function inf_get_blocks() {
     return $blocks;
 }
 
+/**
+ * Register and enqueue Gutenberg blocks.
+ */
 function inf_load_blocks() {
     $theme = wp_get_theme();
     $blocks = inf_get_blocks();
@@ -352,7 +376,12 @@ function inf_save_property_meta( $post_id ) {
 }
 add_action( 'save_post_property', 'inf_save_property_meta' );
 
-// --- Admin List Columns ---
+/**
+ * Modify the admin list columns for the Property post type.
+ *
+ * @param  string[] $columns The default columns.
+ * @return string[]          The modified columns.
+ */
 function inf_property_columns( $columns ) {
     unset( $columns['date'] );
     $columns['image']      = __( 'Image', 'inf' );
@@ -364,11 +393,17 @@ function inf_property_columns( $columns ) {
 }
 add_filter( 'manage_property_posts_columns', 'inf_property_columns' );
 
+/**
+ * Render custom admin column content for the Property post type.
+ *
+ * @param string $column  The column name.
+ * @param int    $post_id The current post ID.
+ */
 function inf_manage_property_columns( $column, $post_id ) {
     switch ( $column ) {
         case 'image':
-            $thumb = get_the_post_thumbnail( $post_id, 'medium', array( 'style' => 'width:48px;height:36px;object-fit:cover;border-radius:4px;' ) );
-            echo $thumb ?: '<span style="color:#aaa;font-size:11px;">No image</span>';
+            $thumb = get_the_post_thumbnail( $post_id, 'medium', array( 'class' => 'inf-admin-thumb' ) );
+            echo $thumb ?: '<span class="inf-admin-no-image">' . esc_html__( 'No image', 'inf' ) . '</span>';
             break;
         case 'location':
             echo esc_html( get_post_meta( $post_id, '_inf_location', true ) ?: '—' );
@@ -393,6 +428,11 @@ function inf_register_cover_image_meta_box() {
 }
 add_action( 'add_meta_boxes', 'inf_register_cover_image_meta_box' );
 
+/**
+ * Render the cover image meta box with media library picker.
+ *
+ * @param WP_Post $post The current post object.
+ */
 function inf_render_cover_image_box( $post ) {
     wp_nonce_field( 'inf_save_cover_image', 'inf_cover_nonce' );
     $image_id = get_post_meta( $post->ID, '_inf_image_id', true );
@@ -424,6 +464,11 @@ function inf_render_cover_image_box( $post ) {
     <?php
 }
 
+/**
+ * Save cover image meta box data and sync post thumbnail.
+ *
+ * @param int $post_id The post ID being saved.
+ */
 function inf_save_cover_image_data( $post_id ) {
     if ( ! isset( $_POST['inf_cover_nonce'] ) || ! wp_verify_nonce( $_POST['inf_cover_nonce'], 'inf_save_cover_image' ) ) return;
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -439,7 +484,29 @@ function inf_save_cover_image_data( $post_id ) {
 }
 add_action( 'save_post_property', 'inf_save_cover_image_data', 20 );
 
+/**
+ * Inject admin column styles for Property post type.
+ */
+add_action( 'admin_head', function() {
+    $screen = get_current_screen();
+    if ( ! $screen || 'edit-property' !== $screen->id ) {
+        return;
+    }
+    ?>
+    <style>
+        .inf-admin-thumb { width:48px; height:36px; object-fit:cover; border-radius:4px; }
+        .inf-admin-no-image { color:#aaa; font-size:11px; }
+    </style>
+    <?php
+});
+
+/**
+ * Seed sample properties on theme activation.
+ *
+ * Runs only when the theme is activated or switched to,
+ * and only if no properties exist yet.
+ */
 require_once __DIR__ . '/inc/seeder/class-property-seeder.php';
-add_action( 'wp_loaded', function() {
+add_action( 'after_switch_theme', function() {
     \Inf\Seeder\PropertySeeder::run();
 });

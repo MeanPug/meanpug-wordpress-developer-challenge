@@ -1,7 +1,12 @@
 <?php
 /**
- * Properties grid — queries and renders dynamic CPT custom entries.
+ * Properties grid template part.
+ *
+ * Queries and renders a grid of Property CPT listings.
+ *
+ * @package infra
  */
+
 $args = array(
     'post_type'      => 'property',
     'posts_per_page' => 9,
