@@ -9,6 +9,30 @@
 
 define('ACF_EARLY_ACCESS', '5');
 
+/**
+ * Fallback ACF functions to prevent critical errors when Advanced Custom Fields is inactive.
+ */
+if ( ! function_exists( 'get_field' ) ) {
+    function get_field( $selector, $post_id = false, $format_value = true ) {
+        return false;
+    }
+}
+if ( ! function_exists( 'the_field' ) ) {
+    function the_field( $selector, $post_id = false, $format_value = true ) {
+        echo '';
+    }
+}
+if ( ! function_exists( 'get_fields' ) ) {
+    function get_fields( $post_id = false, $format_value = true ) {
+        return false;
+    }
+}
+if ( ! function_exists( 'have_rows' ) ) {
+    function have_rows( $selector, $post_id = false ) {
+        return false;
+    }
+}
+
 if ( ! function_exists( 'inf_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
