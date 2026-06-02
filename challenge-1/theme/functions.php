@@ -262,3 +262,68 @@ function inf_register_property_cpt() {
     register_post_type( 'property', $args );
 }
 add_action( 'init', 'inf_register_property_cpt' );
+
+/**
+ * Add meta boxes for Property fields.
+ */
+function inf_add_property_meta_boxes() {
+    add_meta_box(
+        'inf_property_details',
+        __( 'Property Details', 'inf' ),
+        'inf_render_property_meta_box',
+        'property',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'inf_add_property_meta_boxes' );
+
+/**
+ * Render the Property Details meta box.
+ */
+function inf_render_property_meta_box( $post ) {
+    wp_nonce_field( 'inf_save_property_meta', 'inf_property_nonce' );
+    $price           = get_post_meta( $post->ID, '_inf_price', true );
+    $bedrooms        = get_post_meta( $post->ID, '_inf_bedrooms', true );
+    $location        = get_post_meta( $post->ID, '_inf_location', true );
+    $rating          = get_post_meta( $post->ID, '_inf_rating', true );
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="_inf_price"><?php esc_html_e( 'Price per night ($)', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_price" name="_inf_price" value="<?php echo esc_attr( $price ?: '120' ); ?>" min="0" step="1" class="small-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_bedrooms"><?php esc_html_e( 'Bedrooms', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_bedrooms" name="_inf_bedrooms" value="<?php echo esc_attr( $bedrooms ?: '2' ); ?>" min="0" step="1" class="small-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_location"><?php esc_html_e( 'Location', 'inf' ); ?></label></th>
+            <td><input type="text" id="_inf_location" name="_inf_location" value="<?php echo esc_attr( $location ); ?>" placeholder="e.g. Lake Tahoe, CA" class="regular-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_rating"><?php esc_html_e( 'Rating (1–5)', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_rating" name="_inf_rating" value="<?php echo esc_attr( $rating ?: '4.9' ); ?>" min="1" max="5" step="0.01" class="small-text" /></td>
+        </tr>
+    </table>
+    <?php
+}
+
+/**
+ * Save meta box data.
+ */
+function inf_save_property_meta( $post_id ) {
+    if ( ! isset( $_POST['inf_property_nonce'] ) || ! wp_verify_nonce( $_POST['inf_property_nonce'], 'inf_save_property_meta' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    $fields = array( '_inf_price', '_inf_bedrooms', '_inf_location', '_inf_rating' );
+    foreach ( $fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+        }
+    }
+}
+add_action( 'save_post_property', 'inf_save_property_meta' );
