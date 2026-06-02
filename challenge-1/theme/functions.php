@@ -327,3 +327,90 @@ function inf_save_property_meta( $post_id ) {
     }
 }
 add_action( 'save_post_property', 'inf_save_property_meta' );
+
+// --- Admin List Columns ---
+function inf_property_columns( $columns ) {
+    unset( $columns['date'] );
+    $columns['image']      = __( 'Image', 'inf' );
+    $columns['location']   = __( 'Location', 'inf' );
+    $columns['price']      = __( 'Price', 'inf' );
+    $columns['rating']     = __( 'Rating', 'inf' );
+    $columns['date']       = __( 'Date', 'inf' );
+    return $columns;
+}
+add_filter( 'manage_property_posts_columns', 'inf_property_columns' );
+
+function inf_manage_property_columns( $column, $post_id ) {
+    switch ( $column ) {
+        case 'image':
+            $thumb = get_the_post_thumbnail( $post_id, 'medium', array( 'style' => 'width:48px;height:36px;object-fit:cover;border-radius:4px;' ) );
+            echo $thumb ?: '<span style="color:#aaa;font-size:11px;">No image</span>';
+            break;
+        case 'location':
+            echo esc_html( get_post_meta( $post_id, '_inf_location', true ) ?: '—' );
+            break;
+        case 'price':
+            $price = get_post_meta( $post_id, '_inf_price', true );
+            echo $price ? '$' . number_format( (int)$price ) : '—';
+            break;
+        case 'rating':
+            $rating = get_post_meta( $post_id, '_inf_rating', true );
+            echo $rating ? round( (float)$rating, 2 ) : '—';
+            break;
+    }
+}
+add_action( 'manage_property_posts_custom_column', 'inf_manage_property_columns', 10, 2 );
+
+/**
+ * Register cover image meta box with media picker.
+ */
+function inf_register_cover_image_meta_box() {
+    add_meta_box( 'inf_cover_image_box', __( 'Cover Image', 'inf' ), 'inf_render_cover_image_box', 'property', 'side', 'default' );
+}
+add_action( 'add_meta_boxes', 'inf_register_cover_image_meta_box' );
+
+function inf_render_cover_image_box( $post ) {
+    wp_nonce_field( 'inf_save_cover_image', 'inf_cover_nonce' );
+    $image_id = get_post_meta( $post->ID, '_inf_image_id', true );
+    $src      = $image_id ? wp_get_attachment_image_src( $image_id, 'medium' )[0] : '';
+    ?>
+    <div id="inf-cover-preview" style="margin-bottom:12px;"><?php echo $src ? sprintf( '<img src="%s" style="max-width:100%%;border-radius:4px;" />', esc_url( $src ) ) : '<div style="text-align:center;padding:12px 0;color:#888;">No cover image</div>'; ?></div>
+    <button type="button" id="inf-set-cover-btn" class="button"><?php esc_html_e( 'Set Cover Image', 'inf' ); ?></button>
+    <input type="hidden" id="inf-cover-image-id" name="_inf_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
+    <script type="text/javascript">
+    document.addEventListener( 'DOMContentLoaded', function() {
+        var frame;
+        document.getElementById( 'inf-set-cover-btn' ).onclick = function( e ) {
+            e.preventDefault();
+            if ( frame ) { frame.open(); return; }
+            frame = wp.media({
+                title: 'Select Cover Image',
+                button: { text: 'Use as cover' },
+                multiple: false
+            }).on( 'select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                document.getElementById( 'inf-cover-preview' ).innerHTML = '<img src="' + attachment.sizes.medium.url + '" style="max-width:100%;border-radius:4px;" />';
+                document.getElementById( 'inf-cover-image-id' ).value = attachment.id;
+                frame.close();
+            });
+            frame.open();
+        };
+    });
+    </script>
+    <?php
+}
+
+function inf_save_cover_image_data( $post_id ) {
+    if ( ! isset( $_POST['inf_cover_nonce'] ) || ! wp_verify_nonce( $_POST['inf_cover_nonce'], 'inf_save_cover_image' ) ) return;
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( isset( $_POST['_inf_image_id'] ) ) {
+        update_post_meta( $post_id, '_inf_image_id', absint( $_POST['_inf_image_id'] ) );
+        if ($_POST['_inf_image_id']) {
+            set_post_thumbnail($post_id, absint($_POST['_inf_image_id']));
+        } else {
+            delete_post_thumbnail($post_id);
+        }
+    }
+}
+add_action( 'save_post_property', 'inf_save_cover_image_data', 20 );
