@@ -414,3 +414,8 @@ function inf_save_cover_image_data( $post_id ) {
     }
 }
 add_action( 'save_post_property', 'inf_save_cover_image_data', 20 );
+
+require_once __DIR__ . '/inc/seeder/class-property-seeder.php';
+add_action( 'wp_loaded', function() {
+    \Inf\Seeder\PropertySeeder::run();
+});
