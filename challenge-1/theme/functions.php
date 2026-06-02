@@ -224,3 +224,41 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+/**
+ * Register Property Custom Post Type
+ */
+function inf_register_property_cpt() {
+    $labels = array(
+        'name'               => _x('Properties', 'post type general name', 'inf'),
+        'singular_name'      => _x('Property', 'post type singular name', 'inf'),
+        'menu_name'          => _x('Properties', 'admin menu', 'inf'),
+        'name_admin_bar'     => _x('Property', 'add new on admin bar', 'inf'),
+        'add_new'            => _x('Add New', 'property', 'inf'),
+        'add_new_item'       => __('Add New Property', 'inf'),
+        'new_item'           => __('New Property', 'inf'),
+        'edit_item'          => __('Edit Property', 'inf'),
+        'view_item'          => __('View Property', 'inf'),
+        'all_items'          => __('All Properties', 'inf'),
+        'search_items'       => __('Search Properties', 'inf'),
+        'not_found'          => __('No properties found.', 'inf'),
+    );
+    $args   = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'property' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_icon'          => 'dashicons-location-alt',
+        'menu_position'      => 20,
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
+        'show_in_rest'       => true,
+    );
+    register_post_type( 'property', $args );
+}
+add_action( 'init', 'inf_register_property_cpt' );
