@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "watch-blocks": "gulp dev",
-    "watch-js": "webpack --mode=development --config=./webpack/webpack.local.config.js --watch",
+    "watch-js": "webpack --config=./webpack/webpack.dev.js --watch",
     "dev": "npm-run-all --parallel watch-*",
     "build-blocks": "gulp",
-    "build-js": "NODE_ENV=production webpack --mode=production --config=./webpack/webpack.config.js",
+    "build-js": "webpack --config=./webpack/webpack.prod.js",
     "build": "npm-run-all --parallel build-*"
   },
   "repository": {
