@@ -140,6 +140,8 @@ function inf_scripts() {
   wp_enqueue_style( 'mp-core-style', 'https://static.meanpugdigital.com/2.4.4/main.css', array(), null);
 
   wp_enqueue_style( 'inf-theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css') );
+	wp_enqueue_style( 'airbnb-style', get_template_directory_uri() . '/inc/modules/airbnb/airbnb.css', array(), filemtime(get_template_directory() . '/inc/modules/airbnb/airbnb.css') );
+	wp_enqueue_script( 'airbnb-script', get_template_directory_uri() . '/inc/modules/airbnb/airbnb.js', array('jquery'), filemtime(get_template_directory() . '/inc/modules/airbnb/airbnb.js'), true );
 	wp_enqueue_style( 'inf-critical-style', get_stylesheet_directory_uri() . '/critical.css', array('inf-theme-style'), filemtime(get_stylesheet_directory() . '/critical.css'));
 
 	wp_enqueue_script( 'inf-critical-scripts', get_stylesheet_directory_uri() . '/critical.js', array('jquery'), filemtime(get_stylesheet_directory() . '/critical.js'), true);
