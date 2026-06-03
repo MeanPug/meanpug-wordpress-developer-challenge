@@ -46,6 +46,8 @@ function mp_output_default_schema_for_post() {
 
     if ( is_singular( 'office' ) ) {
         mp_generate_office_schema( $post );
+    } elseif ( is_singular( 'team' ) ) {
+        mp_generate_attorney_schema( $post );
     } else {
         mp_generate_local_business_schema();
     }
@@ -61,7 +63,7 @@ add_action('wp_footer', 'mp_output_default_schema_for_post');
 
 # outputs any additional for a post/page not covered by the default schema definitions
 function mp_output_additional_schema_for_post() {
-    if ( is_singular( array( 'post', 'practice-area' ) ) ) {
+    if ( is_singular( array( 'post', 'practice-area', 'local', 'office' ) ) ) {
         $faq_items = get_field('schema_faq_items');
 
         if ( $faq_items && sizeof( $faq_items ) > 0 ) {
@@ -77,16 +79,6 @@ function mp_output_additional_schema_for_post() {
 add_action('wp_footer', 'mp_output_additional_schema_for_post');
 
 ##-- MPD
-add_action('mpdcontent/ask-question/submission', function($data) {
-  GFAPI::add_entry(array(
-    '1' => $data['question'],
-    '4' => $data['name'],
-    '6' => $data['email'],
-    '7' => $data['content'],
-    'form_id'   => get_field('ask_a_question_form_id', 'option'),
-  ));
-});
-
 add_action('mpdcontent/ask-question/submission', function($data) {
   GFAPI::submit_form(
     get_field('ask_a_question_form_id', 'option'),

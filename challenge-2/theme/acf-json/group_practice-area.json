@@ -1,0 +1,77 @@
+{
+  "key": "group_practice_area",
+  "title": "Practice Area Fields",
+  "fields": [
+    {
+      "key": "field_pa_testimonials",
+      "label": "Testimonials",
+      "name": "testimonials",
+      "type": "relationship",
+      "instructions": "Select related testimonials for this practice area",
+      "required": 0,
+      "post_type": ["testimonials"],
+      "filters": ["search"],
+      "return_format": "object"
+    },
+    {
+      "key": "field_pa_schema_faq",
+      "label": "FAQ Items",
+      "name": "schema_faq_items",
+      "type": "repeater",
+      "instructions": "Add FAQ items for schema markup",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_pa_faq_question",
+          "label": "Question",
+          "name": "question",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_pa_faq_answer",
+          "label": "Answer",
+          "name": "answer",
+          "type": "wysiwyg",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "field_pa_geopoint",
+      "label": "Geopoint",
+      "name": "geopoint",
+      "type": "google_map",
+      "instructions": "Center point for this practice area's coverage area",
+      "required": 0
+    },
+    {
+      "key": "field_pa_related_attorneys",
+      "label": "Related Attorneys",
+      "name": "related_attorneys",
+      "type": "relationship",
+      "instructions": "Select attorneys who practice in this area",
+      "required": 0,
+      "post_type": ["team"],
+      "filters": ["search"],
+      "return_format": "object"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "practice-area"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

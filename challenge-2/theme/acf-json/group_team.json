@@ -1,0 +1,96 @@
+{
+  "key": "group_team",
+  "title": "Attorney Fields",
+  "fields": [
+    {
+      "key": "field_team_position",
+      "label": "Position / Title",
+      "name": "position",
+      "type": "text",
+      "instructions": "e.g. Senior Partner, Associate, Of Counsel",
+      "required": 0
+    },
+    {
+      "key": "field_team_phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "type": "text",
+      "required": 0
+    },
+    {
+      "key": "field_team_email",
+      "label": "Email",
+      "name": "email",
+      "type": "email",
+      "required": 0
+    },
+    {
+      "key": "field_team_office",
+      "label": "Primary Office",
+      "name": "office",
+      "type": "post_object",
+      "instructions": "Select the attorney's primary office",
+      "required": 0,
+      "post_type": ["office"],
+      "return_format": "object"
+    },
+    {
+      "key": "field_team_bar_admissions",
+      "label": "Bar Admissions",
+      "name": "bar_admissions",
+      "type": "repeater",
+      "instructions": "States/ jurisdictions where the attorney is admitted",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_team_bar_state",
+          "label": "State",
+          "name": "state",
+          "type": "text",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "field_team_education",
+      "label": "Education",
+      "name": "education",
+      "type": "repeater",
+      "instructions": "Law schools and degrees",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_team_edu_school",
+          "label": "School",
+          "name": "school",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_team_edu_degree",
+          "label": "Degree",
+          "name": "degree",
+          "type": "text",
+          "required": 0
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "team"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}
