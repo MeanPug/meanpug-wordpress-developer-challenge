@@ -1,0 +1,27 @@
+.meanpug-meta-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.meanpug-meta-table td {
+    padding: 8px 12px;
+    vertical-align: middle;
+}
+
+.meanpug-meta-table td:first-child {
+    width: 200px;
+    font-weight: 600;
+}
+
+.meanpug-meta-table input[type="text"],
+.meanpug-meta-table input[type="email"],
+.meanpug-meta-table input[type="url"],
+.meanpug-meta-table input[type="number"],
+.meanpug-meta-table textarea {
+    width: 100%;
+    max-width: 400px;
+}
+
+.meanpug-meta-table textarea {
+    resize: vertical;
+}
