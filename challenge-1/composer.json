@@ -1,0 +1,22 @@
+{
+    "name": "meanpug/infra",
+    "description": "MeanPug WordPress Developer Challenge — Challenge 1",
+    "type": "project",
+    "license": "proprietary",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3",
+        "phpcompatibility/phpcompatibility-wp": "^2",
+        "phpunit/phpunit": "^9",
+        "yoast/phpunit-polyfills": "^1"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "lint": "phpcs --standard=./phpcs.xml",
+        "lint:fix": "phpcbf --standard=./phpcs.xml",
+        "test": "phpunit"
+    }
+}

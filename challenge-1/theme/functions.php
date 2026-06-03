@@ -9,6 +9,37 @@
 
 define('ACF_EARLY_ACCESS', '5');
 
+/**
+ * Fallback ACF functions to prevent critical errors when Advanced Custom Fields is inactive.
+ *
+ * These stubs allow the theme to render without fatal errors if the ACF plugin is not active.
+ * They trigger _doing_it_wrong() in debug mode so developers know when ACF is expected.
+ * @see https://www.advancedcustomfields.com/
+ */
+if ( ! function_exists( 'get_field' ) ) {
+    function get_field( $selector, $post_id = false, $format_value = true ) {
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
+        return null;
+    }
+}
+if ( ! function_exists( 'the_field' ) ) {
+    function the_field( $selector, $post_id = false, $format_value = true ) {
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
+    }
+}
+if ( ! function_exists( 'get_fields' ) ) {
+    function get_fields( $post_id = false, $format_value = true ) {
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required.', '1.0.0' );
+        return array();
+    }
+}
+if ( ! function_exists( 'have_rows' ) ) {
+    function have_rows( $selector, $post_id = false ) {
+        _doing_it_wrong( __FUNCTION__, 'Advanced Custom Fields plugin is required for field: ' . esc_html( $selector ), '1.0.0' );
+        return false;
+    }
+}
+
 if ( ! function_exists( 'inf_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -83,6 +114,15 @@ if ( ! function_exists( 'inf_setup' ) ) :
     * @link https://codex.wordpress.org/Post_Formats
     */
     add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
+
+    /**
+    * Register navigation menu locations.
+    *
+    * @link https://developer.wordpress.org/themes/functionality/navigation-menus/
+    */
+    register_nav_menus( array(
+        'front-header' => esc_html__( 'Front Page Header', 'inf' ),
+    ) );
 
     /**
     * SAMPLE: additional post thumbnail sizes
@@ -163,13 +203,18 @@ function inf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'inf_scripts' );
 
+/**
+ * Enqueue footer styles separately for performance.
+ */
 function inf_add_footer_styles() {
 	wp_enqueue_style( 'inf-main-style', get_template_directory_uri() . '/main.css', array(), filemtime(get_template_directory() . '/main.css') );
 };
 add_action( 'get_footer', 'inf_add_footer_styles' );
 
 /**
- * Get Blocks
+ * Get registered block directories.
+ *
+ * @return string[] List of block directory names.
  */
 function inf_get_blocks() {
     $theme = wp_get_theme();
@@ -186,6 +231,9 @@ function inf_get_blocks() {
     return $blocks;
 }
 
+/**
+ * Register and enqueue Gutenberg blocks.
+ */
 function inf_load_blocks() {
     $theme = wp_get_theme();
     $blocks = inf_get_blocks();
@@ -224,3 +272,241 @@ require_once __DIR__ . '/inc/widgets/all.php';
 require_once __DIR__ . '/inc/modules/all.php';
 require_once __DIR__ . '/inc/utils/all.php';
 require_once __DIR__ . '/inc/services/all.php';
+
+/**
+ * Register Property Custom Post Type
+ */
+function inf_register_property_cpt() {
+    $labels = array(
+        'name'               => _x('Properties', 'post type general name', 'inf'),
+        'singular_name'      => _x('Property', 'post type singular name', 'inf'),
+        'menu_name'          => _x('Properties', 'admin menu', 'inf'),
+        'name_admin_bar'     => _x('Property', 'add new on admin bar', 'inf'),
+        'add_new'            => _x('Add New', 'property', 'inf'),
+        'add_new_item'       => __('Add New Property', 'inf'),
+        'new_item'           => __('New Property', 'inf'),
+        'edit_item'          => __('Edit Property', 'inf'),
+        'view_item'          => __('View Property', 'inf'),
+        'all_items'          => __('All Properties', 'inf'),
+        'search_items'       => __('Search Properties', 'inf'),
+        'not_found'          => __('No properties found.', 'inf'),
+    );
+    $args   = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'property' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_icon'          => 'dashicons-location-alt',
+        'menu_position'      => 20,
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
+        'show_in_rest'       => true,
+    );
+    register_post_type( 'property', $args );
+}
+add_action( 'init', 'inf_register_property_cpt' );
+
+/**
+ * Add meta boxes for Property fields.
+ */
+function inf_add_property_meta_boxes() {
+    add_meta_box(
+        'inf_property_details',
+        __( 'Property Details', 'inf' ),
+        'inf_render_property_meta_box',
+        'property',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'inf_add_property_meta_boxes' );
+
+/**
+ * Render the Property Details meta box.
+ */
+function inf_render_property_meta_box( $post ) {
+    wp_nonce_field( 'inf_save_property_meta', 'inf_property_nonce' );
+    $price           = get_post_meta( $post->ID, '_inf_price', true );
+    $bedrooms        = get_post_meta( $post->ID, '_inf_bedrooms', true );
+    $location        = get_post_meta( $post->ID, '_inf_location', true );
+    $rating          = get_post_meta( $post->ID, '_inf_rating', true );
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="_inf_price"><?php esc_html_e( 'Price per night ($)', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_price" name="_inf_price" value="<?php echo esc_attr( $price ?: '120' ); ?>" min="0" step="1" class="small-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_bedrooms"><?php esc_html_e( 'Bedrooms', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_bedrooms" name="_inf_bedrooms" value="<?php echo esc_attr( $bedrooms ?: '2' ); ?>" min="0" step="1" class="small-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_location"><?php esc_html_e( 'Location', 'inf' ); ?></label></th>
+            <td><input type="text" id="_inf_location" name="_inf_location" value="<?php echo esc_attr( $location ); ?>" placeholder="e.g. Lake Tahoe, CA" class="regular-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="_inf_rating"><?php esc_html_e( 'Rating (1–5)', 'inf' ); ?></label></th>
+            <td><input type="number" id="_inf_rating" name="_inf_rating" value="<?php echo esc_attr( $rating ?: '4.9' ); ?>" min="1" max="5" step="0.01" class="small-text" /></td>
+        </tr>
+    </table>
+    <?php
+}
+
+/**
+ * Save meta box data.
+ */
+function inf_save_property_meta( $post_id ) {
+    if ( ! isset( $_POST['inf_property_nonce'] ) || ! wp_verify_nonce( $_POST['inf_property_nonce'], 'inf_save_property_meta' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    $fields = array( '_inf_price', '_inf_bedrooms', '_inf_location', '_inf_rating' );
+    foreach ( $fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+        }
+    }
+}
+add_action( 'save_post_property', 'inf_save_property_meta' );
+
+/**
+ * Modify the admin list columns for the Property post type.
+ *
+ * @param  string[] $columns The default columns.
+ * @return string[]          The modified columns.
+ */
+function inf_property_columns( $columns ) {
+    unset( $columns['date'] );
+    $columns['image']      = __( 'Image', 'inf' );
+    $columns['location']   = __( 'Location', 'inf' );
+    $columns['price']      = __( 'Price', 'inf' );
+    $columns['rating']     = __( 'Rating', 'inf' );
+    $columns['date']       = __( 'Date', 'inf' );
+    return $columns;
+}
+add_filter( 'manage_property_posts_columns', 'inf_property_columns' );
+
+/**
+ * Render custom admin column content for the Property post type.
+ *
+ * @param string $column  The column name.
+ * @param int    $post_id The current post ID.
+ */
+function inf_manage_property_columns( $column, $post_id ) {
+    switch ( $column ) {
+        case 'image':
+            $thumb = get_the_post_thumbnail( $post_id, 'medium', array( 'class' => 'inf-admin-thumb' ) );
+            echo $thumb ?: '<span class="inf-admin-no-image">' . esc_html__( 'No image', 'inf' ) . '</span>';
+            break;
+        case 'location':
+            echo esc_html( get_post_meta( $post_id, '_inf_location', true ) ?: '—' );
+            break;
+        case 'price':
+            $price = get_post_meta( $post_id, '_inf_price', true );
+            echo $price ? '$' . number_format( (int)$price ) : '—';
+            break;
+        case 'rating':
+            $rating = get_post_meta( $post_id, '_inf_rating', true );
+            echo $rating ? round( (float)$rating, 2 ) : '—';
+            break;
+    }
+}
+add_action( 'manage_property_posts_custom_column', 'inf_manage_property_columns', 10, 2 );
+
+/**
+ * Register cover image meta box with media picker.
+ */
+function inf_register_cover_image_meta_box() {
+    add_meta_box( 'inf_cover_image_box', __( 'Cover Image', 'inf' ), 'inf_render_cover_image_box', 'property', 'side', 'default' );
+}
+add_action( 'add_meta_boxes', 'inf_register_cover_image_meta_box' );
+
+/**
+ * Render the cover image meta box with media library picker.
+ *
+ * @param WP_Post $post The current post object.
+ */
+function inf_render_cover_image_box( $post ) {
+    wp_nonce_field( 'inf_save_cover_image', 'inf_cover_nonce' );
+    $image_id = get_post_meta( $post->ID, '_inf_image_id', true );
+    $src      = $image_id ? wp_get_attachment_image_src( $image_id, 'medium' )[0] : '';
+    ?>
+    <div id="inf-cover-preview" style="margin-bottom:12px;"><?php echo $src ? sprintf( '<img src="%s" style="max-width:100%%;border-radius:4px;" />', esc_url( $src ) ) : '<div style="text-align:center;padding:12px 0;color:#888;">No cover image</div>'; ?></div>
+    <button type="button" id="inf-set-cover-btn" class="button"><?php esc_html_e( 'Set Cover Image', 'inf' ); ?></button>
+    <input type="hidden" id="inf-cover-image-id" name="_inf_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
+    <script type="text/javascript">
+    document.addEventListener( 'DOMContentLoaded', function() {
+        var frame;
+        document.getElementById( 'inf-set-cover-btn' ).onclick = function( e ) {
+            e.preventDefault();
+            if ( frame ) { frame.open(); return; }
+            frame = wp.media({
+                title: 'Select Cover Image',
+                button: { text: 'Use as cover' },
+                multiple: false
+            }).on( 'select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                document.getElementById( 'inf-cover-preview' ).innerHTML = '<img src="' + attachment.sizes.medium.url + '" style="max-width:100%;border-radius:4px;" />';
+                document.getElementById( 'inf-cover-image-id' ).value = attachment.id;
+                frame.close();
+            });
+            frame.open();
+        };
+    });
+    </script>
+    <?php
+}
+
+/**
+ * Save cover image meta box data and sync post thumbnail.
+ *
+ * @param int $post_id The post ID being saved.
+ */
+function inf_save_cover_image_data( $post_id ) {
+    if ( ! isset( $_POST['inf_cover_nonce'] ) || ! wp_verify_nonce( $_POST['inf_cover_nonce'], 'inf_save_cover_image' ) ) return;
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( isset( $_POST['_inf_image_id'] ) ) {
+        update_post_meta( $post_id, '_inf_image_id', absint( $_POST['_inf_image_id'] ) );
+        if ($_POST['_inf_image_id']) {
+            set_post_thumbnail($post_id, absint($_POST['_inf_image_id']));
+        } else {
+            delete_post_thumbnail($post_id);
+        }
+    }
+}
+add_action( 'save_post_property', 'inf_save_cover_image_data', 20 );
+
+/**
+ * Inject admin column styles for Property post type.
+ */
+add_action( 'admin_head', function() {
+    $screen = get_current_screen();
+    if ( ! $screen || 'edit-property' !== $screen->id ) {
+        return;
+    }
+    ?>
+    <style>
+        .inf-admin-thumb { width:48px; height:36px; object-fit:cover; border-radius:4px; }
+        .inf-admin-no-image { color:#aaa; font-size:11px; }
+    </style>
+    <?php
+});
+
+/**
+ * Seed sample properties on theme activation.
+ *
+ * Runs only when the theme is activated or switched to,
+ * and only if no properties exist yet.
+ */
+require_once __DIR__ . '/inc/seeder/class-property-seeder.php';
+add_action( 'after_switch_theme', function() {
+    \Inf\Seeder\PropertySeeder::run();
+});
