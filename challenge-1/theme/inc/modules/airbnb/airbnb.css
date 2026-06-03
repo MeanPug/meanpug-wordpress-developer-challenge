@@ -773,3 +773,6 @@ body {
 #wpadminbar {
   position: fixed !important;
 }
+body {
+  overflow-x: hidden;
+}
