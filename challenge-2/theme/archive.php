@@ -11,12 +11,10 @@ get_header();
 ?>
 	<div id="primary" class="content-area">
         <?php
-        $archive_template = 'archive';
-
-        if (is_post_type_archive('practice-area')) {
-            $archive_template = 'practice-area';
-        }
-        get_template_part( 'template-parts/archives/content', $archive_template);
+        $post_type = get_post_type();
+        $template = locate_template("template-parts/archives/content-{$post_type}.php");
+        $slug = $template ? $post_type : 'default';
+        get_template_part('template-parts/archives/content', $slug);
         ?>
 	</div><!-- #primary -->
 
