@@ -1,0 +1,77 @@
+{
+  "key": "group_testimonials",
+  "title": "Testimonial Fields",
+  "fields": [
+    {
+      "key": "field_test_rating",
+      "label": "Rating",
+      "name": "rating",
+      "type": "select",
+      "instructions": "Star rating for this review",
+      "required": 1,
+      "choices": {
+        "1": "1 Star",
+        "2": "2 Stars",
+        "3": "3 Stars",
+        "4": "4 Stars",
+        "5": "5 Stars"
+      },
+      "default_value": "5"
+    },
+    {
+      "key": "field_test_reviewer_name",
+      "label": "Reviewer Name",
+      "name": "reviewer_name",
+      "type": "text",
+      "required": 1
+    },
+    {
+      "key": "field_test_reviewer",
+      "label": "Reviewer Details",
+      "name": "reviewer",
+      "type": "group",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_test_reviewer_name_sub",
+          "label": "Name",
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "key": "field_test_reviewer_location",
+          "label": "Location",
+          "name": "location",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "key": "field_test_practice_area",
+      "label": "Practice Area",
+      "name": "practice_area",
+      "type": "post_object",
+      "instructions": "Link this testimonial to a practice area",
+      "required": 0,
+      "post_type": ["practice-area"],
+      "return_format": "object"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "testimonials"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

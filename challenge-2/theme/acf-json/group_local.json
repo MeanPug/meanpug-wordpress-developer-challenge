@@ -1,0 +1,58 @@
+{
+  "key": "group_local",
+  "title": "Area Served Fields",
+  "fields": [
+    {
+      "key": "field_local_content_type",
+      "label": "Content Type",
+      "name": "content_type",
+      "type": "select",
+      "instructions": "Is this location data or an area served page?",
+      "required": 1,
+      "choices": {
+        "Area Served": "Area Served",
+        "Location": "Location"
+      },
+      "default_value": "Area Served"
+    },
+    {
+      "key": "field_local_area_type",
+      "label": "Area Type",
+      "name": "area_type",
+      "type": "select",
+      "instructions": "e.g. State, City, County",
+      "required": 0,
+      "choices": {
+        "State": "State",
+        "City": "City",
+        "County": "County",
+        "Region": "Region"
+      }
+    },
+    {
+      "key": "field_local_geopoint",
+      "label": "Geopoint",
+      "name": "geopoint",
+      "type": "google_map",
+      "instructions": "Center point for this area",
+      "required": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "local"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

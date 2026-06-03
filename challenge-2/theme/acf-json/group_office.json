@@ -1,0 +1,91 @@
+{
+  "key": "group_office",
+  "title": "Office Fields",
+  "fields": [
+    {
+      "key": "field_office_address",
+      "label": "Address",
+      "name": "address",
+      "type": "group",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_office_street",
+          "label": "Street Address",
+          "name": "street",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_office_street2",
+          "label": "Street Address 2",
+          "name": "street2",
+          "type": "text",
+          "required": 0
+        },
+        {
+          "key": "field_office_city",
+          "label": "City",
+          "name": "city",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_office_state",
+          "label": "State",
+          "name": "state",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_office_postal_code",
+          "label": "Postal Code",
+          "name": "postal_code",
+          "type": "text",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "field_office_geopoint",
+      "label": "Geopoint",
+      "name": "geopoint",
+      "type": "google_map",
+      "instructions": "Pin the office location on the map",
+      "required": 1
+    },
+    {
+      "key": "field_office_phone",
+      "label": "Phone Number",
+      "name": "phone_number",
+      "type": "link",
+      "required": 0,
+      "return_format": "array"
+    },
+    {
+      "key": "field_office_directions",
+      "label": "Directions Link",
+      "name": "directions_link",
+      "type": "link",
+      "required": 0,
+      "return_format": "url"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "office"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

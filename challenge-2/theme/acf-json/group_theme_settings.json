@@ -1,0 +1,179 @@
+{
+  "key": "group_theme_settings",
+  "title": "Theme Settings",
+  "fields": [
+    {
+      "key": "field_settings_contact_phone",
+      "label": "Main Phone Number",
+      "name": "contact_phone",
+      "type": "link",
+      "required": 0,
+      "return_format": "array"
+    },
+    {
+      "key": "field_settings_contact_email",
+      "label": "Main Email",
+      "name": "contact_email",
+      "type": "link",
+      "required": 0,
+      "return_format": "array"
+    },
+    {
+      "key": "field_settings_main_address",
+      "label": "Main Address",
+      "name": "contact_main_address",
+      "type": "group",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_settings_addr_street_number",
+          "label": "Street Number",
+          "name": "street_number",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_street_name",
+          "label": "Street Name",
+          "name": "street_name",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_city",
+          "label": "City",
+          "name": "city",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_state",
+          "label": "State",
+          "name": "state",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_post_code",
+          "label": "Postal Code",
+          "name": "post_code",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_lat",
+          "label": "Latitude",
+          "name": "lat",
+          "type": "text"
+        },
+        {
+          "key": "field_settings_addr_lng",
+          "label": "Longitude",
+          "name": "lng",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "key": "field_settings_offices",
+      "label": "Offices",
+      "name": "contact_offices",
+      "type": "repeater",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_settings_office_name",
+          "label": "Office Name",
+          "name": "name",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_settings_office_address",
+          "label": "Address",
+          "name": "address",
+          "type": "textarea"
+        },
+        {
+          "key": "field_settings_office_phone",
+          "label": "Phone Number",
+          "name": "phone_number",
+          "type": "link",
+          "return_format": "array"
+        },
+        {
+          "key": "field_settings_office_directions",
+          "label": "Directions Link",
+          "name": "directions_link",
+          "type": "url"
+        }
+      ]
+    },
+    {
+      "key": "field_settings_social_profiles",
+      "label": "Social Profiles",
+      "name": "social_profiles",
+      "type": "repeater",
+      "instructions": "Links to social media profiles",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_settings_social_url",
+          "label": "URL",
+          "name": "url",
+          "type": "url",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "field_settings_google_maps_key",
+      "label": "Google Maps API Key",
+      "name": "technical_google_maps_api_key",
+      "type": "text",
+      "required": 0
+    },
+    {
+      "key": "field_settings_schema_aggregate_rating",
+      "label": "Schema Aggregate Rating",
+      "name": "schema_aggregate_rating",
+      "type": "group",
+      "instructions": "Overall firm rating for schema markup",
+      "required": 0,
+      "sub_fields": [
+        {
+          "key": "field_settings_schema_rating_value",
+          "label": "Rating Value",
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "key": "field_settings_schema_rating_count",
+          "label": "Review Count",
+          "name": "count",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "key": "field_settings_ask_question_form",
+      "label": "Ask a Question Form ID",
+      "name": "ask_a_question_form_id",
+      "type": "number",
+      "instructions": "Gravity Forms form ID for the 'Ask a Question' form",
+      "required": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "theme-general-settings"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}
