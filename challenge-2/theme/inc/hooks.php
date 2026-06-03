@@ -46,6 +46,8 @@ function mp_output_default_schema_for_post() {
 
     if ( is_singular( 'office' ) ) {
         mp_generate_office_schema( $post );
+    } elseif ( is_singular( 'team' ) ) {
+        mp_generate_attorney_schema( $post );
     } else {
         mp_generate_local_business_schema();
     }
@@ -61,7 +63,7 @@ add_action('wp_footer', 'mp_output_default_schema_for_post');
 
 # outputs any additional for a post/page not covered by the default schema definitions
 function mp_output_additional_schema_for_post() {
-    if ( is_singular( array( 'post', 'practice-area' ) ) ) {
+    if ( is_singular( array( 'post', 'practice-area', 'local', 'office' ) ) ) {
         $faq_items = get_field('schema_faq_items');
 
         if ( $faq_items && sizeof( $faq_items ) > 0 ) {

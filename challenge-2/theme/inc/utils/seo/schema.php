@@ -261,3 +261,51 @@ function mp_generate_faq_page_schema( $faq_markup, $comment = '' ) {
     echo json_encode( $schema );
     echo '</script>';
 }
+
+function mp_generate_attorney_schema($attorney) {
+    $position = get_field('position', $attorney);
+    $phone = get_field('phone', $attorney);
+    $email = get_field('email', $attorney);
+    $office = get_field('office', $attorney);
+
+    $schema = array(
+        '@context' => 'http://schema.org',
+        '@type' => 'Attorney',
+        'name' => get_the_title($attorney),
+        'description' => get_the_excerpt($attorney),
+        'image' => get_the_post_thumbnail_url($attorney, 'full'),
+        'telephone' => $phone,
+        'email' => $email,
+        'jobTitle' => $position,
+    );
+
+    if ($office) {
+        $office_address = get_field('address', $office);
+        $office_geopoint = get_field('geopoint', $office);
+
+        $schema['worksFor'] = array(
+            '@type' => 'LegalService',
+            'name' => get_bloginfo('name'),
+            'address' => array(
+                '@type' => 'PostalAddress',
+                'addressLocality' => $office_address['city'],
+                'addressRegion' => $office_address['state'],
+                'postalCode' => $office_address['postal_code'],
+                'streetAddress' => $office_address['street'] . ($office_address['street2'] ? ', ' . $office_address['street2'] : ''),
+            ),
+        );
+
+        if ($office_geopoint) {
+            $schema['worksFor']['geo'] = array(
+                '@type' => 'GeoCoordinates',
+                'latitude' => $office_geopoint['lat'],
+                'longitude' => $office_geopoint['lng'],
+            );
+        }
+    }
+
+    echo '<!-- SCHEMA: Attorney -->';
+    echo '<script type="application/ld+json">';
+    echo json_encode($schema);
+    echo '</script>';
+}
