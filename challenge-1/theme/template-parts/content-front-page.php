@@ -12,7 +12,7 @@ $listings = array(
     'dates'    => 'Dec 1 - 6',
     'price'    => '$580',
     'rating'   => '4.97',
-    'new'      => false,
+    'badge'    => 'Guest favorite',
     'image'    => 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -21,7 +21,7 @@ $listings = array(
     'dates'    => 'Nov 28 - Dec 3',
     'price'    => '$310',
     'rating'   => '4.95',
-    'new'      => false,
+    'badge'    => 'Guest favorite',
     'image'    => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -30,7 +30,7 @@ $listings = array(
     'dates'    => 'Dec 5 - 10',
     'price'    => '$245',
     'rating'   => '4.99',
-    'new'      => true,
+    'badge'    => '',
     'image'    => 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -39,7 +39,7 @@ $listings = array(
     'dates'    => 'Nov 30 - Dec 5',
     'price'    => '$420',
     'rating'   => '4.96',
-    'new'      => false,
+    'badge'    => 'Guest favorite',
     'image'    => 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -48,7 +48,7 @@ $listings = array(
     'dates'    => 'Dec 8 - 13',
     'price'    => '$195',
     'rating'   => '4.93',
-    'new'      => false,
+    'badge'    => '',
     'image'    => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -57,7 +57,7 @@ $listings = array(
     'dates'    => 'Dec 2 - 7',
     'price'    => '$340',
     'rating'   => '4.98',
-    'new'      => true,
+    'badge'    => 'Guest favorite',
     'image'    => 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -66,7 +66,7 @@ $listings = array(
     'dates'    => 'Dec 10 - 15',
     'price'    => '$390',
     'rating'   => '4.94',
-    'new'      => false,
+    'badge'    => 'Guest favorite',
     'image'    => 'https://images.unsplash.com/photo-1612698093158-e07ac200d44e?w=720&q=80&auto=format&fit=crop',
   ),
   array(
@@ -75,7 +75,7 @@ $listings = array(
     'dates'    => 'Nov 25 - 30',
     'price'    => '$275',
     'rating'   => '4.91',
-    'new'      => false,
+    'badge'    => '',
     'image'    => 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=720&q=80&auto=format&fit=crop',
   ),
 );
@@ -85,15 +85,30 @@ $listings = array(
   class="airbnb-listings"
   aria-label="<?php esc_attr_e( 'Available properties', 'inf' ); ?>"
 >
-  <div class="airbnb-listings__grid">
+  <div class="airbnb-listings__heading">
+    <h2 class="airbnb-listings__title"><?php esc_html_e( 'Popular stays near you', 'inf' ); ?></h2>
+    <div class="airbnb-listings__nav">
+      <button class="airbnb-listings__nav-btn" type="button" aria-label="<?php esc_attr_e( 'Previous', 'inf' ); ?>">
+        <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M8 1L3 6l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+      <button class="airbnb-listings__nav-btn" type="button" aria-label="<?php esc_attr_e( 'Next', 'inf' ); ?>">
+        <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M4 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 
+  <div class="airbnb-listings__grid">
     <?php foreach ( $listings as $listing ) : ?>
       <article class="airbnb-card">
 
         <div class="airbnb-card__media">
-          <?php if ( $listing['new'] ) : ?>
+          <?php if ( ! empty( $listing['badge'] ) ) : ?>
             <span class="airbnb-card__badge">
-              <?php esc_html_e( 'New', 'inf' ); ?>
+              <?php echo esc_html( $listing['badge'] ); ?>
             </span>
           <?php endif; ?>
 
@@ -120,7 +135,7 @@ $listings = array(
 
         <div class="airbnb-card__body">
           <div class="airbnb-card__row">
-            <h2 class="airbnb-card__location"><?php echo esc_html( $listing['location'] ); ?></h2>
+            <h3 class="airbnb-card__location"><?php echo esc_html( $listing['location'] ); ?></h3>
             <div
               class="airbnb-card__rating"
               aria-label="<?php printf( esc_attr__( 'Rated %s', 'inf' ), esc_attr( $listing['rating'] ) ); ?>"
@@ -142,6 +157,5 @@ $listings = array(
 
       </article>
     <?php endforeach; ?>
-
   </div>
 </section>

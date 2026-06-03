@@ -14,48 +14,67 @@
 
 <header class="airbnb-header" role="banner">
 
-  <!-- Top bar: logo / search / nav -->
+  <!-- Top bar -->
   <div class="airbnb-header__bar">
     <div class="airbnb-header__bar-inner">
 
       <!-- Logo -->
       <a
-        href="<?php echo esc_url( home_url( '/' ) ); ?>"
+        href=""
         class="airbnb-header__logo"
-        aria-label="<?php esc_attr_e( 'Go to homepage', 'inf' ); ?>"
+        aria-label=""
       >
-        <svg class="airbnb-header__logo-belo" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <path d="M16 1C10.2 1 5.5 6.6 5.5 13.5c0 4.2 1.8 7.8 4.3 10.8 1.8 2.2 3.8 4.1 6 5.7.4.3.9.3 1.4 0 2.2-1.6 4.2-3.5 6-5.7 2.5-3 4.3-6.6 4.3-10.8C27.5 6.6 22.8 1 16 1zm0 27.2c-2-1.5-3.9-3.2-5.5-5.2C8.2 20.3 7 17.1 7 13.5 7 7.4 11 2.5 16 2.5s9 4.9 9 11c0 3.6-1.2 6.8-3.5 9.5-1.6 2-3.5 3.7-5.5 5.2zM16 7.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zm0 9.5a4 4 0 110-8 4 4 0 010 8z"/>
-        </svg>
-        <span class="airbnb-header__logo-wordmark">airbnb</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb" class="airbnb-header__logo-svg">
       </a>
 
-      <!-- Search pill -->
-      <div class="airbnb-header__search" role="search" aria-label="<?php esc_attr_e( 'Search stays', 'inf' ); ?>">
-        <div class="airbnb-search-pill">
-          <button class="airbnb-search-pill__segment" type="button" aria-label="<?php esc_attr_e( 'Search by destination', 'inf' ); ?>">
-            <span class="airbnb-search-pill__label"><?php esc_html_e( 'Anywhere', 'inf' ); ?></span>
-          </button>
-          <span class="airbnb-search-pill__divider" aria-hidden="true"></span>
-          <button class="airbnb-search-pill__segment" type="button" aria-label="<?php esc_attr_e( 'Search by dates', 'inf' ); ?>">
-            <span class="airbnb-search-pill__label"><?php esc_html_e( 'Any week', 'inf' ); ?></span>
-          </button>
-          <span class="airbnb-search-pill__divider" aria-hidden="true"></span>
-          <button class="airbnb-search-pill__segment airbnb-search-pill__segment--guests" type="button" aria-label="<?php esc_attr_e( 'Search by guests', 'inf' ); ?>">
-            <span class="airbnb-search-pill__label airbnb-search-pill__label--muted"><?php esc_html_e( 'Add guests', 'inf' ); ?></span>
-            <span class="airbnb-search-pill__submit" aria-hidden="true">
-              <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true">
-                <path d="M31 28l-7.6-7.6A12.9 12.9 0 1021 22.4L28.6 30 31 28zm-18-4a11 11 0 110-22 11 11 0 010 22z" fill="currentColor"/>
-              </svg>
-            </span>
-          </button>
-        </div>
-      </div>
+      <!-- Center nav tabs -->
+      <nav class="airbnb-header__tabs-nav" aria-label="<?php esc_attr_e( 'Main navigation', 'inf' ); ?>">
+
+        <!-- Stays -->
+        <button class="airbnb-header__tab airbnb-header__tab--active" type="button">
+          <span class="airbnb-header__tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 28V13.5L16 4l13 9.5V28H20v-9h-8v9H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="13" y="19" width="6" height="9" rx="1" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </span>
+          <span><?php esc_html_e( 'Stays', 'inf' ); ?></span>
+        </button>
+
+        <!-- Experiences -->
+        <button class="airbnb-header__tab" type="button">
+          <span class="airbnb-header__tab-badge"><?php esc_html_e( 'New', 'inf' ); ?></span>
+          <span class="airbnb-header__tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="16" cy="20" rx="10" ry="8" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 12V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 20c0-5 3-10 6-10s6 5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M6 20h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 4.5c0 0 1.5 2 4 2s4-2 4-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span><?php esc_html_e( 'Experiences', 'inf' ); ?></span>
+        </button>
+
+        <!-- Services -->
+        <button class="airbnb-header__tab" type="button">
+          <span class="airbnb-header__tab-badge"><?php esc_html_e( 'New', 'inf' ); ?></span>
+          <span class="airbnb-header__tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 22h20M8 22V14a8 8 0 1116 0v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="4" y="22" width="24" height="4" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M14 6.5V4M18 6.5V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span><?php esc_html_e( 'Services', 'inf' ); ?></span>
+        </button>
+
+      </nav>
 
       <!-- Right nav -->
       <nav class="airbnb-header__nav" aria-label="<?php esc_attr_e( 'Account navigation', 'inf' ); ?>">
         <a href="#" class="airbnb-header__nav-link airbnb-header__nav-link--host">
-          <?php esc_html_e( 'Airbnb your home', 'inf' ); ?>
+          <?php esc_html_e( 'Become a host', 'inf' ); ?>
         </a>
         <a
           href="#"
@@ -88,82 +107,35 @@
     </div>
   </div>
 
-  <!-- Category tabs -->
-  <div class="airbnb-header__tabs">
-    <div class="airbnb-header__tabs-inner">
-
-      <div class="airbnb-category-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Property types', 'inf' ); ?>">
-        <?php
-        $airbnb_categories = array(
-          array( 'slug' => 'icons',       'label' => 'Icons' ),
-          array( 'slug' => 'views',       'label' => 'Amazing views' ),
-          array( 'slug' => 'beach',       'label' => 'Beach' ),
-          array( 'slug' => 'tiny',        'label' => 'Tiny homes' ),
-          array( 'slug' => 'cabins',      'label' => 'Cabins' ),
-          array( 'slug' => 'lake',        'label' => 'Lakefront' ),
-          array( 'slug' => 'design',      'label' => 'Design' ),
-          array( 'slug' => 'mansions',    'label' => 'Mansions' ),
-          array( 'slug' => 'camping',     'label' => 'Camping' ),
-          array( 'slug' => 'castles',     'label' => 'Castles' ),
-          array( 'slug' => 'farms',       'label' => 'Farms' ),
-          array( 'slug' => 'boats',       'label' => 'Boats' ),
-          array( 'slug' => 'luxe',        'label' => 'Luxe' ),
-          array( 'slug' => 'treehouses',  'label' => 'Treehouses' ),
-          array( 'slug' => 'arctic',      'label' => 'Arctic' ),
-          array( 'slug' => 'containers',  'label' => 'Containers' ),
-        );
-
-        $airbnb_icons = array(
-          'icons'      => '<path d="M16 2l3.09 6.26L26 9.27l-5 4.87 1.18 6.86L16 17.9l-6.18 3.1L11 14.14 6 9.27l6.91-1.01L16 2z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" fill="none"/>',
-          'views'      => '<path d="M2 26l6-8 5 6 5-9 5 5 7-12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'beach'      => '<path d="M28 28H4M16 28V12M8 18c0-4.4 3.6-8 8-8s8 3.6 8 8M10 12l12 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/>',
-          'tiny'       => '<path d="M3 28h26M5 28V14l11-10 11 10v14M12 28v-8h8v8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'cabins'     => '<path d="M2 28h28M4 28V16M28 28V16M16 2L2 16h28L16 2zM11 28v-8h10v8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'lake'       => '<path d="M2 22c5-6 10 0 15-6s10 0 13-4M2 28c5-4 10 2 15-4s10 0 13-2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/><circle cx="16" cy="8" r="5" stroke="currentColor" stroke-width="1.75" fill="none"/>',
-          'design'     => '<rect x="3" y="4" width="26" height="24" rx="2" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M3 11h26M10 11v17" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/>',
-          'mansions'   => '<path d="M1 28h30M3 28V13h26v15M1 13l15-10 15 10M13 28v-9h6v9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'camping'    => '<path d="M2 28h28M16 3L3 28h26L16 3zM16 3v25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'castles'    => '<path d="M3 28h26M5 28V14h5V9h4V5h-2V2h2v3h4V2h2v3h-2v4h4v5h5v14M10 28v-8h12v8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'farms'      => '<path d="M2 28h28M18 28V16h8v12M6 28V15L14 8l8 7v13M10 28v-6h8v6M24 16V9h4v7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'boats'      => '<path d="M5 22l2-10h18l2 10H5zM16 12V5M11 8l5-3 5 3M2 22c4 8 24 8 28 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
-          'luxe'       => '<path d="M16 2l3.7 7.5 8.3 1.2-6 5.9 1.4 8.1L16 20.9 8.6 24.7l1.4-8.1L4 10.7l8.3-1.2L16 2z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" fill="none"/>',
-          'treehouses' => '<circle cx="16" cy="11" r="9" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M16 20v10M12 30h8M10 15h12M16 10v8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/>',
-          'arctic'     => '<path d="M16 2v28M2 16h28M6 6l20 20M26 6L6 26" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.75" fill="none"/>',
-          'containers' => '<rect x="2" y="8" width="28" height="18" rx="2" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M9 8V6a2 2 0 012-2h10a2 2 0 012 2v2M12 17h8M2 17h28" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/>',
-        );
-
-        foreach ( $airbnb_categories as $i => $cat ) :
-          $is_active = ( 0 === $i );
-          $icon_path = isset( $airbnb_icons[ $cat['slug'] ] ) ? $airbnb_icons[ $cat['slug'] ] : '';
-          ?>
-          <button
-            class="airbnb-category-tabs__tab<?php echo $is_active ? ' airbnb-category-tabs__tab--active' : ''; ?>"
-            role="tab"
-            aria-selected="<?php echo $is_active ? 'true' : 'false'; ?>"
-            data-category="<?php echo esc_attr( $cat['slug'] ); ?>"
-            type="button"
-          >
-            <span class="airbnb-category-tabs__icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true">
-                <?php echo $icon_path; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-              </svg>
-            </span>
-            <span class="airbnb-category-tabs__label"><?php echo esc_html( $cat['label'] ); ?></span>
-          </button>
-          <?php
-        endforeach;
-        ?>
+  <!-- Search bar -->
+  <div class="airbnb-header__search-wrap">
+    <div class="airbnb-search-bar" role="search" aria-label="<?php esc_attr_e( 'Search stays', 'inf' ); ?>">
+      <div class="airbnb-search-bar__field">
+        <label class="airbnb-search-bar__label"><?php esc_html_e( 'Where', 'inf' ); ?></label>
+        <input
+          class="airbnb-search-bar__input"
+          type="text"
+          placeholder="<?php esc_attr_e( 'Explore destinations', 'inf' ); ?>"
+          aria-label="<?php esc_attr_e( 'Search destination', 'inf' ); ?>"
+        >
       </div>
-
-      <div class="airbnb-header__filters">
-        <button class="airbnb-filters-btn" type="button" aria-label="<?php esc_attr_e( 'Show filters', 'inf' ); ?>">
-          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-            <path d="M5 8c1.306 0 2.418.835 2.83 2H14v2H7.829A3.001 3.001 0 112 10h.001A3 3 0 015 8zm0 2a1 1 0 100 2 1 1 0 000-2zm6-8a3 3 0 012.829 4H14v2h-.17a3.001 3.001 0 01-5.66 0H2V6h6.17A3.001 3.001 0 0111 2zm0 2a1 1 0 100 2 1 1 0 000-2z" fill="currentColor"/>
+      <span class="airbnb-search-bar__divider" aria-hidden="true"></span>
+      <div class="airbnb-search-bar__field">
+        <label class="airbnb-search-bar__label"><?php esc_html_e( 'Dates', 'inf' ); ?></label>
+        <span class="airbnb-search-bar__placeholder"><?php esc_html_e( 'Add dates', 'inf' ); ?></span>
+      </div>
+      <span class="airbnb-search-bar__divider" aria-hidden="true"></span>
+      <div class="airbnb-search-bar__field airbnb-search-bar__field--last">
+        <div>
+          <label class="airbnb-search-bar__label"><?php esc_html_e( 'Who', 'inf' ); ?></label>
+          <span class="airbnb-search-bar__placeholder airbnb-search-bar__placeholder--muted"><?php esc_html_e( 'Add guests', 'inf' ); ?></span>
+        </div>
+        <button class="airbnb-search-bar__submit" type="button" aria-label="<?php esc_attr_e( 'Search', 'inf' ); ?>">
+          <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true">
+            <path d="M31 28l-7.6-7.6A12.9 12.9 0 1021 22.4L28.6 30 31 28zm-18-4a11 11 0 110-22 11 11 0 010 22z" fill="currentColor"/>
           </svg>
-          <span><?php esc_html_e( 'Filters', 'inf' ); ?></span>
         </button>
       </div>
-
     </div>
   </div>
 
