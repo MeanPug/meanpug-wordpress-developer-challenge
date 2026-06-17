@@ -211,6 +211,24 @@ add_action( 'init', 'inf_load_blocks' );
 // isn't used on the page
 add_filter('should_load_separate_core_block_assets', '__return_true');
 
+/**
+ * Challenge 1: load Flaticon UIcons on the airPnP front page only.
+ *
+ * Keeps the icon webfonts off every other template so we don't pay for them
+ * site-wide.
+ */
+function airpnp_enqueue_uicons() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$uicons = 'https://cdn-uicons.flaticon.com/4.0.0/';
+	wp_enqueue_style( 'uicons-regular-rounded', $uicons . 'uicons-regular-rounded/css/uicons-regular-rounded.css', array(), '4.0.0' );
+	wp_enqueue_style( 'uicons-solid-rounded', $uicons . 'uicons-solid-rounded/css/uicons-solid-rounded.css', array(), '4.0.0' );
+	wp_enqueue_style( 'uicons-brands', $uicons . 'uicons-brands/css/uicons-brands.css', array(), '4.0.0' );
+}
+add_action( 'wp_enqueue_scripts', 'airpnp_enqueue_uicons' );
+
 require_once __DIR__ . '/inc/filters.php';
 require_once __DIR__ . '/inc/hooks.php';
 require_once __DIR__ . '/inc/template_functions.php';

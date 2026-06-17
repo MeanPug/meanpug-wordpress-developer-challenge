@@ -3,5 +3,6 @@
 
 @import "tailwindcss/components";
 @import "./css/components/nav.css";
+@import "./css/components/airpnp.css";
 
 @import "tailwindcss/utilities";
