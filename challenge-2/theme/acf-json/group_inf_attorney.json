@@ -1,0 +1,104 @@
+{
+	"key": "group_inf_attorney",
+	"title": "Attorney Fields",
+	"fields": [
+		{
+			"key": "field_inf_attorney_role",
+			"label": "Role / Title",
+			"name": "role",
+			"type": "text",
+			"instructions": "e.g. \"Managing Partner\". Read by template-parts/snippets/content-author-bio.php.",
+			"required": 0
+		},
+		{
+			"key": "field_inf_attorney_email",
+			"label": "Email",
+			"name": "email",
+			"type": "email",
+			"instructions": "Public contact email. Rendered via the_field('email').",
+			"required": 0
+		},
+		{
+			"key": "field_inf_attorney_phone",
+			"label": "Phone",
+			"name": "phone",
+			"type": "link",
+			"instructions": "Phone as a link (tel:). The author bio reads phone['url'] and phone['title'].",
+			"required": 0,
+			"return_format": "array"
+		},
+		{
+			"key": "field_inf_attorney_bio",
+			"label": "Short Bio",
+			"name": "bio",
+			"type": "textarea",
+			"instructions": "Optional short bio for cards/sidebars. The long-form bio lives in the editor.",
+			"required": 0,
+			"rows": 4,
+			"new_lines": "wpautop"
+		},
+		{
+			"key": "field_inf_attorney_bar_admissions",
+			"label": "Bar Admissions",
+			"name": "bar_admissions",
+			"type": "repeater",
+			"instructions": "Jurisdictions / courts the attorney is admitted to practice in.",
+			"required": 0,
+			"layout": "table",
+			"button_label": "Add Admission",
+			"sub_fields": [
+				{
+					"key": "field_inf_attorney_bar_admission_label",
+					"label": "Admission",
+					"name": "label",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_attorney_bar_admission_year",
+					"label": "Year",
+					"name": "year",
+					"type": "number",
+					"min": 1900,
+					"max": 2100
+				}
+			]
+		},
+		{
+			"key": "field_inf_attorney_practice_areas",
+			"label": "Practice Areas",
+			"name": "practice_areas",
+			"type": "relationship",
+			"instructions": "Practice areas this attorney handles. Powers the Related Practice Areas widget on attorney singles.",
+			"required": 0,
+			"post_type": [
+				"practice-area"
+			],
+			"filters": [
+				"search"
+			],
+			"return_format": "object",
+			"min": 0,
+			"max": 0
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "post_type",
+				"operator": "==",
+				"value": "team"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Schema for `team` attorney profiles. Headshot = featured image.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}

@@ -1,0 +1,92 @@
+{
+	"key": "group_inf_case_result",
+	"title": "Case Result Fields",
+	"fields": [
+		{
+			"key": "field_inf_case_result_amount",
+			"label": "Amount",
+			"name": "amount",
+			"type": "number",
+			"instructions": "Numeric value of the verdict/settlement (used for sorting).",
+			"required": 1,
+			"min": 0
+		},
+		{
+			"key": "field_inf_case_result_amount_display",
+			"label": "Amount (Display)",
+			"name": "amount_display",
+			"type": "text",
+			"instructions": "Human formatted amount, e.g. \"$1.2 Million\". Falls back to the numeric amount if empty.",
+			"required": 0
+		},
+		{
+			"key": "field_inf_case_result_case_type",
+			"label": "Case Type",
+			"name": "case_type",
+			"type": "text",
+			"instructions": "e.g. \"Car Accident\", \"Medical Malpractice\".",
+			"required": 0
+		},
+		{
+			"key": "field_inf_case_result_year",
+			"label": "Year",
+			"name": "year",
+			"type": "number",
+			"instructions": "Year the result was obtained.",
+			"required": 0,
+			"min": 1900,
+			"max": 2100
+		},
+		{
+			"key": "field_inf_case_result_attorney",
+			"label": "Attorney",
+			"name": "attorney",
+			"type": "post_object",
+			"instructions": "Attorney responsible for the result.",
+			"required": 0,
+			"post_type": [
+				"team"
+			],
+			"return_format": "object",
+			"multiple": 0,
+			"allow_null": 1,
+			"ui": 1
+		},
+		{
+			"key": "field_inf_case_result_practice_areas",
+			"label": "Related Practice Areas",
+			"name": "practice_areas",
+			"type": "relationship",
+			"instructions": "Practice area(s) this result belongs to.",
+			"required": 0,
+			"post_type": [
+				"practice-area"
+			],
+			"filters": [
+				"search"
+			],
+			"return_format": "object",
+			"min": 0,
+			"max": 0
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "post_type",
+				"operator": "==",
+				"value": "case-result"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Schema for `case-result` verdicts & settlements.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}
