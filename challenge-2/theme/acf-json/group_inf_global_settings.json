@@ -1,0 +1,233 @@
+{
+	"key": "group_inf_global_settings",
+	"title": "Global Theme Settings",
+	"fields": [
+		{
+			"key": "field_inf_settings_tab_contact",
+			"label": "Contact",
+			"name": "",
+			"type": "tab",
+			"placement": "top"
+		},
+		{
+			"key": "field_inf_settings_contact_phone",
+			"label": "Contact Phone",
+			"name": "contact_phone",
+			"type": "link",
+			"instructions": "Primary phone. Read as get_field('contact_phone','option')['title'] / ['url'].",
+			"required": 0,
+			"return_format": "array"
+		},
+		{
+			"key": "field_inf_settings_contact_email",
+			"label": "Contact Email",
+			"name": "contact_email",
+			"type": "link",
+			"instructions": "Primary email as a link (mailto:). Read as get_field('contact_email','option')['title'].",
+			"required": 0,
+			"return_format": "array"
+		},
+		{
+			"key": "field_inf_settings_contact_main_address",
+			"label": "Main Address",
+			"name": "contact_main_address",
+			"type": "group",
+			"instructions": "Default business address used by mp_generate_local_business_schema().",
+			"required": 0,
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_inf_settings_addr_street_number",
+					"label": "Street Number",
+					"name": "street_number",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_street_name",
+					"label": "Street Name",
+					"name": "street_name",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_city",
+					"label": "City",
+					"name": "city",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_state",
+					"label": "State",
+					"name": "state",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_post_code",
+					"label": "Post Code",
+					"name": "post_code",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_lat",
+					"label": "Latitude",
+					"name": "lat",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_addr_lng",
+					"label": "Longitude",
+					"name": "lng",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"key": "field_inf_settings_contact_offices",
+			"label": "Offices",
+			"name": "contact_offices",
+			"type": "repeater",
+			"instructions": "Office cards shown in the location navigator. Each: name, address, phone, directions.",
+			"required": 0,
+			"layout": "block",
+			"button_label": "Add Office",
+			"sub_fields": [
+				{
+					"key": "field_inf_settings_office_name",
+					"label": "Name",
+					"name": "name",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_settings_office_address",
+					"label": "Address",
+					"name": "address",
+					"type": "textarea",
+					"rows": 3,
+					"new_lines": "br"
+				},
+				{
+					"key": "field_inf_settings_office_phone_number",
+					"label": "Phone Number",
+					"name": "phone_number",
+					"type": "link",
+					"return_format": "array"
+				},
+				{
+					"key": "field_inf_settings_office_directions_link",
+					"label": "Directions Link",
+					"name": "directions_link",
+					"type": "url"
+				}
+			]
+		},
+		{
+			"key": "field_inf_settings_social_profiles",
+			"label": "Social Profiles",
+			"name": "social_profiles",
+			"type": "repeater",
+			"instructions": "Used for schema sameAs. Each profile exposes a `url`.",
+			"required": 0,
+			"layout": "table",
+			"button_label": "Add Profile",
+			"sub_fields": [
+				{
+					"key": "field_inf_settings_social_network",
+					"label": "Network",
+					"name": "network",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_settings_social_url",
+					"label": "URL",
+					"name": "url",
+					"type": "url",
+					"required": 1
+				}
+			]
+		},
+		{
+			"key": "field_inf_settings_tab_seo",
+			"label": "SEO & Schema",
+			"name": "",
+			"type": "tab",
+			"placement": "top"
+		},
+		{
+			"key": "field_inf_settings_schema_aggregate_rating",
+			"label": "Aggregate Rating",
+			"name": "schema_aggregate_rating",
+			"type": "group",
+			"instructions": "Powers AggregateRating schema. Read as ['value'] and ['count'].",
+			"required": 0,
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_inf_settings_agg_value",
+					"label": "Rating Value",
+					"name": "value",
+					"type": "number",
+					"min": 0,
+					"max": 5,
+					"step": 0.1
+				},
+				{
+					"key": "field_inf_settings_agg_count",
+					"label": "Review Count",
+					"name": "count",
+					"type": "number",
+					"min": 0
+				}
+			]
+		},
+		{
+			"key": "field_inf_settings_tab_technical",
+			"label": "Technical & Forms",
+			"name": "",
+			"type": "tab",
+			"placement": "top"
+		},
+		{
+			"key": "field_inf_settings_google_maps_api_key",
+			"label": "Google Maps API Key",
+			"name": "technical_google_maps_api_key",
+			"type": "text",
+			"instructions": "Used to initialise the Google Maps SDK for the location navigator.",
+			"required": 0
+		},
+		{
+			"key": "field_inf_settings_ask_a_question_form_id",
+			"label": "Ask a Question — Form ID",
+			"name": "ask_a_question_form_id",
+			"type": "text",
+			"instructions": "Gravity Forms form ID used for the global \"ask a question\" form.",
+			"required": 0
+		},
+		{
+			"key": "field_inf_settings_default_evaluation_form_header",
+			"label": "Default Evaluation Form Header",
+			"name": "default_evaluation_form_header",
+			"type": "text",
+			"instructions": "Default heading shown above the case evaluation form.",
+			"required": 0
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "options_page",
+				"operator": "==",
+				"value": "theme-general-settings"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Global firm-wide settings consumed via get_field(..., 'option').",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}

@@ -1,0 +1,40 @@
+{
+	"key": "group_inf_user_profile",
+	"title": "User — Attorney Link",
+	"fields": [
+		{
+			"key": "field_inf_user_team_profile",
+			"label": "Attorney Profile",
+			"name": "team_profile",
+			"type": "post_object",
+			"instructions": "Link this WordPress user to their Attorney (team) post. Read as get_field('team_profile', 'user_'.$id) by content-author-bio.php to attribute blog posts.",
+			"required": 0,
+			"post_type": [
+				"team"
+			],
+			"return_format": "id",
+			"multiple": 0,
+			"allow_null": 1,
+			"ui": 1
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "user_form",
+				"operator": "==",
+				"value": "all"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Connects WP users to their `team` attorney profile.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}

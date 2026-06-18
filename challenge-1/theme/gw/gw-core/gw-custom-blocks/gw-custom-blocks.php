@@ -1,0 +1,1239 @@
+<?php
+/***
+ * 
+ * @package GW Custom Blocks
+ * @version 1.2.0
+ * @author Luigi Libet
+ * @link https://github.com/LuigiLibet/gw-custom-blocks
+ * @license GPL-2.0+
+ * @copyright 2025 Luigi Libet
+ */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+	exit;
+}
+
+/**
+ * GW Custom Blocks
+ * Simple helper to register dynamic (PHP-rendered) blocks with optional auto-discovery.
+ *
+ * Usage example:
+ * gw_register_block('my-badge', array(
+ *   'name'    => 'My Badge',
+ *   'category'=> 'custom',
+ *   'supports'=> array('color' => array('text' => true, 'background' => true)),
+ *   'render'  => 'badge/view.php', // relative to blocks/ by default
+ *   'editor_styles' => 'assets/css/editor.css', // optional
+ *   'dir'     => '', // override base dir; defaults to blocks
+ *   'fields'  => array(
+ *       'label' => array('type' => 'string', 'control' => 'text', 'label' => 'Label', 'default' => ''),
+ *       'size'  => array('type' => 'number', 'control' => 'range', 'label' => 'Size', 'min' => 8, 'max' => 64, 'step' => 1, 'default' => 16),
+ *       'color' => array('type' => 'string', 'control' => 'color', 'label' => 'Color'),
+ *   ),
+ * ));
+ *
+ * Inline render (very simple template):
+ *   'render' => '<span class="badge">{{label}}</span>'
+ * Placeholders supported: {{content}} and {{attributeName}}
+ */
+
+// Keep a registry so we can provide a single editor script with config for all blocks.
+if (!isset($GLOBALS['gw_custom_blocks_registry'])) {
+	$GLOBALS['gw_custom_blocks_registry'] = array();
+}
+
+// Keep a registry for icon libraries
+if (!isset($GLOBALS['gw_icon_libraries'])) {
+	$GLOBALS['gw_icon_libraries'] = array();
+}
+
+/**
+ * Check if we are in the block editor.
+ * Similar to is_admin() but specifically for the Gutenberg block editor.
+ *
+ * @return bool True if in the block editor, false otherwise.
+ *
+ * @example
+ * if (gw_in_editor()) {
+ *     // Show editor-specific content
+ * } else {
+ *     // Show frontend content
+ * }
+ */
+function gw_in_editor() {
+	// Primary method: Check if serving REST request with edit context
+	// This is the standard way WordPress indicates editor rendering
+	if (function_exists('wp_is_serving_rest_request') 
+		&& wp_is_serving_rest_request() 
+		&& ($_GET['context'] ?? '') === 'edit') {
+		return true;
+	}
+	
+	// Fallback: Check if we're in the admin and if it's the block editor
+	if (is_admin()) {
+		// Use wp_is_block_editor() if available (WordPress 5.0+)
+		if (function_exists('wp_is_block_editor')) {
+			if (wp_is_block_editor()) {
+				return true;
+			}
+		}
+		
+		// Fallback: check current screen
+		$screen = get_current_screen();
+		if ($screen) {
+			if (method_exists($screen, 'is_block_editor') && $screen->is_block_editor()) {
+				return true;
+			}
+			
+			// Additional fallback: check if we're in the post editor
+			if (in_array($screen->base, array('post', 'page'))) {
+				// Check if block editor is enabled (not classic editor)
+				if (function_exists('use_block_editor_for_post_type')) {
+					return use_block_editor_for_post_type($screen->post_type);
+				}
+			}
+		}
+	}
+	
+	return false;
+}
+
+/**
+ * Register a Custom Block
+ *
+ * @param string $slug Block slug (without namespace). Final name will be "$namespace/$slug".
+ * @param array  $args Settings:
+ *  - name (string): UI title. Default: humanized slug
+ *  - namespace (string): Default 'gw'
+ *  - category (string): Default 'custom'
+ *  - supports (array): Block supports
+ *  - render (string): PHP file path (absolute or relative) OR inline HTML string
+ *  - dir (string): Base dir for relative render paths. Default theme 'blocks'
+ *  - icon (string|array): Block icon
+ *  - keywords (array): Inserter keywords
+ *  - editor_styles (string): Optional CSS file path to load in editor
+ *  - fields (array): Attribute/controls spec. Each key is attribute name.
+ *      Support: control types text, textarea, color, range, number, toggle, select, buttongroup, gallery, image, repeater, icon_picker
+ *      'buttongroup' renders pill-style segmented buttons (WP ToggleGroupControl). It is
+ *      deselectable (click the active pill to clear back to ''). Each option may include an
+ *      'icon' (dashicon slug) to render icon pills like the core Group/Row block.
+ */
+function gw_register_block($slug, $args = array()) {
+	$defaults = array(
+		'name'          => null,
+		'namespace'     => 'gw',
+		'category'      => 'custom',
+		'supports'      => array(),
+		'render'        => null,
+		'dir'           => '',
+		'icon'          => 'block-default',
+		'keywords'      => array(),
+		'editor_styles' => '',
+		'style'         => '',
+		'script'        => '',
+		'fields'        => array(),
+		'ui'            => array(),
+		// InnerBlocks configuration (only used by blocks declaring innerBlocks support)
+		'allowedBlocks' => null,   // array of block names to restrict child insertion
+		'template'      => null,   // array template e.g. array(array('gw/slide'))
+		'templateLock'  => null,   // false | 'all' | 'insert'
+		'orientation'   => null,   // 'horizontal' | 'vertical'
+		// Block hierarchy (passed to registerBlockType)
+		'parent'        => null,   // array of block names this block can be inserted into
+		'ancestor'      => null,   // array of block names that must be an ancestor
+	);
+	$args = array_merge($defaults, $args);
+
+	$title = $args['name'] ?: ucwords(trim(str_replace(array('-', '_'), ' ', $slug)));
+	$namespace = $args['namespace'] ?: 'gw';
+	$block_name = $namespace . '/' . $slug;
+
+	// Base dir for PHP templates (default: theme 'blocks')
+	$base_dir = $args['dir'];
+	if (!$base_dir) {
+		$base_dir = trailingslashit(get_theme_file_path('blocks'));
+	} else {
+		// If relative, make it theme-relative
+		if (0 !== strpos($base_dir, ABSPATH)) {
+			$base_dir = trailingslashit(get_theme_file_path($base_dir));
+		} else {
+			$base_dir = trailingslashit($base_dir);
+		}
+	}
+
+	// Normalize fields -> attributes
+	$attributes = array();
+	foreach ($args['fields'] as $attr_key => $field) {
+		$type = isset($field['type']) ? $field['type'] : 'string';
+		$attr = array('type' => $type);
+		if (array_key_exists('default', $field)) {
+			$attr['default'] = $field['default'];
+		}
+		// For select, constrain enum if options provided
+		if (isset($field['control']) && $field['control'] === 'select' && !empty($field['options']) && is_array($field['options'])) {
+			$attr['enum'] = array_values(array_map(function($opt){
+				return is_array($opt) && isset($opt['value']) ? $opt['value'] : $opt;
+			}, $field['options']));
+		}
+		$attributes[$attr_key] = $attr;
+	}
+
+	// Add WordPress core attributes for supported features
+	// Anchor support
+	if (!empty($args['supports']['anchor'])) {
+		if (!isset($attributes['anchor'])) {
+			$attributes['anchor'] = array('type' => 'string');
+		}
+	}
+	// Custom className support
+	if (!empty($args['supports']['customClassName'])) {
+		if (!isset($attributes['className'])) {
+			$attributes['className'] = array('type' => 'string');
+		}
+	}
+
+	// Store registry entry for editor script to read
+	$GLOBALS['gw_custom_blocks_registry'][$block_name] = array(
+		'name'      => $block_name,
+		'title'     => $title,
+		'icon'      => $args['icon'],
+		'category'  => $args['category'],
+		'supports'  => $args['supports'],
+		'fields'    => $args['fields'],
+		'attributes'=> $attributes,
+		'ui'        => $args['ui'],
+		'parent'    => $args['parent'],
+		'ancestor'  => $args['ancestor'],
+		'innerBlocksConfig' => array(
+			'allowedBlocks' => $args['allowedBlocks'],
+			'template'      => $args['template'],
+			'templateLock'  => $args['templateLock'],
+			'orientation'   => $args['orientation'],
+		),
+	);
+
+	// Helper function to normalize asset paths
+	$normalize_asset_path = function($path) {
+		if (empty($path)) {
+			return '';
+		}
+		// If already a full URL (http/https), return as is
+		if (0 === strpos($path, 'http://') || 0 === strpos($path, 'https://')) {
+			return $path;
+		}
+		// If relative path (doesn't start with /), make it theme-relative
+		if (0 !== strpos($path, '/')) {
+			return trailingslashit(get_template_directory_uri()) . ltrim($path, '/');
+		}
+		// If absolute path, convert to URI if it's inside theme
+		$theme_dir = trailingslashit(get_template_directory());
+		if (0 === strpos($path, $theme_dir)) {
+			return str_replace($theme_dir, trailingslashit(get_template_directory_uri()), $path);
+		}
+		// Otherwise return as is (might be absolute path outside theme)
+		return $path;
+	};
+
+	// Prepare editor style handle if provided
+	$editor_style_handle = '';
+	if (!empty($args['editor_styles'])) {
+		$style_src = $normalize_asset_path($args['editor_styles']);
+		$editor_style_handle = 'gw-custom-blocks-editor-style-' . sanitize_key($slug);
+		wp_register_style($editor_style_handle, $style_src, array(), wp_get_theme()->get('Version'));
+	}
+
+	// Prepare frontend style handle if provided
+	$frontend_style_handle = '';
+	if (!empty($args['style'])) {
+		$style_src = $normalize_asset_path($args['style']);
+		$frontend_style_handle = 'gw-custom-blocks-style-' . sanitize_key($slug);
+		wp_register_style($frontend_style_handle, $style_src, array(), wp_get_theme()->get('Version'));
+	}
+
+	// Prepare frontend script handle if provided
+	$frontend_script_handle = '';
+	if (!empty($args['script'])) {
+		$script_src = $normalize_asset_path($args['script']);
+		$frontend_script_handle = 'gw-custom-blocks-script-' . sanitize_key($slug);
+		wp_register_script($frontend_script_handle, $script_src, array(), wp_get_theme()->get('Version'), true);
+	}
+
+	// Build render callback
+	$render_spec = $args['render'];
+	$render_cb = function($attrs = array(), $content = '', $block = null) use ($render_spec, $base_dir) {
+		// Helper to include PHP template safely and capture output
+		$include_php = function($path) use ($attrs, $content, $block) {
+			if (!file_exists($path)) {
+				return '';
+			}
+			ob_start();
+			// Make attrs accessible inside template
+			$attributes = $attrs;
+			$post_id = get_the_ID();
+			include $path;
+			return ob_get_clean();
+		};
+
+		if (is_string($render_spec)) {
+			// Inline HTML template if looks like markup
+			$is_inline_template = false;
+			$trimmed = trim($render_spec);
+			if ($trimmed !== '' && $trimmed[0] === '<') {
+				$is_inline_template = true;
+			}
+
+			if ($is_inline_template) {
+				$replace = $trimmed;
+				// Replace {{content}} or $content placeholder
+				$replace = str_replace(array('{{content}}', '$content'), $content, $replace);
+				// Replace {{attribute}}
+				foreach ($attrs as $k => $v) {
+					$replace = str_replace('{{' . $k . '}}', is_scalar($v) ? (string) $v : '', $replace);
+					$replace = str_replace('$' . $k, is_scalar($v) ? (string) $v : '', $replace);
+				}
+				return $replace;
+			}
+
+			// Otherwise treat as path: absolute or relative to base_dir
+			$template_path = $render_spec;
+			if (0 !== strpos($template_path, ABSPATH)) {
+				$template_path = $base_dir . ltrim($template_path, '/');
+			}
+			
+			// Check if we're in the editor and look for editor.php
+			if (gw_in_editor()) {
+				$editor_path = dirname($template_path) . '/editor.php';
+				if (file_exists($editor_path)) {
+					return $include_php($editor_path);
+				}
+			}
+			
+			// Use regular render template
+			return $include_php($template_path);
+		}
+
+		// No render spec -> nothing
+		return '';
+	};
+
+	// Ensure our editor script is registered and localized
+	gw_custom_blocks_bootstrap_editor_script();
+
+	$register_args = array(
+		'api_version'     => 2,
+		'title'           => $title,
+		'category'        => $args['category'],
+		'icon'            => $args['icon'],
+		'keywords'        => $args['keywords'],
+		'supports'        => $args['supports'],
+		'attributes'      => $attributes,
+		'editor_script'   => 'gw-custom-blocks-editor',
+		'render_callback' => $render_cb,
+	);
+	if ($editor_style_handle) {
+		$register_args['editor_style'] = $editor_style_handle;
+	}
+	if ($frontend_style_handle) {
+		$register_args['style'] = $frontend_style_handle;
+	}
+	if ($frontend_script_handle) {
+		$register_args['script'] = $frontend_script_handle;
+	}
+	if (!empty($args['parent'])) {
+		$register_args['parent'] = $args['parent'];
+	}
+	if (!empty($args['ancestor'])) {
+		$register_args['ancestor'] = $args['ancestor'];
+	}
+
+	register_block_type($block_name, $register_args);
+}
+
+/**
+ * Register blocks by auto-discovering PHP templates in a directory.
+ *
+ * - Auto-discovers block directories containing a view.php under $dir (default: theme 'blocks')
+ * - Example path: blocks/my-block/view.php
+ * - Each directory name becomes the slug; title is humanized from slug
+ */
+function gw_register_blocks_autodiscover($dir = '') {
+	$base_dir = $dir ? $dir : get_theme_file_path('blocks');
+	if (!is_dir($base_dir)) {
+		return;
+	}
+	$files = glob(trailingslashit($base_dir) . '*/view.php');
+	if (!$files) {
+		return;
+	}
+	foreach ($files as $file) {
+		$slug = basename(dirname($file));
+		gw_register_block($slug, array(
+			'render' => $file,
+		));
+	}
+}
+
+/**
+ * Ensure our generic editor script is registered and localized with registry data.
+ */
+function gw_custom_blocks_bootstrap_editor_script() {
+	static $bootstrapped = false;
+	if ($bootstrapped) {
+		// Update localization if new blocks were added
+		gw_custom_blocks_update_localization();
+		return;
+	}
+	$bootstrapped = true;
+
+	$theme_uri = trailingslashit(get_template_directory_uri());
+	$base_path = $theme_uri . 'gw/gw-core/gw-custom-blocks/';
+	$version = wp_get_theme()->get('Version');
+	
+	// Dependencies base de WordPress
+	$wp_deps = array('wp-blocks', 'wp-element', 'wp-i18n', 'wp-components', 
+	                 'wp-block-editor', 'wp-server-side-render', 'wp-data', 
+	                 'wp-core-data', 'wp-api-fetch');
+	
+	// 1. Utilidades (sin dependencias internas, solo wp.*)
+	wp_register_script(
+		'gw-custom-blocks-utils',
+		$base_path . 'lib/utils.js',
+		$wp_deps,
+		$version,
+		true
+	);
+	
+	// 2. Dependencias (depende de utils)
+	wp_register_script(
+		'gw-custom-blocks-deps',
+		$base_path . 'lib/dependencies.js',
+		array_merge($wp_deps, array('gw-custom-blocks-utils')),
+		$version,
+		true
+	);
+	
+	// 3. Controles individuales (dependen de deps y utils)
+	$controls = array(
+		'post-select' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		'image' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		'gallery' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		'repeater' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		'icon-picker' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		'term-select' => array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+	);
+	
+	foreach ($controls as $control => $control_deps) {
+		wp_register_script(
+			"gw-custom-blocks-control-{$control}",
+			$base_path . "controls/{$control}.js",
+			$control_deps,
+			$version,
+			true
+		);
+	}
+	
+	// 4. Controles base (depende de todos los controles individuales)
+	$base_control_deps = array_merge(
+		array('gw-custom-blocks-deps', 'gw-custom-blocks-utils'),
+		array_map(function($c) { return "gw-custom-blocks-control-{$c}"; }, array_keys($controls))
+	);
+	wp_register_script(
+		'gw-custom-blocks-controls-base',
+		$base_path . 'controls/base.js',
+		$base_control_deps,
+		$version,
+		true
+	);
+	
+	// 5. UI (toolbar, inspector) - depende de base
+	wp_register_script(
+		'gw-custom-blocks-ui',
+		$base_path . 'core/ui.js',
+		array('gw-custom-blocks-controls-base'),
+		$version,
+		true
+	);
+	
+	// 6. Registro de bloques - depende de ui
+	wp_register_script(
+		'gw-custom-blocks-registry',
+		$base_path . 'core/block-registry.js',
+		array('gw-custom-blocks-ui'),
+		$version,
+		true
+	);
+	
+	// 7. Orquestador principal - depende de registry
+	wp_register_script(
+		'gw-custom-blocks-editor',
+		$base_path . 'gw-custom-blocks.js',
+		array('gw-custom-blocks-registry'),
+		$version,
+		true
+	);
+
+	// Register editor styles for gallery control (will be enqueued via hook)
+	$style_uri = $base_path . 'gw-custom-blocks.css';
+	wp_register_style('gw-custom-blocks-editor-styles', $style_uri, array(), $version);
+
+	// Localize initial registry
+	gw_custom_blocks_update_localization();
+}
+
+/**
+ * Push registry into the editor script localization so JS can register the UI.
+ */
+function gw_custom_blocks_update_localization() {
+	$blocks = array_values($GLOBALS['gw_custom_blocks_registry']);
+	
+	// Prepare icon libraries for localization
+	$icon_libraries = array();
+	$all_libraries = gw_get_all_icon_libraries();
+	foreach ($all_libraries as $lib_id => $lib) {
+		$icon_libraries[] = array(
+			'id' => $lib['id'],
+			'name' => $lib['name'],
+			'template' => $lib['template'],
+			'icons' => $lib['icons'],
+		);
+	}
+	
+	$localization_data = array(
+		'blocks' => $blocks,
+		'iconLibraries' => $icon_libraries,
+	);
+	
+	// Localize both scripts that need GW_CUSTOM_BLOCKS
+	wp_localize_script('gw-custom-blocks-registry', 'GW_CUSTOM_BLOCKS', $localization_data);
+	wp_localize_script('gw-custom-blocks-editor', 'GW_CUSTOM_BLOCKS', $localization_data);
+}
+
+/**
+ * Enqueue editor scripts and styles for custom blocks.
+ */
+function gw_custom_blocks_enqueue_editor_assets() {
+	// Update localization before enqueuing scripts
+	gw_custom_blocks_update_localization();
+	
+	// Enqueue the editor script
+	wp_enqueue_script('gw-custom-blocks-editor');
+	
+	// Enqueue editor styles
+	wp_enqueue_style('gw-custom-blocks-editor-styles');
+	
+	// Enqueue icon library CSS files in the editor
+	$all_libraries = gw_get_all_icon_libraries();
+	foreach ($all_libraries as $lib_id => $lib) {
+		if (!empty($lib['css'])) {
+			$css_url = $lib['css'];
+			// Convert relative paths to absolute URLs
+			if (0 !== strpos($css_url, 'http') && 0 !== strpos($css_url, '//')) {
+				if (0 === strpos($css_url, '/')) {
+					// Absolute path under theme
+					$css_url = trailingslashit(get_template_directory_uri()) . ltrim($css_url, '/');
+				} else {
+					// Relative to theme
+					$css_url = trailingslashit(get_template_directory_uri()) . $css_url;
+				}
+			}
+			$handle = 'gw-icon-library-' . sanitize_key($lib_id);
+			wp_enqueue_style($handle, $css_url, array(), wp_get_theme()->get('Version'));
+		}
+	}
+}
+add_action('enqueue_block_editor_assets', 'gw_custom_blocks_enqueue_editor_assets');
+
+/**
+ * Get gallery image URLs from comma-separated image IDs string.
+ *
+ * @param string $ids_string Comma-separated string of image IDs (e.g., "123,456,789")
+ * @param string $size Image size to retrieve. Default 'full'. Can be 'thumbnail', 'medium', 'large', 'full', or any registered size.
+ * @return array Array of image URLs. Returns empty array if no valid IDs found.
+ *
+ * @example
+ * $gallery_ids = "123,456,789";
+ * $urls = gw_get_gallery_urls($gallery_ids);
+ * // Returns: ['https://example.com/wp-content/uploads/image1.jpg', ...]
+ *
+ * @example
+ * $urls = gw_get_gallery_urls($gallery_ids, 'thumbnail');
+ * // Returns thumbnail URLs
+ */
+function gw_get_gallery_urls($ids_string, $size = 'full') {
+	if (empty($ids_string)) {
+		return array();
+	}
+
+	$items = array_filter(array_map('trim', explode(',', $ids_string)));
+
+	if (empty($items)) {
+		return array();
+	}
+
+	$urls = array();
+	foreach ($items as $item) {
+		if (is_numeric($item) && (int) $item > 0) {
+			// Item is an attachment ID — resolve to URL
+			$image_url = wp_get_attachment_image_url((int) $item, $size);
+			if ($image_url) {
+				$urls[] = $image_url;
+			}
+		} elseif (filter_var($item, FILTER_VALIDATE_URL)) {
+			// Item is already a URL (saveAs: 'url' mode)
+			$urls[] = esc_url_raw($item);
+		}
+	}
+
+	return $urls;
+}
+
+/**
+ * Get repeater items from serialized string (JSON or PHP serialized format).
+ *
+ * @param string $serialized_string Serialized string containing repeater items (JSON or PHP serialized format)
+ * @return array Array of items. Each item is an associative array with field values. Returns empty array if invalid or empty.
+ *
+ * @example
+ * $items_data = $attributes['items'];
+ * $items = gw_get_repeater_items($items_data);
+ * foreach ($items as $item) {
+ *     echo esc_html($item['title']);
+ *     echo esc_html($item['description']);
+ * }
+ *
+ * @example
+ * // With nested gallery field
+ * $items = gw_get_repeater_items($attributes['items']);
+ * foreach ($items as $item) {
+ *     $image_urls = gw_get_gallery_urls($item['image'], 'large');
+ *     foreach ($image_urls as $url) {
+ *         echo '<img src="' . esc_url($url) . '" />';
+ *     }
+ * }
+ */
+function gw_get_repeater_items($serialized_string) {
+	if (empty($serialized_string) || !is_string($serialized_string)) {
+		return array();
+	}
+
+	$trimmed = trim($serialized_string);
+	if ($trimmed === '') {
+		return array();
+	}
+
+	// Try JSON first (preferred format, easier to handle)
+	if (($trimmed[0] === '[' || $trimmed[0] === '{')) {
+		$decoded = json_decode($trimmed, true);
+		if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+			return $decoded;
+		}
+	}
+
+	// Fallback to PHP unserialize for legacy data.
+	// Only accept serialized arrays ('a:'); never objects ('O:'), and forbid
+	// class instantiation to prevent PHP Object Injection (POP gadget chains).
+	if (function_exists('unserialize') && strpos($trimmed, 'a:') === 0) {
+		$unserialized = @unserialize($trimmed, array('allowed_classes' => false));
+		if ($unserialized !== false && is_array($unserialized)) {
+			return $unserialized;
+		}
+	}
+
+	// If all else fails, return empty array
+	return array();
+}
+
+/**
+ * Get image URL from ID or URL value.
+ *
+ * Helper function to get image URL regardless of whether the field stores ID or URL.
+ * If value is numeric (ID), fetches the image URL from WordPress attachment.
+ * If value is already a URL, returns it directly.
+ *
+ * @param string|int $value Image ID (numeric) or image URL (string)
+ * @param string $size Image size to retrieve. Default 'full'. Can be 'thumbnail', 'medium', 'large', 'full', or any registered size.
+ * @return string Image URL. Returns empty string if no valid value found.
+ *
+ * @example
+ * // When field saves as ID
+ * $image_id = $attributes['image']; // e.g., "123"
+ * $image_url = gw_get_image_url($image_id, 'large');
+ * // Returns: 'https://example.com/wp-content/uploads/image.jpg'
+ *
+ * @example
+ * // When field saves as URL
+ * $image_url = $attributes['image']; // e.g., "https://example.com/image.jpg"
+ * $image_url = gw_get_image_url($image_url);
+ * // Returns: 'https://example.com/image.jpg'
+ *
+ * @example
+ * // In template
+ * $image_value = isset($attributes['image']) ? $attributes['image'] : '';
+ * if (!empty($image_value)) {
+ *     $url = gw_get_image_url($image_value, 'large');
+ *     echo '<img src="' . esc_url($url) . '" alt="" />';
+ * }
+ */
+function gw_get_image_url($value, $size = 'full') {
+	if (empty($value)) {
+		return '';
+	}
+
+	// Check if value is numeric (ID)
+	if (is_numeric($value)) {
+		$image_id = (int) $value;
+		if ($image_id > 0) {
+			$image_url = wp_get_attachment_image_url($image_id, $size);
+			if ($image_url) {
+				return $image_url;
+			}
+		}
+	}
+
+	// If not numeric or wp_get_attachment_image_url failed, treat as URL
+	// Validate it's a valid URL format
+	if (is_string($value) && (filter_var($value, FILTER_VALIDATE_URL) !== false || strpos($value, '/') === 0)) {
+		return $value;
+	}
+
+	// If all else fails, return empty string
+	return '';
+}
+
+/**
+ * Get term names from comma-separated term IDs string.
+ *
+ * Helper function to get term information from comma-separated string of term IDs.
+ *
+ * @param string $ids_string Comma-separated string of term IDs (e.g., "123,456,789")
+ * @param string $taxonomy Taxonomy name. Required to fetch term information.
+ * @return array Array of term objects with 'id', 'name', 'slug', and 'parent' properties. Returns empty array if no valid IDs found.
+ *
+ * @example
+ * $term_ids = "123,456,789";
+ * $terms = gw_get_term_names($term_ids, 'category');
+ * // Returns: array(
+ * //   array('id' => 123, 'name' => 'Category 1', 'slug' => 'category-1', 'parent' => 0),
+ * //   array('id' => 456, 'name' => 'Category 2', 'slug' => 'category-2', 'parent' => 0),
+ * //   array('id' => 789, 'name' => 'Category 3', 'slug' => 'category-3', 'parent' => 0),
+ * // )
+ *
+ * @example
+ * // In template
+ * $term_ids = isset($attributes['categories']) ? $attributes['categories'] : '';
+ * $terms = gw_get_term_names($term_ids, 'product_cat');
+ * foreach ($terms as $term) {
+ *     echo '<div>' . esc_html($term['name']) . '</div>';
+ * }
+ */
+function gw_get_term_names($ids_string, $taxonomy) {
+	if (empty($ids_string) || empty($taxonomy)) {
+		return array();
+	}
+
+	// Parse comma-separated IDs
+	$ids = array_map('trim', explode(',', $ids_string));
+	$ids = array_filter($ids, function($id) {
+		return is_numeric($id) && $id > 0;
+	});
+
+	if (empty($ids)) {
+		return array();
+	}
+
+	// Validate taxonomy exists
+	if (!taxonomy_exists($taxonomy)) {
+		return array();
+	}
+
+	// Get terms
+	$terms = get_terms(array(
+		'taxonomy' => $taxonomy,
+		'include' => array_map('intval', $ids),
+		'hide_empty' => false,
+	));
+
+	if (is_wp_error($terms) || empty($terms)) {
+		return array();
+	}
+
+	// Build result array preserving order from IDs string
+	$result = array();
+	$terms_by_id = array();
+	foreach ($terms as $term) {
+		$terms_by_id[$term->term_id] = $term;
+	}
+
+	// Preserve the order from the IDs string
+	foreach ($ids as $id) {
+		$id = (int) $id;
+		if (isset($terms_by_id[$id])) {
+			$term = $terms_by_id[$id];
+			$result[] = array(
+				'id' => $term->term_id,
+				'name' => $term->name,
+				'slug' => $term->slug,
+				'parent' => $term->parent,
+			);
+		}
+	}
+
+	return $result;
+}
+
+
+
+/**
+ * Register REST API route for searching posts.
+ * Used by the Post Select control.
+ */
+function gw_custom_blocks_register_rest_routes() {
+	register_rest_route('gw/v1', '/posts', array(
+		'methods' => 'GET',
+		'callback' => 'gw_custom_blocks_rest_search_posts',
+		'permission_callback' => function() {
+			return current_user_can('edit_posts');
+		},
+		'args' => array(
+			'type' => array(
+				'default' => 'page',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'search' => array(
+				'default' => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'per_page' => array(
+				'default' => 10,
+				'sanitize_callback' => 'absint',
+			),
+		),
+	));
+
+	// Register REST API route for searching terms
+	register_rest_route('gw/v1', '/terms', array(
+		'methods' => 'GET',
+		'callback' => 'gw_custom_blocks_rest_search_terms',
+		'permission_callback' => function() {
+			return current_user_can('edit_posts');
+		},
+		'args' => array(
+			'taxonomy' => array(
+				'required' => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'search' => array(
+				'default' => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'per_page' => array(
+				'default' => 10,
+				'sanitize_callback' => 'absint',
+			),
+			'hide_empty' => array(
+				'default' => false,
+				'sanitize_callback' => 'rest_sanitize_boolean',
+			),
+			'orderby' => array(
+				'default' => 'name',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'order' => array(
+				'default' => 'ASC',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'include' => array(
+				'default' => array(),
+				'sanitize_callback' => function($param) {
+					if (is_string($param)) {
+						$param = explode(',', $param);
+					}
+					return array_map('absint', (array) $param);
+				},
+			),
+			'exclude' => array(
+				'default' => array(),
+				'sanitize_callback' => function($param) {
+					if (is_string($param)) {
+						$param = explode(',', $param);
+					}
+					return array_map('absint', (array) $param);
+				},
+			),
+			'parent' => array(
+				'default' => '',
+				'sanitize_callback' => 'absint',
+			),
+		),
+	));
+}
+add_action('rest_api_init', 'gw_custom_blocks_register_rest_routes');
+
+/**
+ * REST API callback for searching posts.
+ */
+function gw_custom_blocks_rest_search_posts($request) {
+	$post_type = $request->get_param('type');
+	$search = $request->get_param('search');
+	$per_page = $request->get_param('per_page');
+
+	// Validate post type
+	if (!post_type_exists($post_type)) {
+		return new WP_Error('invalid_post_type', 'Invalid post type', array('status' => 400));
+	}
+
+	$args = array(
+		'post_type' => $post_type,
+		'posts_per_page' => $per_page,
+		'post_status' => 'publish',
+		'orderby' => 'title',
+		'order' => 'ASC',
+	);
+
+	if (!empty($search)) {
+		$args['s'] = $search;
+	}
+
+	$query = new WP_Query($args);
+	$posts = array();
+
+	if ($query->have_posts()) {
+		foreach ($query->posts as $post) {
+			$posts[] = array(
+				'value' => $post->ID,
+				'label' => $post->post_title . ' (ID: ' . $post->ID . ')',
+			);
+		}
+	}
+
+	// If we have a specific value selected but it's not in the search results,
+	// we might want to fetch it specifically? 
+	// For now, the UI handles fetching the selected value separately if needed, 
+	// but usually we just store the ID.
+
+	return rest_ensure_response($posts);
+}
+
+/**
+ * REST API callback for searching terms.
+ * Used by the Term Select control.
+ */
+function gw_custom_blocks_rest_search_terms($request) {
+	$taxonomy = $request->get_param('taxonomy');
+	$search = $request->get_param('search');
+	$per_page = $request->get_param('per_page');
+
+	// Validate taxonomy
+	if (!taxonomy_exists($taxonomy)) {
+		return new WP_Error('invalid_taxonomy', 'Invalid taxonomy', array('status' => 400));
+	}
+
+	// Build query args from request parameters
+	$args = array(
+		'taxonomy' => $taxonomy,
+		'number' => $per_page,
+		'hide_empty' => $request->get_param('hide_empty'),
+		'orderby' => $request->get_param('orderby'),
+		'order' => $request->get_param('order'),
+	);
+
+	// Add search if provided
+	if (!empty($search)) {
+		$args['search'] = $search;
+	}
+
+	// Add include/exclude if provided
+	$include = $request->get_param('include');
+	if (!empty($include) && is_array($include)) {
+		$args['include'] = $include;
+	}
+
+	$exclude = $request->get_param('exclude');
+	if (!empty($exclude) && is_array($exclude)) {
+		$args['exclude'] = $exclude;
+	}
+
+	// Add parent if provided and taxonomy is hierarchical
+	$taxonomy_obj = get_taxonomy($taxonomy);
+	if ($taxonomy_obj && $taxonomy_obj->hierarchical) {
+		$parent = $request->get_param('parent');
+		if ($parent !== '') {
+			$args['parent'] = $parent;
+		}
+	}
+
+	// Get terms using WP_Term_Query
+	$terms = get_terms($args);
+	$terms_data = array();
+
+	if (!is_wp_error($terms) && !empty($terms)) {
+		foreach ($terms as $term) {
+			$terms_data[] = array(
+				'value' => (string) $term->term_id,
+				'label' => $term->name,
+				'parent' => (int) $term->parent,
+				'slug' => $term->slug,
+			);
+		}
+	}
+
+	return rest_ensure_response($terms_data);
+}
+
+/**
+ * Register an icon library.
+ *
+ * @param string $id Unique identifier for the library (e.g., 'uicons-rr')
+ * @param array  $args Library configuration:
+ *   - name (string): Display name of the library
+ *   - css (string): CSS file URL or path (for reference, CSS should be enqueued manually in functions.php)
+ *   - template (string): HTML template with {{icon}} placeholder (e.g., '<i class="{{icon}}"></i>')
+ *   - icons (array): Array of icons. Can be:
+ *     * Array with 'value' => 'label' pairs: array('fi-rr-home' => 'Home', 'fi-rr-user' => 'User')
+ *     * Array of arrays: array(array('value' => 'fi-rr-home', 'label' => 'Home'))
+ *   - class_prefix (string): Optional. Class prefix for parsing CSS (e.g., 'fi-rr-')
+ *
+ * @example
+ * gw_register_icon_library('uicons-rr', array(
+ *   'name' => 'Flaticon UIcons Regular Rounded',
+ *   'css' => 'https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css',
+ *   'template' => '<i class="{{icon}}"></i>',
+ *   'icons' => array('fi-rr-home' => 'Home', 'fi-rr-user' => 'User'),
+ * ));
+ */
+function gw_register_icon_library($id, $args = array()) {
+	$defaults = array(
+		'name' => '',
+		'css' => '',
+		'template' => '<i class="{{icon}}"></i>',
+		'icons' => array(),
+		'class_prefix' => '',
+	);
+	$args = array_merge($defaults, $args);
+
+	// Normalize icons array
+	$normalized_icons = array();
+	if (!empty($args['icons']) && is_array($args['icons'])) {
+		foreach ($args['icons'] as $key => $value) {
+			if (is_array($value) && isset($value['value'])) {
+				// Already in normalized format
+				$normalized_icons[] = array(
+					'value' => $value['value'],
+					'label' => isset($value['label']) ? $value['label'] : $value['value'],
+				);
+			} else {
+				// Key-value pair format
+				$normalized_icons[] = array(
+					'value' => is_string($key) ? $key : $value,
+					'label' => is_string($value) ? $value : (is_string($key) ? $key : ''),
+				);
+			}
+		}
+	}
+
+	$GLOBALS['gw_icon_libraries'][$id] = array(
+		'id' => $id,
+		'name' => $args['name'],
+		'css' => $args['css'],
+		'template' => $args['template'],
+		'icons' => $normalized_icons,
+		'class_prefix' => $args['class_prefix'],
+	);
+}
+
+/**
+ * Get icon library configuration.
+ *
+ * @param string $id Library identifier
+ * @return array|null Library configuration or null if not found
+ */
+function gw_get_icon_library($id) {
+	if (isset($GLOBALS['gw_icon_libraries'][$id])) {
+		return $GLOBALS['gw_icon_libraries'][$id];
+	}
+	return null;
+}
+
+/**
+ * Get all registered icon libraries.
+ *
+ * @return array Array of all registered icon libraries
+ */
+function gw_get_all_icon_libraries() {
+	return $GLOBALS['gw_icon_libraries'];
+}
+
+/**
+ * Parse icon library CSS file to extract icon classes.
+ *
+ * Downloads or reads CSS file and extracts all classes matching the given prefix.
+ *
+ * @param string $css_url CSS file URL or local file path
+ * @param string $class_prefix Class prefix to match (e.g., 'fi-rr-')
+ * @return array Array of icons in format array('fi-rr-home' => 'Home', 'fi-rr-user' => 'User')
+ *
+ * @example
+ * $icons = gw_parse_icon_library_css(
+ *   'https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css',
+ *   'fi-rr-'
+ * );
+ */
+function gw_parse_icon_library_css($css_url, $class_prefix) {
+	$icons = array();
+
+	// Get CSS content
+	$css_content = '';
+	if (filter_var($css_url, FILTER_VALIDATE_URL)) {
+		// Remote URL - use wp_remote_get
+		$response = wp_remote_get($css_url, array(
+			'timeout' => 10,
+			'sslverify' => true,
+		));
+		if (!is_wp_error($response) && isset($response['body'])) {
+			$css_content = $response['body'];
+		}
+	} else {
+		// Local file path
+		if (file_exists($css_url)) {
+			$css_content = file_get_contents($css_url);
+		} elseif (file_exists(get_template_directory() . '/' . ltrim($css_url, '/'))) {
+			$css_content = file_get_contents(get_template_directory() . '/' . ltrim($css_url, '/'));
+		}
+	}
+
+	if (empty($css_content)) {
+		return $icons;
+	}
+
+	// Escape prefix for regex
+	$escaped_prefix = preg_quote($class_prefix, '/');
+
+	// Pattern to match: .fi-rr-icon-name:before { content: "..."; }
+	// Also matches: .fi-rr-icon-name:before { content: "\e001"; }
+	$pattern = '/\.(' . $escaped_prefix . '[a-zA-Z0-9\-]+):before\s*\{[^}]*content:\s*["\']([^"\']+)["\']/';
+
+	preg_match_all($pattern, $css_content, $matches, PREG_SET_ORDER);
+
+	foreach ($matches as $match) {
+		$class_name = $match[1];
+		// Generate human-readable label from class name
+		// Remove prefix and convert to title case
+		$label = str_replace($class_prefix, '', $class_name);
+		$label = str_replace(array('-', '_'), ' ', $label);
+		$label = ucwords($label);
+		$icons[$class_name] = $label;
+	}
+
+	return $icons;
+}
+
+/**
+ * Render icon from stored value.
+ *
+ * Parses stored value (format: "library:icon" or just "icon" if single library),
+ * gets library configuration, and renders the icon HTML.
+ *
+ * @param string $value Stored value (format: "library:icon" or just "icon" if single library)
+ * @param array  $args Optional arguments:
+ *   - template (string): Custom template override
+ *   - library (string): Force specific library ID
+ *   - class (string): Additional CSS classes to add
+ * @return string HTML output. Returns empty string if invalid.
+ *
+ * @example
+ * // With library prefix
+ * echo gw_icon('uicons-rr:fi-rr-home');
+ *
+ * @example
+ * // Without prefix (single library)
+ * echo gw_icon('fi-rr-home');
+ *
+ * @example
+ * // With custom template
+ * echo gw_icon('fi-rr-home', array('template' => '<span class="{{icon}}"></span>'));
+ *
+ * @example
+ * // With additional classes
+ * echo gw_icon('fi-rr-home', array('class' => 'my-icon'));
+ */
+function gw_icon($value, $args = array()) {
+	if (empty($value)) {
+		return '';
+	}
+
+	$defaults = array(
+		'template' => '',
+		'library' => '',
+		'class' => '',
+	);
+	$args = array_merge($defaults, $args);
+
+	// Parse value: "library:icon" or just "icon"
+	$parts = explode(':', $value, 2);
+	$library_id = '';
+	$icon_class = '';
+
+	if (count($parts) === 2) {
+		// Format: "library:icon"
+		$library_id = $parts[0];
+		$icon_class = $parts[1];
+	} else {
+		// No library prefix - try to detect from available libraries
+		$icon_class = $parts[0];
+		if (!empty($args['library'])) {
+			$library_id = $args['library'];
+		} else {
+			// If only one library registered, use it
+			$all_libraries = gw_get_all_icon_libraries();
+			if (count($all_libraries) === 1) {
+				$library_id = key($all_libraries);
+			}
+		}
+	}
+
+	// Get library configuration
+	$library = null;
+	if (!empty($library_id)) {
+		$library = gw_get_icon_library($library_id);
+	}
+
+	// If no library found, try to find one that contains this icon class
+	if (!$library) {
+		$all_libraries = gw_get_all_icon_libraries();
+		foreach ($all_libraries as $lib) {
+			foreach ($lib['icons'] as $icon) {
+				if ($icon['value'] === $icon_class) {
+					$library = $lib;
+					$library_id = $lib['id'];
+					break 2;
+				}
+			}
+		}
+	}
+
+	if (!$library) {
+		return '';
+	}
+
+	// Use custom template or library template
+	$template = !empty($args['template']) ? $args['template'] : $library['template'];
+
+	// Replace placeholder
+	$html = str_replace('{{icon}}', esc_attr($icon_class), $template);
+
+	// Add additional classes if specified
+	if (!empty($args['class'])) {
+		// Try to add class to existing class attribute
+		if (preg_match('/class=["\']([^"\']*)["\']/', $html, $matches)) {
+			$existing_classes = $matches[1];
+			$new_classes = trim($existing_classes . ' ' . esc_attr($args['class']));
+			$html = preg_replace('/class=["\'][^"\']*["\']/', 'class="' . esc_attr($new_classes) . '"', $html);
+		} else {
+			// No class attribute, add it to the first tag
+			$html = preg_replace('/<(\w+)([^>]*)>/', '<$1 class="' . esc_attr($args['class']) . '"$2>', $html, 1);
+		}
+	}
+
+	return $html;
+}

@@ -1,11 +1,21 @@
 /*
-Theme Name: infra
-Theme URI: git@github.com:MeanPug/meanpug-wordpress-developer-challenge.git
-Author: MeanPug Digital
-Author URI: https://www.meanpug.com
-Description: The theme for infra public site
-Version: 1.0
-Requires at least: 5.0
-Tested up to: 5.4
-Requires PHP: 7.0
+Theme Name: AirPnP
+Description: A modern WordPress theme for Juicy Espresso Hub.
+Author: GlitchWood
+Author URI: https://glitchwood.com
+Version: 1.0.5
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 8.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: juicy-espresso-hub
+Domain Path: /languages
+Tags: block-theme, full-site-editing, custom-header, custom-logo, custom-menu, featured-images, footer-widgets, one-column, two-columns, three-columns, left-sidebar, right-sidebar, wide-blocks, block-patterns, editor-style, sticky-post, translation-ready, blog, business, portfolio
 */
+
+/*
+ * This file is intentionally minimal as this is a block theme.
+ * Most styling is handled through theme.json and block styles.
+ * Only critical styles that cannot be handled through theme.json should be placed here.
+ */ 

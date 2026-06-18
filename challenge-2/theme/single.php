@@ -25,15 +25,15 @@ $has_child_topics_explorer = $post_type == 'practice-area';
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
       <?php while ( have_posts() ) : the_post();
-        $current_sidebar = $sidebar_for_post_type[$post_type] ?: 'default-sidebar';
-        $current_header = $header_for_post_type[$post_type] ?: 'default-header';
+        $current_sidebar = $sidebar_for_post_type[$post_type] ?? 'default-sidebar';
+        $current_header = $header_for_post_type[$post_type] ?? 'default-header';
       ?>
       <header>
           <?php get_template_part( 'template-parts/headers/content', $current_header ); ?>
       </header>
 
       <?php
-        if ($$has_child_topics_explorer) {
+        if ($has_child_topics_explorer) {
           get_template_part( 'template-parts/snippets/content', 'topics-accordion' );
         }
       ?>

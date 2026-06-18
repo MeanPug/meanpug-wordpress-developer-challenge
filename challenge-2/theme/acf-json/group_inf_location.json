@@ -1,0 +1,131 @@
+{
+	"key": "group_inf_location",
+	"title": "Location Fields (Areas Served)",
+	"fields": [
+		{
+			"key": "field_inf_location_content_type",
+			"label": "Content Type",
+			"name": "content_type",
+			"type": "select",
+			"instructions": "Set to \"Area Served\" so this location surfaces in the location navigator and area-served queries.",
+			"required": 1,
+			"choices": {
+				"Area Served": "Area Served"
+			},
+			"default_value": "Area Served",
+			"return_format": "value",
+			"allow_null": 0,
+			"multiple": 0,
+			"ui": 0,
+			"ajax": 0
+		},
+		{
+			"key": "field_inf_location_area_type",
+			"label": "Area Type",
+			"name": "area_type",
+			"type": "select",
+			"instructions": "Geographic granularity used to bucket areas in the location navigator.",
+			"required": 0,
+			"choices": {
+				"City": "City",
+				"County": "County",
+				"State": "State",
+				"Region": "Region"
+			},
+			"default_value": "City",
+			"return_format": "value",
+			"allow_null": 0,
+			"multiple": 0,
+			"ui": 0,
+			"ajax": 0
+		},
+		{
+			"key": "field_inf_location_geopoint",
+			"label": "Geopoint",
+			"name": "geopoint",
+			"type": "google_map",
+			"instructions": "Drop a pin for this area. Consumed as {lat,lng} by inc/services/locations.php for distance matching.",
+			"required": 1,
+			"center_lat": "39.8283",
+			"center_lng": "-98.5795",
+			"zoom": 5
+		},
+		{
+			"key": "field_inf_location_address",
+			"label": "Address",
+			"name": "address",
+			"type": "group",
+			"instructions": "",
+			"required": 0,
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_inf_location_address_street",
+					"label": "Street",
+					"name": "street",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_location_address_street2",
+					"label": "Street 2",
+					"name": "street2",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_location_address_city",
+					"label": "City",
+					"name": "city",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_location_address_state",
+					"label": "State",
+					"name": "state",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_location_address_postal_code",
+					"label": "Postal Code",
+					"name": "postal_code",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"key": "field_inf_location_practice_areas",
+			"label": "Related Practice Areas",
+			"name": "practice_areas",
+			"type": "relationship",
+			"instructions": "Practice areas served at this location. Read via get_field('practice_areas') by the Related Practice Areas widget.",
+			"required": 0,
+			"post_type": [
+				"practice-area"
+			],
+			"filters": [
+				"search"
+			],
+			"return_format": "object",
+			"min": 0,
+			"max": 0
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "post_type",
+				"operator": "==",
+				"value": "local"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Schema for `local` Areas Served pages.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}

@@ -1,0 +1,86 @@
+{
+	"key": "group_inf_testimonial",
+	"title": "Testimonial Fields",
+	"fields": [
+		{
+			"key": "field_inf_testimonial_reviewer",
+			"label": "Reviewer",
+			"name": "reviewer",
+			"type": "group",
+			"instructions": "Person who left the review. mp_generate_testimonial_schema() reads reviewer['name'].",
+			"required": 1,
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_inf_testimonial_reviewer_name",
+					"label": "Name",
+					"name": "name",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_testimonial_reviewer_location",
+					"label": "Location",
+					"name": "location",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_testimonial_reviewer_photo",
+					"label": "Photo",
+					"name": "photo",
+					"type": "image",
+					"return_format": "array",
+					"preview_size": "thumbnail"
+				}
+			]
+		},
+		{
+			"key": "field_inf_testimonial_rating",
+			"label": "Rating",
+			"name": "rating",
+			"type": "number",
+			"instructions": "Star rating out of 5.",
+			"required": 0,
+			"default_value": 5,
+			"min": 0,
+			"max": 5,
+			"step": 1
+		},
+		{
+			"key": "field_inf_testimonial_practice_areas",
+			"label": "Related Practice Areas",
+			"name": "practice_areas",
+			"type": "relationship",
+			"instructions": "Practice area(s) this testimonial relates to.",
+			"required": 0,
+			"post_type": [
+				"practice-area"
+			],
+			"filters": [
+				"search"
+			],
+			"return_format": "object",
+			"min": 0,
+			"max": 0
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "post_type",
+				"operator": "==",
+				"value": "testimonials"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Schema for client `testimonials`.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}

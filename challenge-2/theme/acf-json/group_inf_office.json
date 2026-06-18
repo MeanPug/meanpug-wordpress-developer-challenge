@@ -1,0 +1,90 @@
+{
+	"key": "group_inf_office",
+	"title": "Office Fields",
+	"fields": [
+		{
+			"key": "field_inf_office_address",
+			"label": "Address",
+			"name": "address",
+			"type": "group",
+			"instructions": "Consumed by mp_generate_office_schema() to emit LocalBusiness/PostalAddress schema.",
+			"required": 1,
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_inf_office_address_street",
+					"label": "Street",
+					"name": "street",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_office_address_street2",
+					"label": "Street 2",
+					"name": "street2",
+					"type": "text"
+				},
+				{
+					"key": "field_inf_office_address_city",
+					"label": "City",
+					"name": "city",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_office_address_state",
+					"label": "State",
+					"name": "state",
+					"type": "text",
+					"required": 1
+				},
+				{
+					"key": "field_inf_office_address_postal_code",
+					"label": "Postal Code",
+					"name": "postal_code",
+					"type": "text",
+					"required": 1
+				}
+			]
+		},
+		{
+			"key": "field_inf_office_geopoint",
+			"label": "Geopoint",
+			"name": "geopoint",
+			"type": "google_map",
+			"instructions": "Consumed as {lat,lng} for the GeoCoordinates schema node.",
+			"required": 1,
+			"center_lat": "39.8283",
+			"center_lng": "-98.5795",
+			"zoom": 12
+		},
+		{
+			"key": "field_inf_office_phone",
+			"label": "Phone",
+			"name": "phone",
+			"type": "link",
+			"instructions": "Office phone as a link (tel:). Title is shown, URL is dialled.",
+			"required": 0,
+			"return_format": "array"
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "post_type",
+				"operator": "==",
+				"value": "office"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Schema for physical `office` locations.",
+	"show_in_rest": 0,
+	"modified": 1781654400
+}
