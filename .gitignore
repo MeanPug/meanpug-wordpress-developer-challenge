@@ -24,3 +24,10 @@ node_modules/
 
 .idea/
 node_modules/
+
+# internal working docs — NEVER commit
+_internal/
+
+# macOS AppleDouble / metadata junk (this volume generates them)
+._*
+.DS_Store

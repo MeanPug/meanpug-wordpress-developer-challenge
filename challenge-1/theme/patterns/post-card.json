@@ -1,0 +1,6 @@
+{
+  "__file": "wp_block",
+  "title": "Post Card",
+  "content": "<!-- wp:group {\"style\":{\"spacing\":{\"blockGap\":\"0\"}},\"layout\":{\"type\":\"constrained\"}} -->\n<div class=\"wp-block-group\"><!-- wp:post-featured-image {\"isLink\":true} /-->\n\n<!-- wp:group {\"style\":{\"spacing\":{\"blockGap\":\"var:preset|spacing|s\",\"padding\":{\"top\":\"var:preset|spacing|base\"}}},\"layout\":{\"inherit\":false}} -->\n<div class=\"wp-block-group\" style=\"padding-top:var(--wp--preset--spacing--base)\"><!-- wp:post-title {\"level\":3,\"isLink\":true,\"style\":{\"elements\":{\"link\":{\"color\":{\"text\":\"var:preset|color|neutral-500\"}}},\"typography\":{\"fontStyle\":\"normal\",\"fontWeight\":\"600\"}},\"textColor\":\"neutral-500\",\"fontSize\":\"lg\"} /-->\n\n<!-- wp:post-excerpt {\"moreText\":\"Read More\",\"excerptLength\":20,\"fontSize\":\"sm\"} /--></div>\n<!-- /wp:group --></div>\n<!-- /wp:group -->",
+  "syncStatus": ""
+}
