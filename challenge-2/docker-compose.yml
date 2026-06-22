@@ -31,7 +31,22 @@ services:
        - static
      image: wordpress:latest
      volumes:
+       # Must-use loader that bootstraps the schema plugin automatically.
+       # WordPress auto-loads anything in wp-content/mu-plugins/, so this file
+       # runs on every request with no admin activation. (The repo keeps it in a
+       # top-level mu-plugins/ dir purely for clarity; the mount is what places
+       # it in the location WordPress actually reads from.)
+       - ./mu-plugins/pug-puggle-schema-loader.php:/var/www/html/wp-content/mu-plugins/pug-puggle-schema-loader.php
+       # The infra theme depends on Advanced Custom Fields. ACF is installed via
+       # Composer into mu-plugins/ (see composer.json) and booted by acf-loader.php,
+       # so get_field() works on a clean `docker compose up` with no admin activation.
+       - ./mu-plugins/acf-loader.php:/var/www/html/wp-content/mu-plugins/acf-loader.php
+       - ./mu-plugins/advanced-custom-fields:/var/www/html/wp-content/mu-plugins/advanced-custom-fields
        - wp_plugins:/var/www/html/wp-content/plugins
+       # Bind-mount the schema plugin as a must-use plugin so a fresh `docker compose up`
+       # is fully reproducible AND it never appears in the activatable Plugins list.
+       # The root loader above require_once's its bootstrap on every request.
+       - ./plugins/pug-puggle-schema:/var/www/html/wp-content/mu-plugins/pug-puggle-schema
        - ./theme:/var/www/html/wp-content/themes/challenge-2-theme
        - ./uploads:/var/www/html/wp-content/uploads
        - ./server_config.ini:/usr/local/etc/php/conf.d/server_config.ini

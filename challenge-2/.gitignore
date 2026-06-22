@@ -43,3 +43,8 @@ theme/assets/images/build/*
 .npmrc.dev
 .DS_Store
 webpack.local.config.js
+
+# Composer (Challenge 2 env deps)
+/vendor/
+# ACF is installed via `composer install` into mu-plugins; do not track the vendor copy.
+/mu-plugins/advanced-custom-fields/
