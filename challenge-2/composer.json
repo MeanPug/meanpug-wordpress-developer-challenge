@@ -1,0 +1,31 @@
+{
+    "name": "meanpug/challenge-2-env",
+    "description": "Local environment dependencies for the Pug & Puggle (infra) Challenge 2 theme. The infra theme depends on Advanced Custom Fields; this pulls it in reproducibly.",
+    "type": "project",
+    "license": "proprietary",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*"
+            ]
+        }
+    ],
+    "require": {
+        "composer/installers": "^2.0",
+        "wpackagist-plugin/advanced-custom-fields": "*"
+    },
+    "extra": {
+        "installer-paths": {
+            "mu-plugins/{$name}/": [
+                "wpackagist-plugin/advanced-custom-fields"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

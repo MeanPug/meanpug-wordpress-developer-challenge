@@ -41,6 +41,13 @@ add_action( 'admin_head', 'mp_fix_svg' );
 
 # Content Type Schema Output
 function mp_output_default_schema_for_post() {
+    // The schema generators read their data through ACF's get_field(). When ACF
+    // is not active — as in this front-end-only challenge environment — bail out
+    // gracefully instead of throwing a fatal in wp_footer on every request.
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     global $post;
     global $wp_query;
 

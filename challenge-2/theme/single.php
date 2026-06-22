@@ -33,7 +33,7 @@ $has_child_topics_explorer = $post_type == 'practice-area';
       </header>
 
       <?php
-        if ($$has_child_topics_explorer) {
+        if ($has_child_topics_explorer) {
           get_template_part( 'template-parts/snippets/content', 'topics-accordion' );
         }
       ?>

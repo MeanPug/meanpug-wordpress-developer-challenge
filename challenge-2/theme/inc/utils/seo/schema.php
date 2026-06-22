@@ -67,7 +67,7 @@ function mp_generate_office_schema( $office ) {
 
     echo '<!-- SCHEMA: Office -->';
     echo '<script type="application/ld+json">';
-    echo json_encode( $schema );
+    echo wp_json_encode( $schema );
     echo '</script>';
 }
 
@@ -115,7 +115,7 @@ function mp_generate_local_business_schema( $office = null ) {
 
       echo '<!-- SCHEMA: Local Business -->';
       echo '<script type="application/ld+json">';
-      echo json_encode( $schema );
+      echo wp_json_encode( $schema );
       echo '</script>';
     }
 }
@@ -142,7 +142,7 @@ function mp_generate_testimonial_schema( $testimonial, $print_out = false ) {
     if ( $print_out ) {
         echo '<!-- SCHEMA: Testimonial -->';
         echo '<script type="application/ld+json">';
-        echo json_encode( $schema );
+        echo wp_json_encode( $schema );
         echo '</script>';
     }
 
@@ -179,7 +179,7 @@ function mp_generate_testimonials_schema($testimonials, $name_override = null, $
 
     echo '<!-- SCHEMA: Testimonials -->';
     echo '<script type="application/ld+json">';
-    echo json_encode( $schema );
+    echo wp_json_encode( $schema );
     echo '</script>';
 }
 
@@ -218,7 +218,7 @@ function mp_generate_practice_area_schema( $practice_area, $agg_values = null ) 
 
     echo '<!-- SCHEMA: Practice Area -->';
     echo '<script type="application/ld+json">';
-    echo json_encode( $schema );
+    echo wp_json_encode( $schema );
     echo '</script>';
 }
 
@@ -242,7 +242,7 @@ function mp_generate_question_answer_schema( $question, $answer, $print_out = fa
     if ( $print_out ) {
         echo '<!-- SCHEMA: FAQ -->';
         echo '<script type="application/ld+json">';
-        echo json_encode( $schema );
+        echo wp_json_encode( $schema );
         echo '</script>';
     }
 
@@ -258,6 +258,6 @@ function mp_generate_faq_page_schema( $faq_markup, $comment = '' ) {
 
     printf('<!-- SCHEMA: %s -->', $comment );
     echo '<script type="application/ld+json">';
-    echo json_encode( $schema );
+    echo wp_json_encode( $schema );
     echo '</script>';
 }

@@ -41,6 +41,9 @@ add_action( 'admin_head', 'mp_fix_svg' );
 
 # Content Type Schema Output
 function mp_output_default_schema_for_post() {
+        if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
     global $post;
     global $wp_query;
 
