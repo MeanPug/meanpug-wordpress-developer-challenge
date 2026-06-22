@@ -25,10 +25,25 @@ services:
       - ./tailwind.config.js:/code/tailwind.config.js
       - ./theme:/code/theme
 
+   # One-shot init container: installs PHP dependencies (Advanced Custom Fields)
+   # into mu-plugins/ before WordPress boots. wordpress waits for this to finish
+   # (see depends_on below), so `docker compose up` works on a clean clone no
+   # matter whether the developer ran `composer install` by hand first.
+   composer:
+    image: composer:2
+    working_dir: /app
+    command: ["install", "--no-interaction", "--no-progress"]
+    volumes:
+      - ./:/app
+
    wordpress:
      depends_on:
-       - db
-       - static
+       db:
+         condition: service_started
+       static:
+         condition: service_started
+       composer:
+         condition: service_completed_successfully
      image: wordpress:latest
      volumes:
        # Must-use loader that bootstraps the schema plugin automatically.
