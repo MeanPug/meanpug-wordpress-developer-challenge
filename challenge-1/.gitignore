@@ -43,3 +43,5 @@ theme/assets/images/build/*
 .npmrc.dev
 .DS_Store
 webpack.local.config.js
+# ...except the committed default that makes `docker compose up` reproducible.
+!webpack/webpack.local.config.js

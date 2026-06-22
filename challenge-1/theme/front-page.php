@@ -12,20 +12,18 @@
  * @package infra
  */
 
-get_header();
+get_header( 'home' );
 ?>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+	<main id="main" class="doghouse-main site-main bg-white" tabindex="-1">
 
-			<?php
-			while ( have_posts() ) :
-				the_post();
-
-				get_template_part( 'template-parts/content', 'front-page' );
-			endwhile;
-			?>
-		</main><!-- #main -->
-	</div><!-- #primary -->
+		<?php
+		// The Dog House landing is entirely data-driven, so we render it once
+		// rather than looping the main query. This keeps the page correct (and
+		// un-duplicated) whether the site's front page is set to a static page
+		// or to the latest-posts index — no Reading-settings setup required.
+		get_template_part( 'template-parts/content', 'front-page' );
+		?>
+	</main><!-- #main -->
 
 <?php
 get_footer();
