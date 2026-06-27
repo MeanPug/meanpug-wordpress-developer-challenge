@@ -7,6 +7,7 @@
 @import "./css/plugins/toc.css";
 
 @import "./css/widgets/shared/location-navigator.css";
+@import "./css/templates/front-page.css";
 
 /* Uncomment for optional styles
 @import "./css/components/shared/tabs.css";

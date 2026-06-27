@@ -21,6 +21,9 @@
 
 <body <?php body_class(); ?>>
 
+<?php if ( is_front_page() ) : ?>
+<?php get_template_part( 'template-parts/headers/header', 'front-page' ); ?>
+<?php else : ?>
 <nav class="sticky bg-green inf-site-header z-20">
     <div class="container flex items-center justify-between pt-8 pb-6">
         <div class="w-48 lg:w-96">
@@ -66,6 +69,7 @@
         </div>
     </div>
 </nav>
+<?php endif; ?>
 
 <div id="page" class="site">
 
