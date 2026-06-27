@@ -16,7 +16,7 @@
             <button class="<?php echo esc_attr( $class ); ?>" type="button">
                 <?php echo esc_html( $tab['label'] ); ?>
                 <?php if ( ! empty( $tab['badge'] ) ) : ?>
-                    <span class="inline-block bg-[#222222] text-white text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ml-1 align-middle">
+                    <span class="airbnb-fp__tab__badge">
                         <?php echo esc_html( $tab['badge'] ); ?>
                     </span>
                 <?php endif; ?>
@@ -42,7 +42,7 @@
             </div>
             <?php endforeach; ?>
             <button class="airbnb-fp__search__btn" type="button" aria-label="<?php esc_attr_e( 'Search', 'inf' ); ?>">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="airbnb-fp__search__btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
                 <?php esc_html_e( 'Search', 'inf' ); ?>
             </button>
         </div>
@@ -58,7 +58,7 @@
         </p>
         <a href="#" class="airbnb-fp__hero__cta">
             <?php esc_html_e( 'Learn more', 'inf' ); ?>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="airbnb-fp__hero__cta-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
     </section>
 
