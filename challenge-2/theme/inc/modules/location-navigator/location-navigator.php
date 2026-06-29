@@ -240,9 +240,9 @@ class LocationNavigator_Module extends Module {
     <div class="container mx-auto relative z-10">
     <?php
     $offices_data = $opts['offices_section'];
-    $office_settings = get_field('contact_offices', 'option');
+    $office_posts = inf_get_office_location_posts();
     $use_carousel = $offices_data['use_carousel'];
-    if ($opts['display_type'] !== 'State/City' && $office_settings && sizeof($office_settings) > 0) : ?>
+    if ($opts['display_type'] !== 'State/City' && $office_posts && sizeof($office_posts) > 0) : ?>
       <div class="mp-location-navigator__offices flex flex-col md:flex-row items-start">
         <div class="w-full md:w-1/4 shrink-0 flex md:block items-center justify-between">
           <strong class="mp-location-navigator__label"><?php echo $offices_data['header'] ?></strong>
@@ -255,23 +255,29 @@ class LocationNavigator_Module extends Module {
         <div class="relative pt-4 md:pt-0 w-full md:w-3/4"><div>
             <?php endif ?>
             <ul class="mp-location-navigator__carousel w-3/4<?php if ($use_carousel) echo ' glide__slides' ?>">
-              <?php foreach ($office_settings as $office) : ?>
+              <?php foreach ($office_posts as $office_post) :
+                $phone_number = get_field('phone', $office_post);
+                $geopoint = get_field('geopoint', $office_post);
+                $directions_link = ( $geopoint && ! empty( $geopoint['lat'] ) && ! empty( $geopoint['lng'] ) )
+                  ? 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $geopoint['lat'] . ',' . $geopoint['lng'] )
+                  : get_permalink( $office_post );
+              ?>
                 <li class="mp-location-navigator__carousel-item<?php if ($use_carousel) echo ' glide__slide' ?>">
-                  <strong class="mp-location-navigator__caption"><?php echo $office['name'] ?></strong>
+                  <strong class="mp-location-navigator__caption"><?php echo get_the_title( $office_post ); ?></strong>
 
                   <div class="mp-location-navigator__content">
-                    <?php echo $office['address'] ?>
+                    <?php echo inf_format_local_address_html( get_field( 'address', $office_post ) ); ?>
                   </div>
 
-                  <?php if ($phone_number = $office['phone_number']) : ?>
+                  <?php if ($phone_number) : ?>
                     <div class="mp-location-navigator__tel">
-                      <a href="<?php echo $phone_number['url'] ?>">
-                        <?php echo $phone_number['title'] ?>
+                      <a href="<?php echo esc_url( $phone_number['url'] ); ?>">
+                        <?php echo esc_html( $phone_number['title'] ); ?>
                       </a>
                     </div>
                   <?php endif ?>
 
-                  <a href="<?php echo $office['directions_link'] ?>" class="mp-location-navigator__link mp-location-navigator__link--directions pt-4">
+                  <a href="<?php echo esc_url( $directions_link ); ?>" class="mp-location-navigator__link mp-location-navigator__link--directions pt-4">
                     <?php _e('Get Directions'); ?>
                   </a>
                 </li>

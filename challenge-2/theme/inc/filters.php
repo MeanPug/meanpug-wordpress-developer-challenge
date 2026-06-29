@@ -1,21 +1,5 @@
 <?php
 
-##-- Defaults
-# ACF
-add_filter('acf/settings/save_json', function() {
-    return get_stylesheet_directory() . '/acf-json';
-});
-
-add_filter('acf/settings/load_json', function($paths) {
-    $paths[] = get_template_directory() . '/acf-json';
-
-    if(is_child_theme()) {
-        $paths[] = get_stylesheet_directory() . '/acf-json';
-    }
-
-    return $paths;
-});
-
 ##-- GForms
 add_filter( 'gform_notification', 'inf_filter_form_notifications', 10, 3 );
 function inf_filter_form_notifications( $notification, $form, $entry ) {

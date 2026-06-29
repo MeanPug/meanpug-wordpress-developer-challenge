@@ -1,0 +1,64 @@
+{
+    "key": "group_inf_social_profiles",
+    "title": "Social Profiles",
+    "fields": [
+        {
+            "key": "field_inf_social_profiles",
+            "label": "Social Profiles",
+            "name": "social_profiles",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "Fixed profile URLs (ACF free — no Repeater field).",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_inf_social_facebook_url",
+                    "label": "Facebook URL",
+                    "name": "facebook_url",
+                    "type": "url"
+                },
+                {
+                    "key": "field_inf_social_linkedin_url",
+                    "label": "LinkedIn URL",
+                    "name": "linkedin_url",
+                    "type": "url"
+                },
+                {
+                    "key": "field_inf_social_twitter_url",
+                    "label": "Twitter / X URL",
+                    "name": "twitter_url",
+                    "type": "url"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1782591257
+}

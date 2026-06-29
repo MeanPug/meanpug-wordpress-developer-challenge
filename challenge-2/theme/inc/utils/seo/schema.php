@@ -58,11 +58,7 @@ function mp_generate_office_schema( $office ) {
         'openingHours' => 'Mo-Su,all day'
     );
 
-    $sameas = [];
-    $social_profiles = get_field('social_profiles', 'option');
-    foreach ( $social_profiles as $profile ) {
-        $sameas[] = $profile['url'];
-    }
+    $sameas = inf_get_social_profile_urls();
     $schema['sameAs'] = $sameas;
 
     echo '<!-- SCHEMA: Office -->';
@@ -95,7 +91,7 @@ function mp_generate_local_business_schema( $office = null ) {
               'addressLocality'  => $location['city'],
               'addressRegion' => $location['state'],
               'postalCode'    => $location['post_code'],
-              'streetAddress' => $location['street_number'] . ' ' . $location['street_name']
+              'streetAddress' => $location['street'] ?? ( trim( ( $location['street_number'] ?? '' ) . ' ' . ( $location['street_name'] ?? '' ) ) )
           ),
           'geo'   => array(
               'type'  => 'GeoCoordinates',
@@ -106,11 +102,7 @@ function mp_generate_local_business_schema( $office = null ) {
           'openingHours' => 'Mo-Su,all day'
       );
 
-      $sameas = [];
-      $social_profiles = get_field('social_profiles', 'option');
-      foreach ( $social_profiles as $profile ) {
-          $sameas[] = $profile['url'];
-      }
+      $sameas = inf_get_social_profile_urls();
       $schema['sameAs'] = $sameas;
 
       echo '<!-- SCHEMA: Local Business -->';
@@ -134,7 +126,7 @@ function mp_generate_testimonial_schema( $testimonial, $print_out = false ) {
         'reviewRating' => array(
             '@type' => 'Rating',
             'bestRating' => '5',
-            'ratingValue' => '5',
+            'ratingValue' => (string) ( get_field( 'rating', $testimonial ) ?: 5 ),
             'worstRating'   => '0'
         ),
     );

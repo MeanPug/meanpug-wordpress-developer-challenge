@@ -41,6 +41,10 @@ add_action( 'admin_head', 'mp_fix_svg' );
 
 # Content Type Schema Output
 function mp_output_default_schema_for_post() {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     global $post;
     global $wp_query;
 
@@ -61,6 +65,10 @@ add_action('wp_footer', 'mp_output_default_schema_for_post');
 
 # outputs any additional for a post/page not covered by the default schema definitions
 function mp_output_additional_schema_for_post() {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+
     if ( is_singular( array( 'post', 'practice-area' ) ) ) {
         $faq_items = get_field('schema_faq_items');
 

@@ -41,9 +41,11 @@
                 <strong class="font-normal text-5xl block ps-link ps-link--square ps-link--square--white">
                     <?php $contact_phone = get_field('contact_phone', 'option'); ?>
                     <span class="inf-link--square__container">
-                        <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
-                            <?php echo $contact_phone['title'] ?>
-                        </a>
+                        <?php if ($contact_phone) : ?>
+                            <a href="<?php echo $contact_phone['url'] ?>" class="inf-link--square__link">
+                                <?php echo $contact_phone['title'] ?>
+                            </a>
+                        <?php endif; ?>
                     </span>
                 </strong>
             </div>
