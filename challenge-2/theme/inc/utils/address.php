@@ -12,3 +12,17 @@ function inf_format_address( $postal_code, $state, $city, $address1, $address2 =
 
     return $formatted;
 }
+
+function inf_format_local_address_html( $address ) {
+	if ( ! $address || ! is_array( $address ) ) {
+		return '';
+	}
+
+	return inf_format_address(
+		$address['postal_code'] ?? '',
+		$address['state'] ?? '',
+		$address['city'] ?? '',
+		$address['street'] ?? '',
+		$address['street2'] ?? null
+	);
+}

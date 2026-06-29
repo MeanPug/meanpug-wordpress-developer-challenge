@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../acf.php';
+
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
         'page_title'     => 'MeanPug Theme Settings',

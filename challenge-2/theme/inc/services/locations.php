@@ -1,5 +1,19 @@
 <?php
 
+function inf_get_office_location_posts() {
+	return get_posts(
+		array(
+			'post_type'      => 'local',
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+			'meta_key'       => 'content_type',
+			'meta_value'     => 'Office Location',
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+		)
+	);
+}
+
 function mp_location_navigator_search_init() {
     $q = $_POST['q'] ? $_POST['q'] : '';
     $post_type = $_POST['post_type'] ? $_POST['post_type'] : '';

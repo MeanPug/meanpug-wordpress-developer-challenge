@@ -44,7 +44,7 @@ function mp_output_default_schema_for_post() {
     global $post;
     global $wp_query;
 
-    if ( is_singular( 'office' ) ) {
+    if ( is_singular( 'local' ) && get_field( 'content_type' ) === 'Office Location' ) {
         mp_generate_office_schema( $post );
     } else {
         mp_generate_local_business_schema();
@@ -62,7 +62,7 @@ add_action('wp_footer', 'mp_output_default_schema_for_post');
 # outputs any additional for a post/page not covered by the default schema definitions
 function mp_output_additional_schema_for_post() {
     if ( is_singular( array( 'post', 'practice-area' ) ) ) {
-        $faq_items = get_field('schema_faq_items');
+        $faq_items = inf_get_schema_faq_items();
 
         if ( $faq_items && sizeof( $faq_items ) > 0 ) {
             $faq_markup = array();
@@ -114,6 +114,10 @@ add_action('mpdreviews/new-reviews', function($new_reviews) {
     $post_id = wp_insert_post($post_data);
 
     update_field('rating', $review['rating'], $post_id);
-    update_field('reviewer_name', $review['reviewer']['name'], $post_id);
+    update_field(
+      'reviewer',
+      array( 'name' => $review['reviewer']['name'] ),
+      $post_id
+    );
   }
 });

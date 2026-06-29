@@ -1,0 +1,179 @@
+{
+    "key": "group_inf_practice_area",
+    "title": "Practice Area Fields",
+    "fields": [
+        {
+            "key": "field_inf_pa_testimonials",
+            "label": "Testimonials",
+            "name": "testimonials",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "testimonials"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "object",
+            "taxonomy": [],
+            "min": 0,
+            "max": 0,
+            "elements": [],
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_inf_pa_schema_faq_items",
+            "label": "Schema FAQ Items",
+            "name": "schema_faq_items",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "Up to three FAQ pairs for FAQPage schema (ACF free — no Repeater field).",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_inf_pa_faq_1",
+                    "label": "FAQ 1",
+                    "name": "faq_1",
+                    "type": "group",
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_inf_pa_faq_1_question",
+                            "label": "Question",
+                            "name": "question",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_inf_pa_faq_1_answer",
+                            "label": "Answer",
+                            "name": "answer",
+                            "type": "textarea"
+                        }
+                    ]
+                },
+                {
+                    "key": "field_inf_pa_faq_2",
+                    "label": "FAQ 2",
+                    "name": "faq_2",
+                    "type": "group",
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_inf_pa_faq_2_question",
+                            "label": "Question",
+                            "name": "question",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_inf_pa_faq_2_answer",
+                            "label": "Answer",
+                            "name": "answer",
+                            "type": "textarea"
+                        }
+                    ]
+                },
+                {
+                    "key": "field_inf_pa_faq_3",
+                    "label": "FAQ 3",
+                    "name": "faq_3",
+                    "type": "group",
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_inf_pa_faq_3_question",
+                            "label": "Question",
+                            "name": "question",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_inf_pa_faq_3_answer",
+                            "label": "Answer",
+                            "name": "answer",
+                            "type": "textarea"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_inf_pa_hero_cta",
+            "label": "Hero CTA",
+            "name": "hero_cta",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_inf_pa_related_attorneys",
+            "label": "Related Attorneys",
+            "name": "related_attorneys",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "team"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "object",
+            "taxonomy": [],
+            "min": 0,
+            "max": 0,
+            "elements": [],
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "practice-area"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1782591257
+}
