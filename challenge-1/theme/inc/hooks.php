@@ -119,3 +119,11 @@ add_action('mpdreviews/new-reviews', function($new_reviews) {
     update_field('reviewer_name', $review['reviewer']['name'], $post_id);
   }
 });
+
+/**
+ * Overrides the document title for the browser tab.
+ */
+add_filter( 'pre_get_document_title', function() {
+    return 'Air PNP - Mean Pug Challenge';
+});
+
