@@ -8,9 +8,7 @@
  * @package infra
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'w-full' ); ?>>
-
-    <?php get_template_part( 'template-parts/front-page/search-bar' ); ?>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'w-full pt-8' ); ?>>
 
     <div class="w-full">
         <?php get_template_part( 'template-parts/front-page/listings-section', 'homes' ); ?>
