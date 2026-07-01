@@ -51,10 +51,12 @@ function mp_output_default_schema_for_post() {
     }
 
     if ( is_singular( 'practice-area' ) ) {
-        mp_generate_practice_area_schema( $post, get_field('schema_aggregate_rating', 'option' ) );
+        $rating = function_exists( 'get_field' ) ? get_field( 'schema_aggregate_rating', 'option' ) : null;
+        mp_generate_practice_area_schema( $post, $rating );
     } elseif ( is_post_type_archive( 'testimonials' ) ) {
         $testimonials = get_posts( array( 'post_type' => 'testimonials', 'numberposts' => 15 ) );
-        mp_generate_testimonials_schema( $testimonials, null, null, get_field('schema_aggregate_rating', 'option' ) );
+        $rating = function_exists( 'get_field' ) ? get_field( 'schema_aggregate_rating', 'option' ) : null;
+        mp_generate_testimonials_schema( $testimonials, null, null, $rating );
     }
 }
 add_action('wp_footer', 'mp_output_default_schema_for_post');

@@ -4,9 +4,12 @@ module.exports = {
         './theme/**/*.js'
     ],
     theme: {
-        fontFamily: {
-        },
+        fontFamily: {},
         extend: {
+            colors: {
+                'airbnb':      '#FF385C',
+                'airbnb-dark': '#D93B5A',
+            },
             zIndex: {
                 '-10': '-10'
             },

@@ -1,0 +1,38 @@
+/**
+ * Base layout resets
+ *
+ * Overrides MeanPug parent theme CDN width constraints on the standard
+ * WordPress page wrapper elements so the front-page layout fills the viewport.
+ * Placed before Tailwind utilities so component classes take precedence.
+ *
+ * @package infra
+ */
+
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/*
+ * WordPress wraps every template in: #page.site > #content.site-content
+ * front-page.php adds:              #primary.content-area > #main.site-main
+ * The MeanPug CDN stylesheet constrains these to a narrow box.
+ * Reset all of them to full-width so our Tailwind max-w-7xl containers control width.
+ */
+#page,
+.site,
+#content,
+.site-content,
+#primary,
+.content-area,
+#main,
+.site-main {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    float: none;
+}
