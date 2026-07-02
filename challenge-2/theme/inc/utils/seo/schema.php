@@ -261,3 +261,188 @@ function mp_generate_faq_page_schema( $faq_markup, $comment = '' ) {
     echo json_encode( $schema );
     echo '</script>';
 }
+
+/**
+ * Generates Person schema for an attorney.
+ *
+ * @param WP_Post $attorney
+ */
+function mp_generate_attorney_schema( WP_Post $attorney ): void {
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+
+    $schema = array(
+        '@context'    => 'https://schema.org',
+        '@type'       => array( 'Person', 'Attorney' ),
+        'name'        => get_the_title( $attorney ),
+        'description' => get_the_excerpt( $attorney ),
+        'url'         => get_permalink( $attorney ),
+        'image'       => get_the_post_thumbnail_url( $attorney, 'attorney-headshot-square' ),
+        'jobTitle'    => function_exists( 'get_field' ) ? get_field( 'job_title', $attorney ) : '',
+        'email'       => function_exists( 'get_field' ) ? get_field( 'email', $attorney ) : '',
+        'telephone'   => function_exists( 'get_field' ) ? get_field( 'phone_direct', $attorney ) : '',
+        'worksFor'    => array(
+            '@type' => 'LegalService',
+            'name'  => get_bloginfo( 'name' ),
+            'url'   => get_site_url(),
+            'logo'  => wp_get_attachment_image_url( $custom_logo_id, 'full' ),
+        ),
+    );
+
+    // Attach sameAs from LinkedIn if set.
+    $linkedin = function_exists( 'get_field' ) ? get_field( 'social_linkedin', $attorney ) : '';
+    if ( $linkedin ) {
+        $schema['sameAs'] = array( $linkedin );
+    }
+
+    // Attach knowsAbout from related practice areas.
+    $practice_areas = function_exists( 'get_field' ) ? get_field( 'practice_areas', $attorney ) : array();
+    if ( ! empty( $practice_areas ) ) {
+        $schema['knowsAbout'] = wp_list_pluck( (array) $practice_areas, 'post_title' );
+    }
+
+    echo '<!-- SCHEMA: Attorney -->';
+    echo '<script type="application/ld+json">';
+    echo wp_json_encode( $schema );
+    echo '</script>';
+}
+
+/**
+ * Generates JobPosting schema for a career listing.
+ *
+ * @param WP_Post $career
+ */
+function mp_generate_career_schema( WP_Post $career ): void {
+    $closing_date    = function_exists( 'get_field' ) ? get_field( 'closing_date', $career ) : '';
+    $employment_type = function_exists( 'get_field' ) ? get_field( 'employment_type', $career ) : 'FULL_TIME';
+    $remote_option   = function_exists( 'get_field' ) ? get_field( 'remote_option', $career ) : 'ONSITE';
+    $salary_range    = function_exists( 'get_field' ) ? get_field( 'salary_range', $career ) : '';
+    $office          = function_exists( 'get_field' ) ? get_field( 'office', $career ) : null;
+
+    $schema = array(
+        '@context'         => 'https://schema.org',
+        '@type'            => 'JobPosting',
+        'title'            => get_the_title( $career ),
+        'description'      => get_the_content( null, false, $career ),
+        'datePosted'       => get_the_date( 'Y-m-d', $career ),
+        'employmentType'   => $employment_type,
+        'hiringOrganization' => array(
+            '@type' => 'Organization',
+            'name'  => get_bloginfo( 'name' ),
+            'url'   => get_site_url(),
+        ),
+        'jobLocationType'  => 'REMOTE' === $remote_option ? 'TELECOMMUTE' : null,
+    );
+
+    // Add validThrough if a closing date is set.
+    if ( $closing_date ) {
+        $schema['validThrough'] = $closing_date . 'T23:59:59';
+    }
+
+    // Add salary if provided.
+    if ( $salary_range ) {
+        $schema['baseSalary'] = array(
+            '@type'    => 'MonetaryAmount',
+            'currency' => 'USD',
+            'value'    => array(
+                '@type'    => 'QuantitativeValue',
+                'value'    => $salary_range,
+                'unitText' => 'YEAR',
+            ),
+        );
+    }
+
+    // Pull location from the linked Office post.
+    if ( $office instanceof WP_Post ) {
+        $address = function_exists( 'get_field' ) ? get_field( 'address', $office ) : array();
+        if ( ! empty( $address ) ) {
+            $schema['jobLocation'] = array(
+                '@type'   => 'Place',
+                'address' => array(
+                    '@type'           => 'PostalAddress',
+                    'streetAddress'   => $address['street'] . ( ! empty( $address['street2'] ) ? ', ' . $address['street2'] : '' ),
+                    'addressLocality' => $address['city'],
+                    'addressRegion'   => $address['state'],
+                    'postalCode'      => $address['postal_code'],
+                    'addressCountry'  => 'US',
+                ),
+            );
+        }
+    }
+
+    // Null values must be removed — schema.org validators reject them.
+    $schema = array_filter( $schema, fn( $v ) => null !== $v );
+
+    echo '<!-- SCHEMA: Career/JobPosting -->';
+    echo '<script type="application/ld+json">';
+    echo wp_json_encode( $schema );
+    echo '</script>';
+}
+
+/**
+ * Generates BreadcrumbList schema for the current page.
+ *
+ * Builds from the current URL path, using WordPress hierarchy.
+ * Runs on all singular pages and archives.
+ */
+function mp_generate_breadcrumb_schema(): void {
+    $items = array();
+    $pos   = 1;
+
+    // Always start with home.
+    $items[] = array(
+        '@type'    => 'ListItem',
+        'position' => $pos++,
+        'name'     => get_bloginfo( 'name' ),
+        'item'     => get_site_url(),
+    );
+
+    // CPT archive breadcrumb.
+    if ( is_singular() ) {
+        $post_type = get_post_type();
+        $pt_obj    = get_post_type_object( $post_type );
+
+        if ( $pt_obj && $pt_obj->has_archive ) {
+            $items[] = array(
+                '@type'    => 'ListItem',
+                'position' => $pos++,
+                'name'     => $pt_obj->labels->name,
+                'item'     => get_post_type_archive_link( $post_type ),
+            );
+        }
+
+        // Parent post for hierarchical CPTs (e.g. Personal Injury > Car Accidents).
+        $parent_id = wp_get_post_parent_id( get_the_ID() );
+        if ( $parent_id ) {
+            $items[] = array(
+                '@type'    => 'ListItem',
+                'position' => $pos++,
+                'name'     => get_the_title( $parent_id ),
+                'item'     => get_permalink( $parent_id ),
+            );
+        }
+
+        // Current page.
+        $items[] = array(
+            '@type'    => 'ListItem',
+            'position' => $pos,
+            'name'     => get_the_title(),
+            'item'     => get_permalink(),
+        );
+    }
+
+    if ( count( $items ) <= 1 ) {
+        return; // No breadcrumb on home.
+    }
+
+    $schema = array(
+        '@context'        => 'https://schema.org',
+        '@type'           => 'BreadcrumbList',
+        'itemListElement' => $items,
+    );
+
+    echo '<!-- SCHEMA: BreadcrumbList -->';
+    echo '<script type="application/ld+json">';
+    echo wp_json_encode( $schema );
+    echo '</script>';
+}
+

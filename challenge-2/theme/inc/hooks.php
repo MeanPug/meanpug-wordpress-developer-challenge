@@ -55,9 +55,16 @@ function mp_output_default_schema_for_post() {
     } elseif ( is_post_type_archive( 'testimonials' ) ) {
         $testimonials = get_posts( array( 'post_type' => 'testimonials', 'numberposts' => 15 ) );
         mp_generate_testimonials_schema( $testimonials, null, null, get_field('schema_aggregate_rating', 'option' ) );
+    } elseif ( is_singular( 'attorney' ) ) {
+        mp_generate_attorney_schema( $post );
+    } elseif ( is_singular( 'career' ) ) {
+        mp_generate_career_schema( $post );
     }
 }
 add_action('wp_footer', 'mp_output_default_schema_for_post');
+
+# Breadcrumb schema — runs on all singular pages and archives.
+add_action( 'wp_footer', 'mp_generate_breadcrumb_schema' );
 
 # outputs any additional for a post/page not covered by the default schema definitions
 function mp_output_additional_schema_for_post() {

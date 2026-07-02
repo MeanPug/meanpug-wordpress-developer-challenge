@@ -85,10 +85,12 @@ if ( ! function_exists( 'inf_setup' ) ) :
     add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
 
     /**
-    * SAMPLE: additional post thumbnail sizes
-    * add_image_size('attorney-headshot-square', 720, 720 );
-    * add_image_size('attorney-headshot-tall', 600, 625 );
-    */
+     * Attorney headshot image sizes.
+     * Square: used in card grids and sidebar lists.
+     * Tall:   used in full attorney bio pages.
+     */
+    add_image_size( 'attorney-headshot-square', 720, 720, true );
+    add_image_size( 'attorney-headshot-tall', 600, 750, true );
 	}
 endif;
 add_action( 'after_setup_theme', 'inf_setup' );
@@ -217,6 +219,7 @@ require_once __DIR__ . '/inc/template_functions.php';
 
 require_once __DIR__ . '/inc/cpt/all.php';
 require_once __DIR__ . '/inc/tax/all.php';
+require_once __DIR__ . '/inc/acf/all.php';
 require_once __DIR__ . '/inc/menus/all.php';
 require_once __DIR__ . '/inc/settings/all.php';
 require_once __DIR__ . '/inc/sidebars/all.php';
