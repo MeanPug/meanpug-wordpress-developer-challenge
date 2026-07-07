@@ -41,21 +41,25 @@ add_action( 'admin_head', 'mp_fix_svg' );
 
 # Content Type Schema Output
 function mp_output_default_schema_for_post() {
-    global $post;
-    global $wp_query;
+	global $post;
+	global $wp_query;
 
-    if ( is_singular( 'office' ) ) {
-        mp_generate_office_schema( $post );
-    } else {
-        mp_generate_local_business_schema();
-    }
+	if ( ! function_exists( 'get_field' ) ) {
+		return;
+	}
 
-    if ( is_singular( 'practice-area' ) ) {
-        mp_generate_practice_area_schema( $post, get_field('schema_aggregate_rating', 'option' ) );
-    } elseif ( is_post_type_archive( 'testimonials' ) ) {
-        $testimonials = get_posts( array( 'post_type' => 'testimonials', 'numberposts' => 15 ) );
-        mp_generate_testimonials_schema( $testimonials, null, null, get_field('schema_aggregate_rating', 'option' ) );
-    }
+	if ( is_singular( 'office' ) ) {
+		mp_generate_office_schema( $post );
+	} else {
+		mp_generate_local_business_schema();
+	}
+
+	if ( is_singular( 'practice-area' ) ) {
+		mp_generate_practice_area_schema( $post, get_field( 'schema_aggregate_rating', 'option' ) );
+	} elseif ( is_post_type_archive( 'testimonials' ) ) {
+		$testimonials = get_posts( array( 'post_type' => 'testimonials', 'numberposts' => 15 ) );
+		mp_generate_testimonials_schema( $testimonials, null, null, get_field( 'schema_aggregate_rating', 'option' ) );
+	}
 }
 add_action('wp_footer', 'mp_output_default_schema_for_post');
 
