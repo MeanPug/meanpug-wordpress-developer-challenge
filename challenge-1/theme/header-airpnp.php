@@ -1,0 +1,20 @@
+<?php
+/**
+ * Minimal header for the AirPnP challenge.
+ *
+ * This keeps the Challenge 1 homepage independent from the base theme header,
+ * which expects optional ACF configuration.
+ *
+ * @package infra
+ */
+?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php wp_head(); ?>
+</head>
+
+<body <?php body_class( 'airpnp-body' ); ?>>
+<?php wp_body_open(); ?>

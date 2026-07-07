@@ -1,31 +1,31 @@
 <?php
 /**
- * The template for displaying all pages
+ * Front page template for Challenge 1.
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * This template intentionally focuses on the above-the-fold
+ * AirPnP landing page implementation for the MeanPug challenge.
  *
  * @package infra
  */
 
-get_header();
+get_header( 'airpnp' );
 ?>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
 
-			<?php
-			while ( have_posts() ) :
-				the_post();
+<main class="min-h-screen bg-white text-neutral-900">
+	<section class="mx-auto max-w-7xl px-6 py-20">
+		<p class="mb-4 text-sm font-semibold uppercase tracking-wide text-pink-600">
+			MeanPug WordPress Challenge
+		</p>
 
-				get_template_part( 'template-parts/content', 'front-page' );
-			endwhile;
-			?>
-		</main><!-- #main -->
-	</div><!-- #primary -->
+		<h1 class="max-w-3xl text-5xl font-bold tracking-tight">
+			AirPnP homepage is loading.
+		</h1>
+
+		<p class="mt-6 max-w-2xl text-lg text-neutral-600">
+			This confirms our custom front-page template is working without relying on the default theme header.
+		</p>
+	</section>
+</main>
 
 <?php
-get_footer();
+get_footer( 'airpnp' );
