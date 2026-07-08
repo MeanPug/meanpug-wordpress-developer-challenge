@@ -36,6 +36,7 @@ services:
        - ./uploads:/var/www/html/wp-content/uploads
        - ./server_config.ini:/usr/local/etc/php/conf.d/server_config.ini
        - ./wp:/var/www/html
+       - ./mu-plugins:/var/www/html/wp-content/mu-plugins
      ports:
        - "8000:80"
      restart: always
